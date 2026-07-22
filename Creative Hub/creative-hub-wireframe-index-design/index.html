@@ -875,8 +875,15 @@
     .builder-hero, .builder-row i, .builder-cta { border: 1.5px solid var(--is24-charcoal); box-shadow: 2px 3px 0 var(--is24-charcoal); }
     .builder-hero { background: var(--is24-purple); } .builder-row i { background: var(--is24-blue); } .builder-row i:last-child { background: var(--is24-yellow); } .builder-cta { background: var(--is24-teal); }
     @media (max-width: 860px) { .hero-viz { justify-self: center; width: calc(100vw - 64px); max-width: calc(100vw - 64px); } .skill-viz { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; padding: 20px; } .skill-viz span { padding: 10px 4px; font-size: 14px; } }
-    .story-image img, .story-mini-image img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .story-image svg, .story-mini-image svg { display: block; width: 100%; height: 100%; }
     .story-image::after, .story-mini-image::before, .story-mini-image::after { content: none; }
+    .agent-card { min-height: 0; } .agent-body { min-height: 300px; display: flex; flex-direction: column; padding: 24px 18px 18px; }
+    .agent-icon { width: 42px; height: 42px; margin-bottom: 20px; display: grid; place-items: center; border-radius: var(--is24-radius-8); background: var(--is24-sand); color: var(--is24-charcoal); }
+    .agent-icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .agent-body h3 { min-height: 24px; font-size: 21px; } .agent-body p { flex: 1; } .agent-footer { margin-top: 18px; }
+    .usecase-card { border: 0; box-shadow: 0 10px 28px rgba(51,51,51,.08); }
+    .video-play { position: absolute; top: 50%; left: 50%; z-index: 3; width: 54px; height: 54px; display: grid; place-items: center; border-radius: 50%; transform: translate(-50%, -50%); background: var(--is24-white); color: var(--is24-charcoal); box-shadow: 0 4px 12px rgba(51,51,51,.12); transition: transform 160ms ease, box-shadow 160ms ease; }
+    .video-play svg { width: 25px; height: 25px; fill: currentColor; } .usecase-card:hover .video-play { transform: translate(-50%, -50%) scale(1.06); box-shadow: 0 6px 16px rgba(51,51,51,.16); }
   </style>
 </head>
 <body>
@@ -933,45 +940,40 @@
         <div class="rail-wrap">
           <div class="rail">
             <article class="agent-card">
-              <div class="agent-thumb">
-              </div>
               <div class="agent-body">
+                <span class="agent-icon" aria-label="Page layout icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM8 4v16M11 8h5M11 12h5M11 16h3"/></svg></span>
                 <h3>Landing Page Builder</h3>
                 <p>Develop modular landing pages faster and implement them consistently.</p><div class="agent-footer"><span>Content & Campaigns</span><strong>Open →</strong></div>
               </div>
             </article>
 
             <article class="agent-card">
-              <div class="agent-thumb alt1">
-              </div>
               <div class="agent-body">
+                <span class="agent-icon" aria-label="Image icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM7 15l3-3 3 3 2-2 3 3M9 9h.01"/></svg></span>
                 <h3>Image Generator</h3>
                 <p>Create visual ideas and marketing assets based on defined requirements.</p><div class="agent-footer"><span>Image & Design</span><strong>Open →</strong></div>
               </div>
             </article>
 
             <article class="agent-card">
-              <div class="agent-thumb alt2">
-              </div>
               <div class="agent-body">
+                <span class="agent-icon" aria-label="Writing icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19l1-4L16 5l3 3L9 18l-4 1zM14 7l3 3"/></svg></span>
                 <h3>Brand Agent</h3>
                 <p>Adapt copy to brand tone and selected communication contexts.</p><div class="agent-footer"><span>Brand & Writing</span><strong>Open →</strong></div>
               </div>
             </article>
 
             <article class="agent-card">
-              <div class="agent-thumb alt3">
-              </div>
               <div class="agent-body">
+                <span class="agent-icon" aria-label="Chart icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V5M5 19h15M8 16v-4M12 16V8M16 16v-7"/></svg></span>
                 <h3>Chart Agent</h3>
                 <p>Turn data into clear, understandable and reusable charts faster.</p><div class="agent-footer"><span>Data & Insights</span><strong>Open →</strong></div>
               </div>
             </article>
 
             <article class="agent-card">
-              <div class="agent-thumb alt4">
-              </div>
               <div class="agent-body">
+                <span class="agent-icon" aria-label="Mail icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4zM4 7l8 6 8-6"/></svg></span>
                 <h3>E-Mail Builder</h3>
                 <p>Simplify recurring email creation with modules and clear standards.</p><div class="agent-footer"><span>Automation</span><strong>Open →</strong></div>
               </div>
@@ -991,10 +993,10 @@
 
         <div class="content-grid">
           <article class="feature-story">
-            <div class="story-image"><img src="assets/placeholders/update-guide-01.svg" alt="Calm placeholder for the ChatGPT Skills article" /></div>
+            <div class="story-image"><svg viewBox="0 0 800 450" role="img" aria-label="Calm placeholder for the ChatGPT Skills article"><rect width="800" height="450" fill="#3df5dc"/><rect x="160" y="118" width="480" height="214" rx="20" fill="#fbf8f6"/><rect x="212" y="172" width="250" height="14" rx="7" fill="#eaeaea"/><rect x="212" y="210" width="330" height="14" rx="7" fill="#eaeaea"/></svg></div>
             <div class="story-copy">
               <div class="kicker">How-to</div>
-              <h3>Was ist ein ChatGPT Skill?</h3>
+              <h3>What is a ChatGPT Skill?</h3>
               <p>
                 A practical introduction to what Skills are suited for, how they are structured and when a regular prompt is the better solution.
               </p>
@@ -1004,7 +1006,7 @@
 
           <div class="story-list">
             <article class="story-card">
-              <div class="story-mini-image orange"><img src="assets/placeholders/update-guide-02.svg" alt="Ruhiger Placeholder zu neuen ChatGPT Funktionen" /></div>
+              <div class="story-mini-image orange"><svg viewBox="0 0 800 450" role="img" aria-label="Calm placeholder for new ChatGPT features"><rect width="800" height="450" fill="#d5aaff"/><rect x="210" y="105" width="380" height="240" rx="20" fill="#fbf8f6"/><circle cx="400" cy="180" r="42" fill="#eff933"/></svg></div>
               <div>
                 <span>Announcement</span>
                 <h4>New features in ChatGPT</h4><p>The most important changes, briefly put into context for everyday marketing work.</p>
@@ -1012,7 +1014,7 @@
             </article>
 
             <article class="story-card">
-              <div class="story-mini-image dark"><img src="assets/placeholders/update-guide-03.svg" alt="Ruhiger Placeholder zum MVP Guide" /></div>
+              <div class="story-mini-image dark"><svg viewBox="0 0 800 450" role="img" aria-label="Calm placeholder for the MVP guide"><rect width="800" height="450" fill="#eff933"/><rect x="170" y="130" width="460" height="190" rx="20" fill="#fbf8f6"/><rect x="228" y="178" width="110" height="92" rx="12" fill="#24e3ff"/></svg></div>
               <div>
                 <span>Guide</span>
                 <h4>From idea to a small MVP</h4><p>How to reduce a large AI use case to a sensible first test.</p>
@@ -1020,7 +1022,7 @@
             </article>
 
             <article class="story-card">
-              <div class="story-mini-image"><img src="assets/placeholders/update-guide-04.svg" alt="Ruhiger Placeholder zum Image Generator Update" /></div>
+              <div class="story-mini-image"><svg viewBox="0 0 800 450" role="img" aria-label="Calm placeholder for the Image Generator update"><rect width="800" height="450" fill="#24e3ff"/><rect x="180" y="120" width="440" height="210" rx="20" fill="#fbf8f6"/><rect x="234" y="170" width="332" height="14" rx="7" fill="#eaeaea"/></svg></div>
               <div>
                 <span>Tool Update</span>
                 <h4>New access to the Image Generator</h4><p>What changed, who can use it and where to get support.</p>
@@ -1033,24 +1035,27 @@
       <section id="usecases">
         <div class="section-head">
           <div>
-            <h2>Praxisbeispiele</h2>
-            <p>Ausgewählte Cases zeigen Nutzen und Learnings – nicht zwingend für jeden Agent.</p>
+            <h2>Videos</h2>
+            <p>Onboardings, how-to videos and practical walkthroughs for tools, agents and workflows.</p>
           </div>
-          <a class="btn btn--ghost btn--sm section-link" href="#">Mehr Praxisbeispiele →</a>
+          <a class="btn btn--ghost btn--sm section-link" href="#">View all videos →</a>
         </div>
 
         <div class="usecase-grid">
           <article class="usecase-card">
-            <small>Use Case</small>
-            <h3>Landingpages mit wiederverwendbaren Modulen skalieren</h3>
+            <span class="video-play" aria-label="Play video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12l10-6z"/></svg></span>
+            <small>Onboarding</small>
+            <h3>Getting started with the Creative Hub</h3>
           </article>
           <article class="usecase-card">
-            <small>Learning</small>
-            <h3>Wie aus einem E-Mail-MVP ein Blueprint werden kann</h3>
+            <span class="video-play" aria-label="Play video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12l10-6z"/></svg></span>
+            <small>How-to</small>
+            <h3>How to build and use a ChatGPT Skill</h3>
           </article>
           <article class="usecase-card">
-            <small>Behind the scenes</small>
-            <h3>Einen Brand Agent klein und testbar starten</h3>
+            <span class="video-play" aria-label="Play video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12l10-6z"/></svg></span>
+            <small>Walkthrough</small>
+            <h3>Creating a landing page with the Landing Page Builder</h3>
           </article>
         </div>
       </section>
@@ -1058,36 +1063,31 @@
       <section id="links">
         <div class="bottom-grid">
           <div class="panel">
-            <h3>Hilfreiche Einstiege</h3>
-            <p>Dauerhafte Links für häufige Aufgaben.</p>
+            <h3>Helpful links</h3><p>Permanent links for common tasks.</p>
             <div class="link-list">
-              <a class="link-row" href="#"><span>Alle Agents</span><span>→</span></a>
+              <a class="link-row" href="#"><span>View all agents</span><span>→</span></a>
               <a class="link-row" href="#"><span>Agent Process Guide</span><span>→</span></a>
-              <a class="link-row" href="#"><span>Support & Ansprechpartner</span><span>→</span></a>
+              <a class="link-row" href="#"><span>Support &amp; Contacts</span><span>→</span></a>
               <a class="link-row" href="#"><span>FAQ</span><span>→</span></a>
             </div>
           </div>
 
           <div class="panel">
-            <h3>Idee oder Bedarf?</h3>
-            <p>Teile ein Problem, einen bestehenden Workflow oder einen möglichen Use Case.</p>
-            <button class="btn small" style="background:var(--accent);color:#fff;margin-top:10px;">Idee einreichen</button>
+            <h3>Idea or need?</h3><p>Share a problem, an existing workflow or a potential use case.</p><button class="btn small" style="background:var(--accent);color:#fff;margin-top:10px;">Submit an idea</button>
             <div class="link-list" style="margin-top:16px;">
-              <div class="link-row"><span>Bestehende Lösung prüfen</span><span>1</span></div>
-              <div class="link-row"><span>Kleines Experiment</span><span>2</span></div>
-              <div class="link-row"><span>Strategischen Fit klären</span><span>3</span></div>
+              <div class="link-row"><span>Check existing solutions</span><span>1</span></div><div class="link-row"><span>Run a small experiment</span><span>2</span></div><div class="link-row"><span>Confirm strategic fit</span><span>3</span></div>
             </div>
           </div>
 
           <div class="panel newsletter">
             <h3>Creative Hub Updates</h3>
-            <p>Neue Agents, Guides und relevante Änderungen kompakt angekündigt.</p>
+            <p>New agents, guides and relevant changes announced in a concise format.</p>
             <div class="email-row">
               <input type="email" placeholder="E-Mail-Adresse" />
-              <button class="btn small" style="background:#fff;color:#111820;">Anmelden</button>
+              <button class="btn small" style="background:#fff;color:#111820;">Subscribe</button>
             </div>
             <div style="margin-top:18px;font-size:12px;color:#8796a3;">
-              Optionaler Platzhalter – könnte alternativ durch Slack-Verlinkung ersetzt werden.
+              Optional placeholder – could alternatively be replaced with a Slack link.
             </div>
           </div>
         </div>
@@ -1099,7 +1099,7 @@
   <footer>
     <div class="shell footer-inner">
       <strong>Creative Hub</strong>
-      <span>Wireframe für Diskussion mit Eve & Peter</span>
+      <span>Wireframe for discussion with Eve &amp; Peter</span>
       <span>Marketing & Communications</span>
     </div>
   </footer>
@@ -1114,12 +1114,11 @@
         <button onclick="closeModal()" style="border:0;background:#eef1f4;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:20px;">×</button>
       </div>
       <p style="color:#687078;line-height:1.6;">
-        Diese Demo zeigt nur, dass Featured-Inhalte und Cards später zu einer Agent-Seite oder einem Beitrag führen könnten.
-        Im MVP muss nicht jeder Agent bereits eine umfangreiche Detailseite besitzen.
+        This demo only shows that featured content and cards could later lead to an agent page or an article.
+        In the MVP, not every agent needs an extensive detail page yet.
       </p>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px;">
-        <div style="background:#f4f5f7;border-radius:14px;padding:16px;"><strong>Problem</strong><br><span style="color:#687078;font-size:13px;">Wiederkehrende Landingpage-Erstellung.</span></div>
-        <div style="background:#f4f5f7;border-radius:14px;padding:16px;"><strong>Nutzen</strong><br><span style="color:#687078;font-size:13px;">Schneller, konsistenter, wiederverwendbar.</span></div>
+        <div style="background:#f4f5f7;border-radius:14px;padding:16px;"><strong>Problem</strong><br><span style="color:#687078;font-size:13px;">Recurring landing page creation.</span></div><div style="background:#f4f5f7;border-radius:14px;padding:16px;"><strong>Benefit</strong><br><span style="color:#687078;font-size:13px;">Faster, more consistent and reusable.</span></div>
       </div>
     </div>
   </dialog>
