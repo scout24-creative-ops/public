@@ -45,12 +45,14 @@
               title.textContent = item.title;
               const meta = document.createElement('div');
               meta.className = 'meta';
-              meta.textContent = `Updated ${item.publishedDate}`;
+              meta.textContent = `Updated ${item.publishedAt}`;
               const files = document.createElement('div');
               (item.publishedFiles || []).forEach((file, index) => {
                 if (index) files.append(document.createTextNode(' · '));
                 const link = document.createElement('a');
-                link.href = `./${item.publicTargetPath}${file}`;
+                link.href = file === 'index.html'
+                  ? `./${item.publicTargetPath}`
+                  : `./${item.publicTargetPath}${file}`;
                 link.textContent = file;
                 files.append(link);
               });

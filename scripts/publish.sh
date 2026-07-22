@@ -73,7 +73,11 @@ if [[ -z "$existing_type" ]]; then
 fi
 
 mkdir -p "$destination_dir"
-destination_file="$destination_dir/$slug.$extension"
+case "$extension" in
+  html|htm) published_filename='index.html' ;;
+  *) published_filename=$(basename -- "$source_file") ;;
+esac
+destination_file="$destination_dir/$published_filename"
 cp -p "$source_file" "$destination_file"
 
 source_sha256=$(shasum -a 256 "$source_file" | awk '{print $1}')
@@ -100,7 +104,11 @@ ruby -rjson - "$metadata_file" "$manifest_file" "$title" "$slug" "$type_singular
 metadata_file, manifest_file, title, slug, type, source_repository, source_path, source_commit, source_sha256, target_path, published_at, public_url, destination_file, public_root = ARGV
 relative_file = File.basename(destination_file)
 old = File.exist?(metadata_file) ? JSON.parse(File.read(metadata_file)) : {}
-files = (old.fetch("publishedFiles", []) + [relative_file]).uniq.sort
+files = old.fetch("publishedFiles", [])
+# Earlier workflow versions used <slug>.html. New and republished HTML files use
+# index.html so the stable folder URL resolves directly on GitHub Pages.
+files -= ["#{slug}.html", "#{slug}.htm"] if relative_file == "index.html"
+files = (files + [relative_file]).uniq.sort
 metadata = {
   "title" => title, "slug" => slug, "type" => type,
   "sourceRepository" => source_repository, "sourcePath" => source_path,
