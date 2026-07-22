@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Public Resources</title>
+    <style>
+      :root { color-scheme: light; font-family: system-ui, sans-serif; color: #1d1d1f; background: #fff; }
+      body { margin: 0; }
+      main { max-width: 880px; margin: 0 auto; padding: 3rem 1.25rem 5rem; }
+      h1 { margin-bottom: .25rem; } .intro { color: #555; }
+      section { margin-top: 2.5rem; } ul { display: grid; gap: .75rem; padding: 0; list-style: none; }
+      li { border: 1px solid #ddd; border-radius: .5rem; padding: 1rem; }
+      a { color: #0066cc; } .meta { color: #666; font-size: .9rem; }
+      .empty { padding: 1rem; background: #f4f4f4; border-radius: .5rem; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Public Resources</h1>
+      <p class="intro">Approved public copies, grouped by resource type.</p>
+      <div id="resources" class="empty">No publications are available yet.</div>
+    </main>
+    <script>
+      const container = document.querySelector('#resources');
+      const labels = { presentation: 'Presentations', handover: 'Handovers', document: 'Documents' };
+      fetch('./publish-manifest.json')
+        .then(response => response.ok ? response.json() : Promise.reject(response))
+        .then(manifest => {
+          const publications = manifest.publications || [];
+          if (!publications.length) return;
+          container.className = '';
+          container.replaceChildren();
+          const grouped = publications.reduce((groups, item) => {
+            (groups[item.type] ||= []).push(item); return groups;
+          }, {});
+          Object.keys(grouped).sort().forEach(type => {
+            const section = document.createElement('section');
+            const heading = document.createElement('h2');
+            heading.textContent = labels[type] || type;
+            const list = document.createElement('ul');
+            grouped[type].forEach(item => {
+              const entry = document.createElement('li');
+              const title = document.createElement('strong');
+              title.textContent = item.title;
+              const meta = document.createElement('div');
+              meta.className = 'meta';
+              meta.textContent = `Updated ${item.publishedDate}`;
+              const files = document.createElement('div');
+              (item.publishedFiles || []).forEach((file, index) => {
+                if (index) files.append(document.createTextNode(' · '));
+                const link = document.createElement('a');
+                link.href = `./${item.publicTargetPath}${file}`;
+                link.textContent = file;
+                files.append(link);
+              });
+              entry.append(title, meta, files); list.append(entry);
+            });
+            section.append(heading, list); container.append(section);
+          });
+        })
+        .catch(() => { container.textContent = 'The publication manifest is unavailable.'; });
+    </script>
+  </body>
+</html>
