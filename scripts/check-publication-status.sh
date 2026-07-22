@@ -8,7 +8,6 @@ script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
 public_root=$(CDPATH= cd -- "$script_dir/.." && pwd -P)
 source_dir=$(CDPATH= cd -- "$(dirname -- "$source_input")" && pwd -P)
 source_file="$source_dir/$(basename -- "$source_input")"
-
 repository='TODO: source repository not available'
 relative_path="$source_file"
 if git_root=$(git -C "$source_dir" rev-parse --show-toplevel 2>/dev/null); then
@@ -26,23 +25,18 @@ ruby -rjson -rshellwords - "$public_root/publish-manifest.json" "$repository" "$
 manifest_file, repository, relative_path, source_file = ARGV
 begin
   manifest = JSON.parse(File.read(manifest_file))
-  raise "version" unless manifest["version"] == 1 && manifest["publications"].is_a?(Array)
+  raise unless manifest["version"] == 2 && manifest["publications"].is_a?(Array)
   matches = manifest["publications"].select { |item| item["sourceRepository"] == repository && item["sourcePath"] == relative_path }
-  raise "duplicate" if matches.length > 1
-  if matches.empty?
-    puts "not-published"
-    exit
-  end
+  raise if matches.length > 1
+  if matches.empty? then puts "not-published"; exit end
   item = matches.first
-  required = %w[sourceRepository sourcePath sourceCommit sourceSha256 publicTargetPath publishedAt publicUrl status]
-  raise "fields" unless required.all? { |field| item[field].is_a?(String) && !item[field].empty? }
-  raise "target" unless item["publicTargetPath"].match?(%r{\A(?:presentations|handovers|documents)/[a-z0-9]+(?:-[a-z0-9]+)*/\z})
-  metadata_file = File.join(File.dirname(manifest_file), item["publicTargetPath"], "metadata.json")
-  metadata = JSON.parse(File.read(metadata_file))
-  raise "metadata" unless required.all? { |field| metadata[field] == item[field] }
-  current_hash = `shasum -a 256 #{Shellwords.escape(source_file)}`.split.first
-  raise "hash" unless current_hash
-  puts current_hash == item["sourceSha256"] ? "published-current" : "published-outdated"
+  required = %w[project sourceRepository sourcePath sourceAbsolutePath sourceCommit sourceHash publicPath publicUrl lastPublished status]
+  raise unless required.all? { |field| item[field].is_a?(String) && !item[field].empty? }
+  raise unless item["publicPath"] == "#{item["project"]}/#{item["slug"]}/" && !item["project"].include?("/")
+  metadata = JSON.parse(File.read(File.join(File.dirname(manifest_file), item["publicPath"], "metadata.json")))
+  raise unless required.all? { |field| metadata[field] == item[field] }
+  current_hash = "sha256:" + `shasum -a 256 #{Shellwords.escape(source_file)}`.split.first.to_s
+  puts current_hash == item["sourceHash"] ? "published-current" : "published-outdated"
 rescue StandardError
   puts "metadata-invalid"
 end

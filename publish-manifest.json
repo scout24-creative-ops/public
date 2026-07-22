@@ -1,20 +1,21 @@
 {
-  "version": 1,
+  "version": 2,
   "publications": [
     {
       "title": "Creative Hub Wireframe Index Design",
       "slug": "creative-hub-wireframe-index-design",
-      "type": "presentation",
+      "project": "Creative Hub",
       "sourceRepository": "scout24-creative-ops/creative-hub",
       "sourcePath": "drafts/creative-hub-wireframe-index-design.html",
+      "sourceAbsolutePath": "/Users/dboehme/Projects/Creative Hub/drafts/creative-hub-wireframe-index-design.html",
       "sourceCommit": "c3d5c83c56a10750833b2bac303f4e8d893ebcdc",
-      "sourceSha256": "91ecf7b6c6e6fdb29d5577c5d79b4032a612e0f97c366af1f7da70851804873e",
-      "publicTargetPath": "presentations/creative-hub-wireframe-index-design/",
+      "sourceHash": "sha256:91ecf7b6c6e6fdb29d5577c5d79b4032a612e0f97c366af1f7da70851804873e",
+      "publicPath": "Creative Hub/creative-hub-wireframe-index-design/",
+      "publicUrl": "https://scout24-creative-ops.github.io/public/Creative%20Hub/creative-hub-wireframe-index-design/",
       "publishedFiles": [
         "index.html"
       ],
-      "publishedAt": "2026-07-22T14:35:22Z",
-      "publicUrl": "https://scout24-creative-ops.github.io/public/presentations/creative-hub-wireframe-index-design/",
+      "lastPublished": "2026-07-22T14:59:35Z",
       "status": "published"
     }
   ]
