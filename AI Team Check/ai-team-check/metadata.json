@@ -1,0 +1,17 @@
+{
+  "title": "Ai Team Check",
+  "slug": "ai-team-check",
+  "project": "AI Team Check",
+  "sourceRepository": "TODO: source repository not available",
+  "sourcePath": "/Users/dboehme/Projects/AI Team Check/AI-Team-Check.html",
+  "sourceAbsolutePath": "/Users/dboehme/Projects/AI Team Check/AI-Team-Check.html",
+  "sourceCommit": "TODO: source commit not available",
+  "sourceHash": "sha256:40d41350646285d8063eff710d1d653b3655e0250155cbaabc2a70aa5326c5dc",
+  "publicPath": "AI Team Check/ai-team-check/",
+  "publicUrl": "https://scout24-creative-ops.github.io/public/AI%20Team%20Check/ai-team-check/",
+  "publishedFiles": [
+    "index.html"
+  ],
+  "lastPublished": "2026-07-23T12:10:11Z",
+  "status": "published"
+}

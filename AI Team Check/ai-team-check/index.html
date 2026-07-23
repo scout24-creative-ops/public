@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Landing Page Creator – Präsentation</title>
+  <link rel="stylesheet" href="https://www.static-immobilienscout24.de/fro/make-it-better/1.0.0/makeitbetter.css">
+  <style>
+    :root {
+      --deck-bg: #FBF8F6;
+      --text-color: #333333;
+      --content-max-width: 1280px;
+      --slide-padding-x: 80px;
+      --slide-padding-y: 28px;
+      --grid-gap: 24px;
+      --grid-margin-bottom: 70px;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    body {
+      font-family: "Make it Sans", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: #FBF8F6;
+      color: #333333;
+      overflow: hidden;
+    }
+
+    .deck {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      position: relative;
+      background: #FBF8F6;
+    }
+
+    /* Grundaufbau jedes Slides */
+    .slide {
+      width: 100%;
+      height: 100%;
+      padding: 28px 80px;
+      display: none; /* standardmäßig versteckt */
+      flex-direction: column;
+      justify-content: flex-start;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .slide.active {
+      display: flex; /* nur der aktive Slide ist sichtbar */
+    }
+
+    h1.title {
+      font-size: 44px;
+      margin: 32px 0 30px; /* fixer Abstand zur Contentfläche */
+      color: #333;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    h1 {
+      font-size: 44px;
+      margin: 32px 0 70px; /* fixer Abstand zur Contentfläche */
+      color: #333;
+      font-weight: 300;
+      line-height: 1.25;
+    }
+
+    /* Contentfläche: immer gleich, links bündig mit der Headline */
+    .content-area {
+      width: 100%;
+      max-width: 1280px;
+      background: transparent; /* keine Hintergrundfarbe */
+      padding: 0;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Fester Abstand Logo → Contentfläche nur auf Slide 1 */
+    .slide:first-of-type .content-area {
+      margin-top: 70px;
+    }
+
+    /* Grid innerhalb der Contentfläche */
+    .content-grid {
+      width: 100%;
+      display: grid;
+      gap: 24px;
+      margin-bottom: 30px;
+    }
+
+    /* Spalten-Varianten */
+    .cols-1 { grid-template-columns: 1fr; }
+    .cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+    .grid-item {
+      background: #FFFFFF;
+      padding: 50px;
+      border-radius: 12px;
+      font-size: 18px;
+      line-height: 1.5;
+      transition: background-color 200ms ease-out;
+    }
+
+    /* Hover-Effekt für alle Grids auf allen Slides */
+    .grid-item:hover {
+      background-color: #60EFD7;
+    }
+
+    /* Slide 3 – custom hover colors */
+    .slide:nth-of-type(3) .content-grid .grid-item:nth-of-type(1):hover {
+      background-color: #EFF933;
+    }
+
+    .slide:nth-of-type(3) .content-grid .grid-item:nth-of-type(2):hover {
+      background-color: #24E3FF;
+    }
+
+    /* Slide 4 – custom hover colors */
+    .slide:nth-of-type(4) .content-grid .grid-item:nth-of-type(1):hover {
+      background-color: #EFF933;
+    }
+
+    .slide:nth-of-type(4) .content-grid .grid-item:nth-of-type(2):hover {
+      background-color: #24E3FF;
+    }
+
+    .slide:nth-of-type(4) .content-grid .grid-item:nth-of-type(3):hover {
+      background-color: #3DF5DC;
+    }
+
+    .slide:nth-of-type(4) .content-grid .grid-item:nth-of-type(4):hover {
+      background-color: #FF9626;
+    }
+
+    .slide:nth-of-type(2) .content-grid:nth-of-type(1) .grid-item:hover {
+      background-color: #333333;
+      color: #ffffff;
+    }
+
+    .slide:nth-of-type(2) .content-grid:nth-of-type(2) .grid-item:hover {
+      background-color: #3DF5DC;
+      color: #333333;
+    }
+
+    /* Slide 2 – icon swap on hover (card 1) */
+    .slide:nth-of-type(2) .content-grid:nth-of-type(1) .grid-item .eyebrow-icon--hover {
+      display: none;
+    }
+
+    .slide:nth-of-type(2) .content-grid:nth-of-type(1) .grid-item:hover .eyebrow-icon {
+      display: none;
+    }
+
+    .slide:nth-of-type(2) .content-grid:nth-of-type(1) .grid-item:hover .eyebrow-icon--hover {
+      display: block;
+    }
+
+    .slide:first-of-type .grid-item,
+    .slide:first-of-type .grid-item:hover {
+      background-color: #60EFD7;
+    }
+
+    /* Titelfolie */
+    .logo {
+      width: 200px;
+      height: auto;
+      display: block;
+      margin-top: 50px;
+    }
+
+    .subtitle {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    .speaker {
+      font-size: 18px;
+      margin-bottom: 40px;
+    }
+
+    /* Typografie für Inhalte */
+    .eyebrow-icon {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .lead {
+      font-weight: 700;
+      margin-bottom: 16px;
+      font-size: 32px;
+      line-height: 1.4;
+    }
+
+    .lead-light {
+      font-weight: 300;
+      margin-top: 30px;
+      margin-bottom: 16px;
+      font-size: 32px;
+      line-height: 1.4;
+    }
+
+    .body-text {
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 720px;
+    }
+
+    .feature-title {
+      font-size: 32px;
+      font-weight: 700;
+      margin: 8px 0 12px;
+      line-height: 1.2;
+    }
+
+    .feature-text {
+      font-size: 20px;
+      line-height: 1.6;
+    }
+
+    /* Badges / Tags für "Upcoming steps" */
+    .badge-row {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .slide:nth-of-type(4) .grid-item:first-child .badge-row {
+      margin-top: 8px;
+    }
+
+    .badge {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #f0f2f5;
+      display: inline-block;
+    }
+
+    .plus-icon {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    /* Navigation unten rechts – globale Position, immer gleich */
+    .nav {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 10px 18px;
+      background: #f0f2f5;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 14px;
+      user-select: none;
+      border: none;
+      font-family: inherit;
+      line-height: normal;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .pager {
+      font-size: 14px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div class="deck">
+
+    <!-- SLIDE 1 -->
+    <section class="slide active">
+      <img class="logo" src="https://media.ffycdn.net/eu/scout24/JvvnE2L3rC4TdjgTbNTq.svg" alt="ImmoScout24 Logo">
+
+      <div class="content-area">
+        <div class="content-grid cols-1">
+          <div class="grid-item">
+            <h1 class="title">AI Team-Check</h1>
+            <div class="subtitle">Ziel: Überblick für Jorin: Wo steht Marketing &amp; Communications beim Thema AI?</div>
+            <div class="speaker">Wichtig: Keine Bewertung von Teams oder Personen, sondern Gesamtbild.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2 -->
+    <section class="slide">
+      <h1>Wie stark ist AI aktuell in eurem Arbeitsalltag angekommen?</h1>
+
+      <div class="content-area">
+        <div class="content-grid cols-1">
+          <div class="grid-item">
+            <div class="feature-text">- Kaum relevant<br>- Punktuelle Nutzung<br>- Regelmäßige Nutzung<br>- Feste Routinen<br>- Teil von Workflows</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3 -->
+    <section class="slide">
+      <h1>Welche AI-Lösungen funktionieren bei euch aktuell am besten?</h1>
+
+      <div class="content-area">
+        <div class="content-grid cols-1">
+          <div class="grid-item">
+            <div class="feature-text">- ChatGPT / Projekte<br>- Eigene Agents<br>- Company Agents<br>- Recherche<br>- Texte<br>- Präsentationen<br>- Datenanalyse<br>- Monitoring</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4 -->
+    <section class="slide">
+      <h1>Gibt es Beispiele aus eurem Bereich, die wir stärker sichtbar machen sollten?</h1>
+
+      <div class="content-area">
+        <div class="content-grid cols-1">
+          <div class="grid-item">
+            <div class="feature-text">- Gibt es gute Lösungen, die andere Teams nutzen könnten?<br>- Gibt es Agents oder Workflows, die schon echten Mehrwert bringen?<br>- Gibt es Ansätze, die bisher zu wenig bekannt sind?</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5 -->
+    <section class="slide">
+      <h1>Was bremst euch aktuell bei AI?</h1>
+
+      <div class="content-area">
+        <div class="content-grid cols-1">
+          <div class="grid-item">
+            <div class="feature-text">- Zeit<br>- Wissen / Routine<br>- Technisches Setup<br>- Fehlende Ideen<br>- Fehlender Überblick über bestehende Lösungen<br>- Unklare Prioritäten<br>- Qualitäts- oder Markenfragen</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6 -->
+    <section class="slide">
+      <h1>Gibt es Ideen, für die euch aktuell noch die passende Lösung fehlt?</h1>
+
+      <div class="content-area">
+        <div class="content-grid cols-1">
+          <div class="grid-item">
+            <div class="feature-text">- Automatisierte E-Mail-Vorbereitung<br>- Angebotsvergleich<br>- Präsentationen<br>- Brand-/Quality-Check<br>- Datenzugriff<br>- Monitoring<br>- Personalisierte Kommunikation</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7 -->
+    <section class="slide">
+      <h1>Wo seht ihr den größten Hebel durch AI für euer Team?</h1>
+
+      <div class="content-area">
+        <div class="content-grid cols-1">
+          <div class="grid-item">
+            <div class="feature-text">- Zeit sparen<br>- Qualität verbessern<br>- Wiederkehrende Arbeit reduzieren<br>- Schnellere Recherche<br>- Bessere Daten-Nutzung<br>- Proaktivere Kommunikation<br>- Neue Produkte / neue Arbeitsweise</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation (Pager & Buttons) -->
+    <div class="nav">
+      <div class="pager"></div>
+      <button class="btn" type="button" onclick="prevSlide()">Zurück</button>
+      <button class="btn" type="button" onclick="nextSlide()">Weiter</button>
+    </div>
+  </div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    let currentIndex = 0;
+    const total = slides.length;
+
+    function updatePager() {
+      const pager = document.querySelector('.pager');
+      if (pager) {
+        pager.textContent = (currentIndex + 1) + ' / ' + total;
+      }
+    }
+
+    function showSlide(index) {
+      if (index < 0 || index >= total) return;
+      slides.forEach(slide => slide.classList.remove('active'));
+      slides[index].classList.add('active');
+      currentIndex = index;
+      updatePager();
+    }
+
+    function nextSlide() {
+      if (currentIndex < total - 1) {
+        showSlide(currentIndex + 1);
+      }
+    }
+
+    function prevSlide() {
+      if (currentIndex > 0) {
+        showSlide(currentIndex - 1);
+      }
+    }
+
+    // Initialer Pager-Stand
+    updatePager();
+  </script>
+</body>
+</html>
