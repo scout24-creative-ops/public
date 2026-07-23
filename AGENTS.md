@@ -24,4 +24,12 @@ When the user says “Veröffentliche diese Datei.”, resolve the active or spe
 5. Run `./scripts/check-publication-status.sh <source-file>` before completing any task that edits a registered source. If it returns `published-outdated`, state: “Diese Datei wurde seit der letzten Veröffentlichung geändert. Die öffentliche Version ist noch nicht aktuell.” Then offer: “Soll ich die aktuelle Version jetzt veröffentlichen?”
 6. Run the full check only when explicitly requested: `./scripts/check-all-publications.sh`.
 
+## Abschluss eines erfolgreichen Publish
+
+Nach jedem erfolgreichen Publish eine kompakte Zusammenfassung ausgeben: erkannter Quellpfad, Public-Zielpfad, Veröffentlichungsstatus, Repository-Link `https://github.com/scout24-creative-ops/public`, erwartete GitHub-Pages-URL und ob Commit und Push noch fehlen.
+
+Wenn Commit und Push fehlen, unmittelbar fragen: „Soll ich die geprüften Änderungen jetzt committen und auf main pushen?“ Ohne ausdrückliche Zustimmung weder committen noch pushen.
+
+Nach ausdrücklicher Zustimmung vor dem Commit Repository, Remote, aktiven Branch und die Änderungen prüfen; ausschließlich die Dateien der Veröffentlichung committen, auf `main` pushen, die GitHub-Pages-URL prüfen und die funktionierende finale URL ausgeben.
+
 The five legacy root HTML files remain unregistered and unmanaged until their provenance and public approval are documented. Do not move, register, republish, expose, stage, or commit them automatically.
