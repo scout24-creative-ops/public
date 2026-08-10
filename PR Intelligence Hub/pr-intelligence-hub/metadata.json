@@ -1,0 +1,17 @@
+{
+  "title": "Pr Intelligence Hub",
+  "slug": "pr-intelligence-hub",
+  "project": "PR Intelligence Hub",
+  "sourceRepository": "TODO: source repository not available",
+  "sourcePath": "/Users/dboehme/Projects/PR Intelligence Hub/index.html",
+  "sourceAbsolutePath": "/Users/dboehme/Projects/PR Intelligence Hub/index.html",
+  "sourceCommit": "TODO: source commit not available",
+  "sourceHash": "sha256:9d5e336efe4188923f378ab7cde66858efcfe8bf11a722ed692b7808463dfc98",
+  "publicPath": "PR Intelligence Hub/pr-intelligence-hub/",
+  "publicUrl": "https://scout24-creative-ops.github.io/public/PR%20Intelligence%20Hub/pr-intelligence-hub/",
+  "publishedFiles": [
+    "index.html"
+  ],
+  "lastPublished": "2026-08-10T12:10:42Z",
+  "status": "published"
+}
