@@ -180,3 +180,78 @@ a.lpb-chevron-link:active {
 .lpb-text--inversive {
   color: var(--color-text-inversive);
 }
+
+/*
+ * LP Colors contract — bridge implementation candidate.
+ *
+ * Product palette names remain stable. Values are resolved only through
+ * verified COSMA/CoreCSS tokens; no legacy hex values are repeated here.
+ * Status: OPEN / REAL CONTENTFUL VERIFY. This is not yet a product release.
+ */
+.lpb-color-bg--teal {
+  background-color: var(--brand-teal);
+}
+
+.lpb-color-bg--yellow {
+  background-color: var(--brand-yellow);
+}
+
+.lpb-color-bg--blue {
+  background-color: var(--brand-blue);
+}
+
+.lpb-color-bg--purple {
+  background-color: var(--brand-purple);
+}
+
+.lpb-color-bg--orange {
+  background-color: var(--brand-orange);
+}
+
+.lpb-color-bg--charcoal {
+  background-color: var(--gray-1000);
+}
+
+.lpb-color-bg--white {
+  background-color: var(--gray-100);
+}
+
+.lpb-color-bg--sand {
+  background-color: var(--gray-200);
+}
+
+.lpb-color-bg--grey-1 {
+  background-color: var(--gray-250);
+}
+
+.lpb-color-bg--grey-2 {
+  background-color: var(--gray-300);
+}
+
+.lpb-color-bg--grey-3 {
+  background-color: var(--gray-400);
+}
+
+.lpb-color-bg--grey-4 {
+  background-color: var(--gray-650);
+}
+
+.lpb-color-bg--grey-5 {
+  background-color: var(--gray-700);
+}
+
+.lpb-color-bg--grey-6 {
+  background-color: var(--gray-850);
+}
+
+.lpb-color-text--charcoal {
+  color: var(--color-text-charcoal);
+}
+
+.lpb-color-text--white {
+  color: var(--color-text-inversive);
+}
+
+.lpb-color-text--muted {
+  color: var(--color-text-weak);
+}
