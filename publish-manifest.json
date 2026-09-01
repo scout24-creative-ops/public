@@ -53,6 +53,23 @@
       "status": "published"
     },
     {
+      "title": "Lpbuilder Bridge",
+      "slug": "lpbuilder-bridge",
+      "project": "LP Builder – Contentful",
+      "sourceRepository": "TODO: source repository not available",
+      "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/lpbuilder-bridge.css",
+      "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/lpbuilder-bridge.css",
+      "sourceCommit": "TODO: source commit not available",
+      "sourceHash": "sha256:c5dcbc5464603a7786368c8bee15a186fc2b9847e0dc323034d0878e3aa81eb8",
+      "publicPath": "LP Builder – Contentful/lpbuilder-bridge/",
+      "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/lpbuilder-bridge/",
+      "publishedFiles": [
+        "lpbuilder-bridge.css"
+      ],
+      "lastPublished": "2026-09-01T13:17:24Z",
+      "status": "published"
+    },
+    {
       "title": "Pr Intelligence Hub",
       "slug": "pr-intelligence-hub",
       "project": "PR Intelligence Hub",

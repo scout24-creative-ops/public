@@ -1,0 +1,182 @@
+/*
+ * Contentful LP Builder bridge
+ *
+ * CoreCSS / COSMA remains the primary styling system. Add rules here only
+ * when static LPBuilder htmlSource needs a verified renderer-independent gap.
+ *
+ * Intended central delivery path: runtime/contentful/lpbuilder-bridge.css
+ * The Contentful LPBuilder renderer will load this stylesheet centrally.
+ */
+
+/*
+ * Rounded link buttons — v0.1
+ *
+ * Scope: medium, content-width links and four legacy-compatible variants.
+ * This is deliberately not a replacement for the native React ButtonRounded.
+ */
+a.lpb-button,
+a.lpb-button:link,
+a.lpb-button:visited {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 16px 24px;
+  border: 1px solid transparent;
+  border-radius: var(--border-radius-rounded);
+
+  color: var(--color-text-default);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  white-space: nowrap;
+
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+@media (max-width: 668px) {
+  .lpb-button--mobile-full {
+    width: 100%;
+  }
+}
+
+a.lpb-button:focus-visible {
+  outline: 2px solid var(--color-border-focused);
+  outline-offset: 2px;
+}
+
+a.lpb-button.is-disabled,
+a.lpb-button[aria-disabled='true'] {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+a.lpb-button.lpb-button--filled-default {
+  background-color: #333333;
+  border-color: #333333;
+  color: #ffffff;
+}
+
+a.lpb-button.lpb-button--filled-brand {
+  background-color: var(--color-background-brand);
+  border-color: var(--color-background-brand);
+  color: var(--color-text-default);
+}
+
+a.lpb-button.lpb-button--filled-default:hover,
+a.lpb-button.lpb-button--filled-default:active {
+  background-color: #3f3f3f;
+  border-color: #3f3f3f;
+  color: #ffffff;
+}
+
+a.lpb-button.lpb-button--filled-brand:hover,
+a.lpb-button.lpb-button--filled-brand:active {
+  filter: brightness(0.92);
+}
+
+a.lpb-button.lpb-button--outline-strong {
+  background-color: #ffffff;
+  border-color: #333333;
+  color: #333333;
+}
+
+a.lpb-button.lpb-button--outline-weak {
+  background-color: var(--color-background-default);
+  border-color: var(--color-border-default);
+  color: var(--color-text-default);
+}
+
+a.lpb-button.lpb-button--outline-strong:hover,
+a.lpb-button.lpb-button--outline-strong:active {
+  background-color: #ffffff;
+  border-color: #333333;
+  box-shadow: inset 0 0 0 1px #333333;
+  color: #333333;
+}
+
+a.lpb-button.lpb-button--outline-weak:hover,
+a.lpb-button.lpb-button--outline-weak:active {
+  background-color: var(--color-background-weak);
+  border-color: #333333;
+  box-shadow: inset 0 0 0 1px #333333;
+  color: #333333;
+}
+
+/*
+ * Chevron text link — v0.1
+ *
+ * Static, namespaced reconstruction of the existing LP Builder teaser link.
+ * The icon remains decorative and uses the established Chevron.svg asset.
+ */
+a.lpb-chevron-link,
+a.lpb-chevron-link:link,
+a.lpb-chevron-link:visited,
+a.lpb-chevron-link:active {
+  align-items: center;
+  color: #333333;
+  display: inline-flex;
+  font-size: 16px;
+  font-weight: 700;
+  gap: 6px;
+  line-height: 26px;
+  text-decoration: none;
+  text-decoration-color: currentColor;
+  text-underline-offset: 2px;
+}
+
+a.lpb-chevron-link:focus-visible {
+  outline: 2px solid var(--color-border-focused);
+  outline-offset: 2px;
+}
+
+a.lpb-chevron-link:hover,
+a.lpb-chevron-link:active {
+  color: #333333;
+  text-decoration: underline;
+}
+
+.lpb-chevron-link__icon {
+  display: inline-block;
+  flex: 0 0 auto;
+}
+
+/*
+ * Colors & Surfaces bridge prototype — not a product contract.
+ *
+ * This deliberately narrow, namespaced layer tests whether the CMS-provided
+ * COSMA tokens can be consumed reliably from static LPBuilder htmlSource.
+ */
+.lpb-surface--brand {
+  background-color: var(--color-background-brand);
+}
+
+.lpb-surface--default {
+  background-color: var(--color-background-default);
+}
+
+.lpb-surface--weak {
+  background-color: var(--color-background-weak);
+}
+
+.lpb-surface--weakest {
+  background-color: var(--color-background-weakest);
+}
+
+.lpb-text--default {
+  color: var(--color-text-default);
+}
+
+.lpb-text--weak {
+  color: var(--color-text-weak);
+}
+
+.lpb-text--inversive {
+  color: var(--color-text-inversive);
+}
