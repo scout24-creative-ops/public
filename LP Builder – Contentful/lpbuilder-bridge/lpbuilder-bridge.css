@@ -255,3 +255,17 @@ a.lpb-chevron-link:active {
 .lpb-color-text--muted {
   color: var(--color-text-weak);
 }
+
+/*
+ * Borders & Radii — v0.1
+ *
+ * Generic border utilities are supplied by CoreCSS. Static LPBuilder markup
+ * needs only these two namespaced radius roles.
+ */
+.lpb-radius--card {
+  border-radius: var(--border-radius-400);
+}
+
+.lpb-radius--media {
+  border-radius: var(--border-radius-600);
+}
