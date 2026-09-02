@@ -307,7 +307,7 @@ a.lpb-chevron-link:active {
 .lpb-stack--fill {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  align-self: stretch;
 }
 
 .lpb-push-bottom {
@@ -318,6 +318,10 @@ a.lpb-chevron-link:active {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.lpb-content--center-y > a.lpb-button {
+  align-self: flex-start;
 }
 
 @media (max-width: 668px) {
