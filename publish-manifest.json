@@ -53,6 +53,29 @@
       "status": "published"
     },
     {
+      "title": "Service Tile Assets",
+      "slug": "assets/servicetiles",
+      "project": "LP Builder – Contentful",
+      "sourceRepository": "TODO: source repository not available",
+      "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/servicetiles/",
+      "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/servicetiles/",
+      "sourceCommit": "TODO: source repository not available",
+      "sourceHash": "sha256:672eba66b308889fa75baf6135b70ce0081bcebaff294b7444672ef3f0db2628",
+      "publicPath": "LP Builder – Contentful/assets/servicetiles/",
+      "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/assets/servicetiles/",
+      "publishedFiles": [
+        "badge_plus.svg",
+        "finanzieren.svg",
+        "mieter-kaeufer-plus.svg",
+        "mobile-service-icon.svg",
+        "schufa-bonitaetscheck.svg",
+        "suche-speichern.svg",
+        "umziehen.svg"
+      ],
+      "lastPublished": "2026-09-02T19:06:01Z",
+      "status": "published"
+    },
+    {
       "title": "Callout Assets",
       "slug": "assets/callouts",
       "project": "LP Builder – Contentful",
@@ -79,13 +102,13 @@
       "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/lpbuilder-bridge.css",
       "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/lpbuilder-bridge.css",
       "sourceCommit": "TODO: source commit not available",
-      "sourceHash": "sha256:49e1057dbc51128a36fd79503b1bd64ed94c66bf753ba31d029984a810f7df79",
+      "sourceHash": "sha256:9b8a0bf73d6762ca99210d531ce6866b0edd7923a47d662fa3af4e4e69314b67",
       "publicPath": "LP Builder – Contentful/lpbuilder-bridge/",
       "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/lpbuilder-bridge/",
       "publishedFiles": [
         "lpbuilder-bridge.css"
       ],
-      "lastPublished": "2026-09-02T18:18:33Z",
+      "lastPublished": "2026-09-02T19:05:46Z",
       "status": "published"
     },
     {

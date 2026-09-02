@@ -365,6 +365,70 @@ a.lpb-chevron-link:active {
   width: 48px;
 }
 
+/*
+ * Service tiles — v0.1.
+ *
+ * Namespaced static reconstruction of the legacy six-tile service navigation.
+ * CoreCSS supplies the grid, border, surface and typography primitives; these
+ * rules supply only the module-owned card, asset and Palm icon-switch behavior.
+ */
+.lpb-service-tile {
+  color: inherit;
+  display: block;
+  height: 100%;
+  text-decoration: none;
+}
+
+.lpb-service-tile:hover,
+.lpb-service-tile:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+.lpb-service-tile__card {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 16px;
+  position: relative;
+}
+
+.lpb-service-tile:hover .lpb-service-tile__card,
+.lpb-service-tile:active .lpb-service-tile__card {
+  background-color: var(--color-background-weak);
+}
+
+.lpb-service-tile__header {
+  margin-bottom: 16px;
+}
+
+.lpb-service-tile__icon {
+  display: block;
+}
+
+.lpb-service-tile__icon--desktop {
+  height: 48px;
+  width: 48px;
+}
+
+.lpb-service-tile__icon--mobile {
+  display: none;
+  height: 24px;
+  width: 24px;
+}
+
+.lpb-service-tile__badge {
+  display: block;
+  position: absolute;
+  right: 16px;
+  top: 16px;
+}
+
+.lpb-service-tile__badge img {
+  display: block;
+  height: 48px;
+  width: 120px;
+}
+
 @media (max-width: 668px) {
   .lpb-callout {
     padding: 24px;
@@ -373,6 +437,38 @@ a.lpb-chevron-link:active {
   .lpb-callout__layout {
     flex-direction: column;
     gap: 16px;
+  }
+
+  .lpb-service-tile__badge {
+    right: 8px;
+    top: 8px;
+  }
+
+  .lpb-service-tile__badge img {
+    height: 24px;
+    width: 60px;
+  }
+
+  .lpb-service-tile__card {
+    padding: 8px;
+  }
+
+  .lpb-service-tile__header {
+    margin-bottom: 8px;
+  }
+
+  .lpb-service-tile__card h3 {
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 4px;
+  }
+
+  .lpb-service-tile__icon--desktop {
+    display: none;
+  }
+
+  .lpb-service-tile__icon--mobile {
+    display: block;
   }
 }
 

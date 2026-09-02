@@ -1,0 +1,23 @@
+{
+  "title": "Service Tile Assets",
+  "slug": "assets/servicetiles",
+  "project": "LP Builder – Contentful",
+  "sourceRepository": "TODO: source repository not available",
+  "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/servicetiles/",
+  "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/servicetiles/",
+  "sourceCommit": "TODO: source repository not available",
+  "sourceHash": "sha256:672eba66b308889fa75baf6135b70ce0081bcebaff294b7444672ef3f0db2628",
+  "publicPath": "LP Builder – Contentful/assets/servicetiles/",
+  "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/assets/servicetiles/",
+  "publishedFiles": [
+    "badge_plus.svg",
+    "finanzieren.svg",
+    "mieter-kaeufer-plus.svg",
+    "mobile-service-icon.svg",
+    "schufa-bonitaetscheck.svg",
+    "suche-speichern.svg",
+    "umziehen.svg"
+  ],
+  "lastPublished": "2026-09-02T19:06:01Z",
+  "status": "published"
+}
