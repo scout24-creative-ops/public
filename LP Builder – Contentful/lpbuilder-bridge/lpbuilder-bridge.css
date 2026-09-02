@@ -376,10 +376,12 @@ a.lpb-chevron-link:active {
   }
 
   .lpb-steps__connector {
-    bottom: -16px;
+    bottom: -8px;
     display: block;
+    flex: none;
     height: auto;
-    left: 20px;
+    left: 19.5px;
+    min-width: 0;
     position: absolute;
     top: 40px;
     width: 1px;
