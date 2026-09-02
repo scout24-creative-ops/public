@@ -148,6 +148,20 @@ a.lpb-chevron-link:active {
 }
 
 /*
+ * Static COSMA/S24 font-icon size adapters — v0.1.
+ * Pair only with the matching optimised `_24` or `_48` glyph class.
+ */
+.lpb-icon--24 {
+  font-size: 24px;
+  line-height: 24px;
+}
+
+.lpb-icon--48 {
+  font-size: 48px;
+  line-height: 48px;
+}
+
+/*
  * Colors & Surfaces bridge prototype — not a product contract.
  *
  * This deliberately narrow, namespaced layer tests whether the CMS-provided
