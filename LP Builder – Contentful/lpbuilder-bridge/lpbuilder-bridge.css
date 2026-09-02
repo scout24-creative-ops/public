@@ -387,7 +387,7 @@ a.lpb-chevron-link:active {
     width: 1px;
   }
 
-  .lpb-steps__item {
+  .lpb-steps.lpb-steps .lpb-steps__item.grid-item {
     column-gap: 16px;
     display: grid;
     grid-template-columns: 40px minmax(0, 1fr);
