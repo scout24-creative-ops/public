@@ -53,6 +53,25 @@
       "status": "published"
     },
     {
+      "title": "Callout Assets",
+      "slug": "assets/callouts",
+      "project": "LP Builder – Contentful",
+      "sourceRepository": "TODO: source repository not available",
+      "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/callouts/",
+      "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/callouts/",
+      "sourceCommit": "TODO: source repository not available",
+      "sourceHash": "sha256:073699582f17a500af5a4af83be917a750d583043c5f428f5d5551c5b9e9db7f",
+      "publicPath": "LP Builder – Contentful/assets/callouts/",
+      "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/assets/callouts/",
+      "publishedFiles": [
+        "avatar_man.png",
+        "news.png",
+        "star.png"
+      ],
+      "lastPublished": "2026-09-02T18:33:04Z",
+      "status": "published"
+    },
+    {
       "title": "Lpbuilder Bridge",
       "slug": "lpbuilder-bridge",
       "project": "LP Builder – Contentful",
