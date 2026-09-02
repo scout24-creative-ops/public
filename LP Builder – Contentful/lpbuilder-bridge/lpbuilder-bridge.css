@@ -376,22 +376,27 @@ a.lpb-chevron-link:active {
   }
 
   .lpb-steps__connector {
-    bottom: -8px;
+    align-self: stretch;
+    bottom: auto;
     display: block;
     flex: none;
+    grid-column: 1;
+    grid-row: 1 / span 2;
     height: auto;
-    left: 19.5px;
+    justify-self: center;
+    left: auto;
+    margin-bottom: -8px;
+    margin-top: 40px;
     min-width: 0;
-    position: absolute;
-    top: 40px;
+    position: static;
+    top: auto;
     width: 1px;
   }
 
-  .lpb-steps.lpb-steps .lpb-steps__item.grid-item {
+  .lpb-steps__item {
     column-gap: 16px;
     display: grid;
     grid-template-columns: 40px minmax(0, 1fr);
-    padding-left: 0;
     position: relative;
   }
 
