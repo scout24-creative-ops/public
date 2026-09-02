@@ -376,6 +376,36 @@ a.lpb-chevron-link:active {
   }
 
   .lpb-steps__connector {
-    display: none;
+    bottom: -16px;
+    display: block;
+    height: auto;
+    left: 20px;
+    position: absolute;
+    top: 40px;
+    width: 1px;
+  }
+
+  .lpb-steps__item {
+    padding-left: 56px;
+    position: relative;
+  }
+
+  .lpb-steps__header {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .lpb-steps__number {
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
+
+  .lpb-steps__title {
+    margin: 0 0 8px;
+  }
+
+  .lpb-steps__content {
+    margin-top: 0;
   }
 }
