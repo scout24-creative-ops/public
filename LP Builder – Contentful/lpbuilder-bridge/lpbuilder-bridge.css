@@ -462,18 +462,131 @@ a.lpb-chevron-link:active {
   flex: 1 1 auto;
   overflow: visible;
   position: relative;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.lpb-choice-card:hover,
+.lpb-choice-card:focus-within {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+  transform: translateY(-2px);
+}
+
+.lpb-choice-card:hover > a.lpb-button,
+.lpb-choice-card:focus-within > a.lpb-button {
+  background-color: #1a1a1a;
+  color: #ffffff;
 }
 
 .lpb-choice-card__label {
-  background-color: var(--brand-teal);
-  border-radius: var(--border-radius-rounded);
+  background-color: #3df5dc;
+  border-radius: 999px;
+  color: #000;
+  font-size: 14px;
+  font-weight: 600;
   left: 24px;
+  line-height: 1.4;
   padding: 4px 12px;
   position: absolute;
   top: 0;
   transform: translateY(-50%);
   white-space: nowrap;
   z-index: 1;
+}
+
+/* Native details/summary choice-card expansion — legacy parity. */
+.lpb-choice-card-expand {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+  position: relative;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.lpb-choice-card-expand:hover,
+.lpb-choice-card-expand:focus-within {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+  transform: translateY(-2px);
+}
+
+.lpb-choice-card-expand--teal {
+  border: 2px solid #00d7b9;
+}
+
+.lpb-choice-card-expand--purple {
+  border: 2px solid #c9a7eb;
+}
+
+.lpb-choice-card-expand__label--teal {
+  background-color: #3df5dc;
+}
+
+.lpb-choice-card-expand__label--purple {
+  background-color: #e4ccff;
+}
+
+.lpb-choice-card-expand__details {
+  margin: 0 0 20px;
+}
+
+.lpb-choice-card-expand__summary {
+  align-items: center;
+  color: var(--color-text-default);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 16px;
+  font-weight: 700;
+  gap: 8px;
+  line-height: 1.4;
+  list-style: none;
+}
+
+.lpb-choice-card-expand__summary::-webkit-details-marker,
+.lpb-choice-card-expand__summary::marker {
+  display: none;
+}
+
+.lpb-choice-card-expand__summary:focus-visible {
+  outline: 3px solid rgba(0, 215, 185, .35);
+  outline-offset: 4px;
+}
+
+.lpb-choice-card-expand__chevron {
+  border-bottom: 2px solid var(--color-text-default);
+  border-right: 2px solid var(--color-text-default);
+  display: inline-block;
+  height: 9px;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform .2s ease;
+  width: 9px;
+}
+
+.lpb-choice-card-expand__details[open] .lpb-choice-card-expand__chevron {
+  transform: rotate(-135deg) translateY(-2px);
+}
+
+.lpb-choice-card-expand__features {
+  margin-top: 20px;
+}
+
+.lpb-choice-card-expand:hover > a.lpb-button,
+.lpb-choice-card-expand:focus-within > a.lpb-button {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.lpb-choice-card-expand--teal > a.lpb-button {
+  background-color: #3df5dc;
+  border-color: #3df5dc;
+  color: #333333;
+}
+
+.lpb-choice-card-expand--teal:hover > a.lpb-button,
+.lpb-choice-card-expand--teal:focus-within > a.lpb-button {
+  background-color: #55e6cb;
+  border-color: #55e6cb;
+  color: #333333;
 }
 
 @media (max-width: 668px) {
