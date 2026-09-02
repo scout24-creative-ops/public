@@ -296,3 +296,32 @@ a.lpb-chevron-link:active {
   max-width: 100%;
   height: auto;
 }
+
+/*
+ * Generic static layout helpers — teaser runtime gaps.
+ *
+ * These namespaced primitives are intentionally content-agnostic: a card can
+ * fill an equal-height grid item, its final action can be pushed to the
+ * bottom, and split content can centre against adjacent media on lap/desk.
+ */
+.lpb-stack--fill {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.lpb-push-bottom {
+  margin-top: auto;
+}
+
+.lpb-content--center-y {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (max-width: 668px) {
+  .lpb-content--center-y {
+    justify-content: flex-start;
+  }
+}
