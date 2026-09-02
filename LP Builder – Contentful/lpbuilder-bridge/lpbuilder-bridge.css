@@ -324,8 +324,58 @@ a.lpb-chevron-link:active {
   align-self: flex-start;
 }
 
+/*
+ * Steps module mechanism — v0.1.
+ *
+ * CoreCSS supplies the grid, typography and spacing. These namespaced rules
+ * reproduce the module-owned number/header/connector mechanics that do not
+ * exist as generic primitives.
+ */
+.lpb-steps__header {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  min-width: 0;
+}
+
+.lpb-steps__number {
+  align-items: center;
+  background-color: var(--color-background-default);
+  border: 1px solid var(--color-border-default);
+  border-radius: 50%;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: 0 0 32px;
+  height: 32px;
+  justify-content: center;
+  width: 32px;
+}
+
+.lpb-steps__title {
+  margin: 0;
+}
+
+.lpb-steps__connector {
+  background-color: var(--color-border-default);
+  flex: 1 1 16px;
+  height: 1px;
+  min-width: 16px;
+}
+
+.lpb-steps__item:last-child .lpb-steps__connector {
+  display: none;
+}
+
+.lpb-steps__content {
+  margin-top: 16px;
+}
+
 @media (max-width: 668px) {
   .lpb-content--center-y {
     justify-content: flex-start;
+  }
+
+  .lpb-steps__connector {
+    display: none;
   }
 }
