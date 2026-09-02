@@ -283,3 +283,16 @@ a.lpb-chevron-link:active {
 .lpb-radius--media {
   border-radius: var(--border-radius-600);
 }
+
+/*
+ * Responsive content images — v0.1 bridge candidate.
+ *
+ * Raw htmlSource images need containment but must retain their intrinsic width
+ * when they are smaller than the available container. `display: block` also
+ * removes the inline-image baseline gap for standalone content images.
+ */
+.lpb-image--responsive {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
