@@ -325,6 +325,58 @@ a.lpb-chevron-link:active {
 }
 
 /*
+ * Callout module mechanics — v0.1.
+ *
+ * CoreCSS provides surface, radius and typography. These rules preserve the
+ * legacy callout composition: 40/48px padding, a 56px illustration role and
+ * a 48px expert portrait role without inventing replacement assets.
+ */
+.lpb-callout {
+  box-sizing: border-box;
+  padding: 40px 48px;
+}
+
+.lpb-callout__layout {
+  align-items: flex-start;
+  display: flex;
+  gap: 24px;
+}
+
+.lpb-callout__content {
+  min-width: 0;
+}
+
+.lpb-callout__media {
+  flex: 0 0 56px;
+  height: 56px;
+  width: 56px;
+}
+
+.lpb-callout__expert {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.lpb-callout__avatar {
+  flex: 0 0 48px;
+  height: 48px;
+  width: 48px;
+}
+
+@media (max-width: 668px) {
+  .lpb-callout {
+    padding: 24px;
+  }
+
+  .lpb-callout__layout {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+/*
  * Steps module mechanism — v0.1.
  *
  * CoreCSS supplies the grid, typography and spacing. These namespaced rules
