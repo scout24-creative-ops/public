@@ -388,26 +388,35 @@ a.lpb-chevron-link:active {
   }
 
   .lpb-steps__item {
-    padding-left: 56px;
+    column-gap: 16px;
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    padding-left: 0;
     position: relative;
   }
 
   .lpb-steps__header {
-    display: block;
-    margin-bottom: 8px;
+    display: contents;
+    margin: 0;
   }
 
   .lpb-steps__number {
-    left: 0;
-    position: absolute;
-    top: 0;
+    grid-column: 1;
+    grid-row: 1;
+    position: static;
   }
 
   .lpb-steps__title {
+    align-self: center;
+    grid-column: 2;
+    grid-row: 1;
     margin: 0 0 8px;
   }
 
   .lpb-steps__content {
+    grid-column: 2;
+    grid-row: 2;
     margin-top: 0;
+    min-width: 0;
   }
 }
