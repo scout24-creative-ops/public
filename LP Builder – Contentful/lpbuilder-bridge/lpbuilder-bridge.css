@@ -682,7 +682,198 @@ a.lpb-chevron-link:active {
   margin-top: 16px;
 }
 
+/*
+ * B2B package list and action tiles — legacy-verified module mechanics.
+ * CoreCSS continues to provide typography, spacing and generic surfaces.
+ */
+.lpb-b2b-package-list__podium {
+  align-items: end;
+  border-bottom: 1px solid #d1cecd;
+  border-top: 1px solid #d1cecd;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.lpb-b2b-package-list__package {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 100%;
+}
+
+.lpb-b2b-package-list__package--silver {
+  background-color: #d4d1d1;
+  min-height: 368px;
+}
+
+.lpb-b2b-package-list__package--gold {
+  background-color: #f1cc4e;
+  min-height: 434px;
+}
+
+.lpb-b2b-package-list__package--bronze {
+  background-color: #de925b;
+  min-height: 300px;
+}
+
+.lpb-b2b-package-list__label {
+  align-self: flex-start;
+  background-color: #333333;
+  border-radius: var(--border-radius-rounded);
+  color: var(--color-text-inversive);
+  line-height: 18px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  padding: 2px 6px;
+}
+
+.lpb-b2b-package-list__title {
+  border-bottom: 1px solid #333333;
+}
+
+.lpb-b2b-package-list__footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.lpb-action-tiles {
+  overflow: visible;
+  padding: 60px 24px;
+  position: relative;
+}
+
+.lpb-action-tiles__badge {
+  background: transparent;
+  color: #3df5dc;
+  pointer-events: none;
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  width: 240px;
+  z-index: 10;
+}
+
+.lpb-action-tiles__badge-shape {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.lpb-action-tiles__badge-text {
+  align-items: center;
+  box-sizing: border-box;
+  color: #333333;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  height: 55px;
+  justify-content: center;
+  left: 50%;
+  overflow: hidden;
+  position: absolute;
+  text-align: center;
+  top: 42%;
+  transform: translate(-50%, -50%);
+  width: 190px;
+}
+
+.lpb-action-tiles__badge-line-1 {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.lpb-action-tiles__badge-line-2 {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.lpb-action-tiles__body {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.lpb-action-tiles__tile {
+  background-color: var(--color-background-default);
+  border-radius: 12px;
+  box-sizing: border-box;
+  color: var(--color-text-default);
+  display: block;
+  padding: 28px 18px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color .2s ease;
+  width: 100%;
+}
+
+.lpb-action-tiles__tile:hover,
+.lpb-action-tiles__tile:focus-visible {
+  background-color: #3df5dc;
+}
+
+.lpb-action-tiles__tile:focus-visible {
+  outline: 2px solid var(--color-border-focused);
+  outline-offset: 2px;
+}
+
+.lpb-action-tiles__tile img {
+  display: block;
+  height: 48px;
+  margin: 0 auto 12px;
+  max-height: 48px;
+  max-width: 48px;
+  width: 48px;
+}
+
+.lpb-action-tiles__benefits {
+  display: flex;
+  gap: 56px;
+  justify-content: center;
+  margin-top: 40px;
+}
+
 @media (max-width: 668px) {
+  .lpb-b2b-package-list__podium {
+    align-items: stretch;
+    grid-template-columns: 1fr;
+  }
+
+  .lpb-b2b-package-list__package--silver,
+  .lpb-b2b-package-list__package--gold,
+  .lpb-b2b-package-list__package--bronze {
+    min-height: 0;
+  }
+
+  .lpb-b2b-package-list__footer {
+    justify-content: stretch;
+  }
+
+  .lpb-action-tiles {
+    padding: 64px 16px;
+  }
+
+  .lpb-action-tiles__badge {
+    left: 50%;
+    right: auto;
+    top: -20px;
+    transform: translateX(-50%);
+    width: 200px;
+  }
+
+  .lpb-action-tiles__body {
+    margin-top: 20px;
+  }
+
+  .lpb-action-tiles__benefits {
+    align-items: center;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 24px;
+  }
+
   .lpb-content--center-y {
     justify-content: flex-start;
   }

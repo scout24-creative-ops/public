@@ -53,6 +53,26 @@
       "status": "published"
     },
     {
+      "title": "Action Tile Assets",
+      "slug": "assets/action-tiles",
+      "project": "LP Builder – Contentful",
+      "sourceRepository": "TODO: source repository not available",
+      "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/action-tiles/",
+      "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/action-tiles/",
+      "sourceCommit": "TODO: source commit not available",
+      "sourceHash": "sha256:2df1f87cb46f82bae58b6d33164a28bd502830ac09e9c09f82c52022b9c2b60c",
+      "publicPath": "LP Builder – Contentful/assets/action-tiles/",
+      "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/assets/action-tiles/",
+      "publishedFiles": [
+        "gewerbe.svg",
+        "grundstueck.svg",
+        "haus.svg",
+        "wohnung.svg"
+      ],
+      "lastPublished": "2026-09-03T07:05:26Z",
+      "status": "published"
+    },
+    {
       "title": "Callout Assets",
       "slug": "assets/callouts",
       "project": "LP Builder – Contentful",
@@ -102,13 +122,13 @@
       "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/lpbuilder-bridge.css",
       "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/lpbuilder-bridge.css",
       "sourceCommit": "TODO: source commit not available",
-      "sourceHash": "sha256:6f8432193bc19944ee2a837b6e400f0a94088563aac5a1960524b8dd958dd82b",
+      "sourceHash": "sha256:a6d37329cfbd228ac1f257dae5087972e93dfdf37516f204eabf6de3134a89fa",
       "publicPath": "LP Builder – Contentful/lpbuilder-bridge/",
       "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/lpbuilder-bridge/",
       "publishedFiles": [
         "lpbuilder-bridge.css"
       ],
-      "lastPublished": "2026-09-02T20:15:55Z",
+      "lastPublished": "2026-09-03T07:05:54Z",
       "status": "published"
     },
     {

@@ -1,0 +1,20 @@
+{
+  "title": "Action Tile Assets",
+  "slug": "assets/action-tiles",
+  "project": "LP Builder – Contentful",
+  "sourceRepository": "TODO: source repository not available",
+  "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/action-tiles/",
+  "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/action-tiles/",
+  "sourceCommit": "TODO: source commit not available",
+  "sourceHash": "sha256:2df1f87cb46f82bae58b6d33164a28bd502830ac09e9c09f82c52022b9c2b60c",
+  "publicPath": "LP Builder – Contentful/assets/action-tiles/",
+  "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/assets/action-tiles/",
+  "publishedFiles": [
+    "gewerbe.svg",
+    "grundstueck.svg",
+    "haus.svg",
+    "wohnung.svg"
+  ],
+  "lastPublished": "2026-09-03T07:05:26Z",
+  "status": "published"
+}
