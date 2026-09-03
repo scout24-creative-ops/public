@@ -979,6 +979,11 @@ a.lpb-chevron-link:active {
 }
 
 @media (max-width: 768px) {
+  .lpb-hero--bleed .lpb-hero__content {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
   .lpb-hero--bleed .grid .grid-item.one-half {
     width: 100%;
   }
