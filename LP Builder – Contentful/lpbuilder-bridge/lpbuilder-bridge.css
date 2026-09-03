@@ -86,6 +86,20 @@ a.lpb-button:visited {
   }
 }
 
+/* Counter Animated — legacy spacing mechanics, scoped to LP Builder markup. */
+.lpb-counter-animated .counter-animated__item > [class^="font-heading-"],
+.lpb-counter-animated .counter-animated__item > [class*=" font-heading-"] {
+  margin-bottom: 0;
+}
+
+.lpb-counter-animated .counter-animated__label {
+  margin-bottom: var(--space-m, 16px);
+}
+
+.lpb-counter-animated .counter-animated__item p:last-child {
+  margin-bottom: 0;
+}
+
 /* Accordion — legacy visual mechanics, scoped to LP Builder markup. */
 .lpb-accordion .accordion__headline {
   margin-bottom: var(--space-m, 24px);
