@@ -50,6 +50,10 @@ a.lpb-button:visited {
   z-index: 100;
 }
 
+.lpb-sticky-footer.lpb-sticky-footer--preview {
+  transform: translateY(0);
+}
+
 .lpb-sticky-footer__inner {
   align-items: center;
   display: flex;
