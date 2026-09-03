@@ -100,6 +100,62 @@ a.lpb-button:visited {
   margin-bottom: 0;
 }
 
+/* eKomi Reviews — legacy visual mechanics, scoped to LP Builder markup. */
+.lpb-ekomi-reviews .ekomi-reviews__badge-wrapper,
+.lpb-ekomi-reviews .ekomi-reviews__headline,
+.lpb-ekomi-reviews .ekomi-reviews__intro {
+  text-align: center;
+}
+
+.lpb-ekomi-reviews .ekomi-reviews__badge {
+  display: block;
+  height: auto;
+  margin: 0 auto;
+  width: 112px;
+}
+
+.lpb-ekomi-reviews .ekomi-reviews__list {
+  align-items: flex-start;
+}
+
+.lpb-ekomi-reviews .ekomi-reviews__meta,
+.lpb-ekomi-reviews .ekomi-reviews__rating,
+.lpb-ekomi-reviews .ekomi-reviews__stars {
+  align-items: center;
+  display: flex;
+}
+
+.lpb-ekomi-reviews .ekomi-reviews__meta,
+.lpb-ekomi-reviews .ekomi-reviews__rating {
+  gap: var(--space-s, 8px);
+}
+
+.lpb-ekomi-reviews .ekomi-reviews__stars {
+  gap: var(--space-xs, 4px);
+}
+
+.lpb-ekomi-reviews .ekomi-reviews__avatar {
+  align-items: center;
+  border-radius: 9999px;
+  display: flex;
+  flex: 0 0 auto;
+  height: 32px;
+  justify-content: center;
+  width: 32px;
+}
+
+.lpb-ekomi-reviews .ekomi-reviews__avatar-icon {
+  display: block;
+  height: 24px;
+  width: 24px;
+}
+
+.lpb-ekomi-reviews .ekomi-reviews__star {
+  display: block;
+  height: 22px;
+  width: 22px;
+}
+
 /* Accordion — legacy visual mechanics, scoped to LP Builder markup. */
 .lpb-accordion .accordion__headline {
   margin-bottom: var(--space-m, 24px);
