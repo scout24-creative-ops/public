@@ -134,7 +134,6 @@ a.lpb-button:visited {
 }
 
 .lpb-accordion .accordion__panel {
-  max-height: none;
   overflow: hidden;
 }
 
