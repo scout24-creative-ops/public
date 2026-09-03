@@ -86,6 +86,74 @@ a.lpb-button:visited {
   }
 }
 
+/* Accordion — legacy visual mechanics, scoped to LP Builder markup. */
+.lpb-accordion .accordion__headline {
+  margin-bottom: var(--space-m, 24px);
+}
+
+.lpb-accordion .accordion__item {
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.lpb-accordion .accordion__trigger {
+  align-items: center;
+  appearance: none;
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-m, 20px) 0;
+  text-align: left;
+  width: 100%;
+}
+
+.lpb-accordion .accordion__question {
+  font-size: inherit;
+}
+
+.lpb-accordion .accordion__chevron {
+  flex: 0 0 auto;
+  height: 16px;
+  position: relative;
+  width: 16px;
+}
+
+.lpb-accordion .accordion__chevron::before {
+  border-bottom: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  content: "";
+  height: 8px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  transition: transform 0.2s ease;
+  width: 8px;
+}
+
+.lpb-accordion .accordion__panel {
+  overflow: hidden;
+}
+
+.lpb-accordion .accordion__panel p {
+  padding-bottom: var(--space-m, 20px);
+}
+
+.lpb-accordion .accordion__item.is-open .accordion__chevron::before {
+  transform: translate(-50%, -50%) rotate(-135deg);
+}
+
+.lpb-accordion .accordion__item.is-open .accordion__trigger {
+  padding-bottom: var(--space-s, 12px);
+}
+
+.lpb-accordion .accordion__trigger:focus-visible {
+  outline: 2px solid var(--color-border-focused);
+  outline-offset: 2px;
+}
+
 @media (max-width: 668px) {
   .lpb-button--mobile-full {
     width: 100%;

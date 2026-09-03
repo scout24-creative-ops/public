@@ -115,20 +115,37 @@
       "status": "published"
     },
     {
+      "title": "Lpbuilder Accordion",
+      "slug": "lpbuilder-accordion",
+      "project": "LP Builder – Contentful",
+      "sourceRepository": "TODO: source repository not available",
+      "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/bridge/lpbuilder-accordion.js",
+      "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/bridge/lpbuilder-accordion.js",
+      "sourceCommit": "TODO: source commit not available",
+      "sourceHash": "sha256:14a7c7dc8d1f32c65677a00f3d3f8c72d458eca381171dc1f9fe245f15fd5040",
+      "publicPath": "LP Builder – Contentful/lpbuilder-accordion/",
+      "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/lpbuilder-accordion/",
+      "publishedFiles": [
+        "lpbuilder-accordion.js"
+      ],
+      "lastPublished": "2026-09-03T09:30:55Z",
+      "status": "published"
+    },
+    {
       "title": "Lpbuilder Bridge",
       "slug": "lpbuilder-bridge",
       "project": "LP Builder – Contentful",
       "sourceRepository": "TODO: source repository not available",
-      "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/lpbuilder-bridge.css",
-      "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/lpbuilder-bridge.css",
+      "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/bridge/lpbuilder-bridge.css",
+      "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/bridge/lpbuilder-bridge.css",
       "sourceCommit": "TODO: source commit not available",
-      "sourceHash": "sha256:7ec0e5fbc2b932f78702abb822d930061e9ea132d67024156c9c2bfa00ad9e97",
+      "sourceHash": "sha256:f6953c086459f60e800b172e723af505974f2dc648429e67d183979da950962a",
       "publicPath": "LP Builder – Contentful/lpbuilder-bridge/",
       "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/lpbuilder-bridge/",
       "publishedFiles": [
         "lpbuilder-bridge.css"
       ],
-      "lastPublished": "2026-09-03T08:33:07Z",
+      "lastPublished": "2026-09-03T09:28:38Z",
       "status": "published"
     },
     {

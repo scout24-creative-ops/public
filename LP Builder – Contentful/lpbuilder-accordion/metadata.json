@@ -1,0 +1,17 @@
+{
+  "title": "Lpbuilder Accordion",
+  "slug": "lpbuilder-accordion",
+  "project": "LP Builder – Contentful",
+  "sourceRepository": "TODO: source repository not available",
+  "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/bridge/lpbuilder-accordion.js",
+  "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/bridge/lpbuilder-accordion.js",
+  "sourceCommit": "TODO: source commit not available",
+  "sourceHash": "sha256:14a7c7dc8d1f32c65677a00f3d3f8c72d458eca381171dc1f9fe245f15fd5040",
+  "publicPath": "LP Builder – Contentful/lpbuilder-accordion/",
+  "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/lpbuilder-accordion/",
+  "publishedFiles": [
+    "lpbuilder-accordion.js"
+  ],
+  "lastPublished": "2026-09-03T09:30:55Z",
+  "status": "published"
+}
