@@ -156,6 +156,22 @@ a.lpb-button:visited {
   width: 22px;
 }
 
+/* Card Carousel — static fallback visual mechanics, scoped to LP Builder markup. */
+.lpb-card-carousel__card {
+  overflow: hidden;
+}
+
+.lpb-card-carousel__media {
+  position: relative;
+}
+
+.lpb-card-carousel__badge {
+  left: 16px;
+  position: absolute;
+  top: 16px;
+  z-index: 1;
+}
+
 /* Accordion — legacy visual mechanics, scoped to LP Builder markup. */
 .lpb-accordion .accordion__headline {
   margin-bottom: var(--space-m, 24px);
