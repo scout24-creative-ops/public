@@ -162,7 +162,16 @@ a.lpb-button:visited {
 }
 
 .lpb-card-carousel__media {
+  aspect-ratio: 4 / 3;
+  max-width: 100%;
+  overflow: hidden;
   position: relative;
+}
+
+.lpb-card-carousel__media > .lpb-image--responsive {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
 }
 
 .lpb-card-carousel__badge {
@@ -176,6 +185,19 @@ a.lpb-button:visited {
 .lpb-card-carousel__controls,
 .lpb-card-carousel__dots {
   display: flex;
+}
+
+.lpb-card-carousel__viewport {
+  overflow: hidden;
+}
+
+.lpb-card-carousel__viewport > .grid {
+  flex-wrap: nowrap;
+}
+
+.lpb-card-carousel__viewport .grid-item {
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
 }
 
 .lpb-card-carousel__header {
@@ -220,6 +242,13 @@ a.lpb-button:visited {
   width: 24px;
 }
 
+@media (max-width: 1023px) {
+  .lpb-card-carousel__viewport .grid-item {
+    flex-basis: 50%;
+    max-width: 50%;
+  }
+}
+
 @media (max-width: 668px) {
   .lpb-card-carousel__header {
     display: block;
@@ -228,6 +257,17 @@ a.lpb-button:visited {
   .lpb-card-carousel__controls,
   .lpb-card-carousel__dots {
     display: none;
+  }
+
+  .lpb-card-carousel__viewport {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .lpb-card-carousel__viewport .grid-item {
+    flex-basis: 100%;
+    max-width: 100%;
+    scroll-snap-align: start;
   }
 }
 
