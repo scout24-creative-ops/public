@@ -888,6 +888,17 @@ a.lpb-chevron-link:active {
   border-radius: 24px;
 }
 
+/* Use the legacy split hero's desktop content axis without constraining the
+ * viewport-wide bleed surface itself. */
+@media (min-width: 901px) {
+  .lpb-hero--bleed:not(.lpb-hero--centered) .lpb-hero__content {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1157px;
+    padding: 0 16px;
+  }
+}
+
 .lpb-hero--centered .lpb-hero__content {
   display: grid;
   justify-items: center;
