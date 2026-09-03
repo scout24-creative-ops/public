@@ -172,6 +172,65 @@ a.lpb-button:visited {
   z-index: 1;
 }
 
+.lpb-card-carousel__header,
+.lpb-card-carousel__controls,
+.lpb-card-carousel__dots {
+  display: flex;
+}
+
+.lpb-card-carousel__header {
+  align-items: flex-end;
+  gap: var(--space-l, 24px);
+  justify-content: space-between;
+}
+
+.lpb-card-carousel__controls {
+  flex: 0 0 auto;
+  gap: var(--space-s, 12px);
+}
+
+.lpb-card-carousel__control {
+  align-items: center;
+  border: 1px solid var(--color-border-default);
+  border-radius: 50%;
+  display: inline-flex;
+  height: 44px;
+  justify-content: center;
+  width: 44px;
+}
+
+.lpb-card-carousel__control--disabled {
+  opacity: 0.4;
+}
+
+.lpb-card-carousel__dots {
+  gap: var(--space-s, 8px);
+  justify-content: center;
+}
+
+.lpb-card-carousel__dot {
+  background: var(--color-border-default);
+  border-radius: 9999px;
+  height: 8px;
+  width: 8px;
+}
+
+.lpb-card-carousel__dot--active {
+  background: var(--color-text-default);
+  width: 24px;
+}
+
+@media (max-width: 668px) {
+  .lpb-card-carousel__header {
+    display: block;
+  }
+
+  .lpb-card-carousel__controls,
+  .lpb-card-carousel__dots {
+    display: none;
+  }
+}
+
 /* Accordion — legacy visual mechanics, scoped to LP Builder markup. */
 .lpb-accordion .accordion__headline {
   margin-bottom: var(--space-m, 24px);
