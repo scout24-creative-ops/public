@@ -978,6 +978,10 @@ a.lpb-chevron-link:active {
   min-width: 0;
 }
 
+.lpb-handbook-step-media__heading > :not(.lpb-handbook-step-media__number) {
+  margin-top: 5px;
+}
+
 .lpb-handbook-step-media__number {
   align-items: center;
   background-color: var(--color-background-default);
