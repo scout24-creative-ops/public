@@ -966,6 +966,38 @@ a.lpb-chevron-link:active {
 }
 
 /*
+ * Handbook step-media — v0.1.
+ *
+ * CoreCSS supplies the grid, typography, spacing, borders and radii. The
+ * number badge and desktop-only media-left variant are module mechanics.
+ */
+.lpb-handbook-step-media__heading {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  min-width: 0;
+}
+
+.lpb-handbook-step-media__number {
+  align-items: center;
+  background-color: var(--color-background-default);
+  border: 1px solid var(--color-border-default);
+  border-radius: 50%;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: 0 0 32px;
+  height: 32px;
+  justify-content: center;
+  width: 32px;
+}
+
+@media (min-width: 769px) {
+  .lpb-handbook-step-media--media-left .lpb-handbook-step-media__media {
+    order: -1;
+  }
+}
+
+/*
  * Steps module mechanism — v0.1.
  *
  * CoreCSS supplies the grid, typography and spacing. These namespaced rules
