@@ -972,7 +972,7 @@ a.lpb-chevron-link:active {
  * number badge and desktop-only media-left variant are module mechanics.
  */
 .lpb-handbook-step-media__heading {
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   gap: 8px;
   min-width: 0;
