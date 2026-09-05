@@ -9,6 +9,52 @@
  */
 
 /*
+ * Explicit page spacers — v0.1.
+ *
+ * Composition-only primitives: each class supplies exactly one block-size and
+ * no margin or padding. Productive use is pending the renderer opt-in that
+ * disables its direct-section sibling margin for an explicit-spacing page.
+ */
+.lpb-spacer {
+  display: block;
+  flex: none;
+  height: 4px;
+  width: 100%;
+}
+
+.lpb-spacer--xs { height: 4px; }
+.lpb-spacer--s { height: 8px; }
+.lpb-spacer--m { height: 16px; }
+.lpb-spacer--l { height: 24px; }
+.lpb-spacer--xl { height: 32px; }
+.lpb-spacer--xxl { height: 40px; }
+.lpb-spacer--3xl { height: 64px; }
+.lpb-spacer--4xl { height: 80px; }
+
+/*
+ * Explicit-spacing page root — v0.1.
+ *
+ * The renderer's scoped `.htmlSource > section + section` rule cannot match
+ * these nested sections because this root is the direct htmlSource child.
+ * This defensive local reset also keeps the composition contract intact if a
+ * non-scoped section-sibling margin is supplied by surrounding page CSS.
+ */
+.lpb-explicit-spacing > section + section {
+  margin-top: 0;
+}
+
+@media (max-width: 668px) {
+  .lpb-spacer--xs { height: 2px; }
+  .lpb-spacer--s { height: 4px; }
+  .lpb-spacer--m { height: 8px; }
+  .lpb-spacer--l { height: 16px; }
+  .lpb-spacer--xl { height: 24px; }
+  .lpb-spacer--xxl { height: 32px; }
+  .lpb-spacer--3xl { height: 48px; }
+  .lpb-spacer--4xl { height: 50px; }
+}
+
+/*
  * Rounded link buttons — v0.1
  *
  * Scope: medium, content-width links and four legacy-compatible variants.
