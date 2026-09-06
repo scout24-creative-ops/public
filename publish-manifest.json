@@ -149,6 +149,23 @@
       "status": "published"
     },
     {
+      "title": "Lpbuilder Runtime Test",
+      "slug": "lpbuilder-runtime-test",
+      "project": "LP Builder – Contentful",
+      "sourceRepository": "TODO: source repository not available",
+      "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/runtime-test/counter/counter-runtime.js",
+      "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/runtime-test/counter/counter-runtime.js",
+      "sourceCommit": "TODO: source commit not available",
+      "sourceHash": "sha256:a35c9a9f1aff7d4d951e051aaf67c66c7868ca838cb04ddb4aaaad8568e752c1",
+      "publicPath": "LP Builder – Contentful/lpbuilder-runtime-test/",
+      "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/lpbuilder-runtime-test/",
+      "publishedFiles": [
+        "counter-runtime.js"
+      ],
+      "lastPublished": "2026-09-06T08:28:35Z",
+      "status": "published"
+    },
+    {
       "title": "Pr Intelligence Hub",
       "slug": "pr-intelligence-hub",
       "project": "PR Intelligence Hub",
