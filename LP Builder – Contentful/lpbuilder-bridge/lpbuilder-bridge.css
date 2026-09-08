@@ -12,8 +12,7 @@
  * Explicit page spacers — v0.1.
  *
  * Composition-only primitives: each class supplies exactly one block-size and
- * no margin or padding. Productive use is pending the renderer opt-in that
- * disables its direct-section sibling margin for an explicit-spacing page.
+ * no margin or padding. Use inside the explicit page root below.
  */
 .lpb-spacer {
   display: block;
@@ -52,6 +51,201 @@
   .lpb-spacer--xxl { height: 32px; }
   .lpb-spacer--3xl { height: 48px; }
   .lpb-spacer--4xl { height: 50px; }
+}
+
+/*
+ * Product comparison table — static LP Builder bridge.
+ * The table's grid, sticky first column, mobile scroll viewport and native
+ * details interactions are module-owned. Do not use these classes as generic
+ * layout, table, tooltip or accordion utilities.
+ */
+.lpb-product-comparison__scroll-hint {
+  display: none;
+}
+
+.lpb-product-comparison__group {
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.lpb-product-comparison__group-summary {
+  align-items: center;
+  color: var(--color-text-default);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  padding: 16px 0;
+}
+
+.lpb-product-comparison__group-summary::-webkit-details-marker,
+.lpb-product-comparison__group-summary::marker {
+  display: none;
+}
+
+.lpb-product-comparison__group-summary:focus-visible,
+.lpb-product-comparison__tooltip-summary:focus-visible {
+  outline: 2px solid var(--color-border-focused);
+  outline-offset: 2px;
+}
+
+.lpb-product-comparison__group-chevron {
+  border-bottom: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  display: inline-block;
+  flex: 0 0 auto;
+  height: 8px;
+  margin-right: 4px;
+  transform: rotate(45deg);
+  transition: transform 160ms ease;
+  width: 8px;
+}
+
+.lpb-product-comparison__group[open] .lpb-product-comparison__group-chevron {
+  transform: rotate(-135deg);
+}
+
+.lpb-product-comparison__viewport {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.lpb-product-comparison__table {
+  border-collapse: collapse;
+  min-width: 80rem;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.lpb-product-comparison__table th,
+.lpb-product-comparison__table td {
+  border-bottom: 1px solid var(--color-border-default);
+  padding: 16px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.lpb-product-comparison__table th:first-child,
+.lpb-product-comparison__feature {
+  background-color: var(--color-background-default);
+  left: 0;
+  min-width: 272px;
+  position: sticky;
+  text-align: left;
+  width: 40%;
+  z-index: 1;
+}
+
+.lpb-product-comparison__plan {
+  font-weight: 700;
+}
+
+.lpb-product-comparison__feature-inner {
+  align-items: flex-start;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.lpb-product-comparison__row--profi-plus > * {
+  background-color: var(--color-background-weak);
+}
+
+.lpb-product-comparison__row--profi-plus .lpb-product-comparison__feature {
+  background-color: var(--color-background-weak);
+}
+
+.lpb-product-comparison__row--subgroup > * {
+  background-color: var(--color-background-weakest);
+  font-weight: 700;
+}
+
+.lpb-product-comparison__row--subgroup .lpb-product-comparison__feature {
+  background-color: var(--color-background-weakest);
+}
+
+.lpb-product-comparison__status {
+  display: inline-block;
+}
+
+.lpb-product-comparison__status--included {
+  color: var(--color-text-default);
+}
+
+.lpb-product-comparison__status--optional {
+  color: var(--color-text-default);
+}
+
+.lpb-product-comparison__status--unavailable {
+  min-height: 24px;
+  min-width: 24px;
+}
+
+.lpb-product-comparison__tooltip {
+  flex: 0 0 auto;
+  position: relative;
+}
+
+.lpb-product-comparison__tooltip-summary {
+  color: var(--color-text-default);
+  cursor: pointer;
+  display: block;
+  list-style: none;
+}
+
+.lpb-product-comparison__tooltip-summary::-webkit-details-marker,
+.lpb-product-comparison__tooltip-summary::marker {
+  display: none;
+}
+
+.lpb-product-comparison__tooltip-content {
+  background-color: var(--color-background-default);
+  border: 1px solid var(--color-border-default);
+  box-sizing: border-box;
+  left: 0;
+  padding: 16px;
+  position: absolute;
+  top: calc(100% + 8px);
+  width: 280px;
+  z-index: 2;
+}
+
+.lpb-product-comparison__cta-row > * {
+  border-bottom: 0;
+}
+
+.lpb-product-comparison__cta {
+  white-space: nowrap;
+}
+
+@media (max-width: 668px) {
+  .lpb-product-comparison__scroll-hint {
+    align-items: center;
+    background-color: var(--color-background-weak);
+    border: 1px solid var(--color-border-default);
+    display: flex;
+    gap: 8px;
+    padding: 8px 16px;
+  }
+
+  .lpb-product-comparison__table {
+    min-width: 940px;
+  }
+
+  .lpb-product-comparison__table th,
+  .lpb-product-comparison__table td {
+    padding: 12px 8px;
+  }
+
+  .lpb-product-comparison__table th:first-child,
+  .lpb-product-comparison__feature {
+    min-width: 216px;
+  }
+
+  .lpb-product-comparison__tooltip-content {
+    left: auto;
+    right: 0;
+  }
 }
 
 /*
