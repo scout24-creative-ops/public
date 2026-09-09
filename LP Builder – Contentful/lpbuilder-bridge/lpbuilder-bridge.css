@@ -1988,3 +1988,192 @@ a.lpb-chevron-link:active {
     min-width: 0;
   }
 }
+
+/* Local candidates: interest hero, illustrated link directory, static facts.
+ * Source-derived layout only; native disclosure and links, no runtime.
+ * Not yet published or promoted to the reusable GPT whitelist. */
+.lpb-content-frame {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1152px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+.lpb-interest-hero {
+  position: relative;
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+}
+
+.lpb-interest-hero__media {
+  display: block;
+  height: 400px;
+}
+
+.lpb-interest-hero__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lpb-interest-hero__panel {
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+  width: calc(100% - 32px);
+  max-width: 860px;
+  margin: -120px auto 0;
+  padding: 48px;
+  background: var(--color-background-default);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 15%);
+  text-align: center;
+}
+
+.lpb-interest-selector { position: relative; }
+.lpb-interest-selector__trigger {
+  position: relative;
+  list-style: none;
+  cursor: pointer;
+  padding: 4px 48px 8px;
+  background: url('https://www.immobilienscout24.de/content/dam/is24/images/productpages/swoosh.svg') center / 100% 100% no-repeat;
+  color: var(--color-text-default);
+}
+.lpb-interest-selector__trigger::-webkit-details-marker { display: none; }
+.lpb-interest-selector__trigger::after {
+  content: '';
+  position: absolute;
+  right: 24px;
+  top: 40%;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+.lpb-interest-selector[open] > .lpb-interest-selector__trigger::after {
+  transform: translateY(5px) rotate(225deg);
+}
+.lpb-interest-selector__options {
+  position: absolute;
+  z-index: 3;
+  inset-inline: 0;
+  top: 100%;
+  max-height: min(65vh, 640px);
+  overflow-y: auto;
+  margin: 0;
+  padding: 8px 0;
+  list-style: none;
+  background: var(--color-background-default);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+  text-align: left;
+}
+.lpb-interest-selector__option { margin: 0; padding: 0; }
+.lpb-interest-selector__link,
+.lpb-interest-selector__link:visited {
+  display: block;
+  padding: 12px 24px;
+  color: var(--color-text-default);
+  text-decoration: none;
+}
+.lpb-interest-selector__link:hover {
+  background: var(--color-background-weak);
+  color: var(--color-text-default);
+  text-decoration: none;
+}
+.lpb-interest-selector__trigger:focus-visible,
+.lpb-interest-selector__link:focus-visible,
+.lpb-illustrated-links__link:focus-visible {
+  outline: 2px solid var(--color-border-focused);
+  outline-offset: 2px;
+}
+
+.lpb-illustrated-links__items {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 64px 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.lpb-illustrated-links__item { grid-column: span 2; margin: 0; padding: 0; }
+.lpb-illustrated-links__items--five > .lpb-illustrated-links__item:first-child { grid-column: 2 / span 2; }
+.lpb-illustrated-links__items--five > .lpb-illustrated-links__item:nth-child(2) { grid-column: 4 / span 2; }
+.lpb-illustrated-links__items--five > .lpb-illustrated-links__item:nth-child(3) { grid-column: 1 / span 2; }
+.lpb-illustrated-links__items--seven > .lpb-illustrated-links__item:last-child { grid-column: 3 / span 2; }
+.lpb-illustrated-links__link,
+.lpb-illustrated-links__link:visited,
+.lpb-illustrated-links__link:hover,
+.lpb-illustrated-links__link:active {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--color-text-default);
+  text-decoration: none;
+  text-align: center;
+}
+.lpb-illustrated-links__art {
+  position: relative;
+  display: block;
+  width: 224px;
+  max-width: 100%;
+  height: 200px;
+}
+.lpb-illustrated-links__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+/* Lightweight hover indicator above external base artwork; no SVG internals. */
+.lpb-illustrated-links__highlight {
+  position: absolute;
+  top: 12%;
+  right: 6%;
+  width: 20px;
+  height: 36px;
+  border: solid var(--brand-teal);
+  border-width: 0 6px 6px 0;
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+.lpb-illustrated-links__label { max-width: 240px; }
+.lpb-illustrated-links__art [data-lpb-highlight] { opacity: 0; transition: opacity .2s ease-out; }
+@media (min-width: 669px) and (hover: hover) {
+  .lpb-illustrated-links__link:hover [data-lpb-highlight] { opacity: 1; }
+}
+.lpb-illustrated-links__link:focus-visible [data-lpb-highlight] { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .lpb-illustrated-links__art [data-lpb-highlight] { transition: none; }
+}
+
+.lpb-facts__items {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.lpb-facts__item { margin: 0; padding: 0; text-align: center; }
+.lpb-facts__image { display: block; width: 220px; max-width: 100%; height: 105px; object-fit: contain; margin: 0 auto 16px; }
+.lpb-facts__disclaimer { margin-top: 48px; color: var(--color-text-weak); }
+
+@media (max-width: 668px) {
+  .lpb-interest-hero__media { height: 160px; }
+  .lpb-interest-hero__panel { width: calc(100% - 16px); margin-top: 64px; padding: 24px 16px; }
+  .lpb-interest-selector__trigger { padding: 4px 32px; }
+  .lpb-interest-selector__trigger::after { right: 16px; width: 8px; height: 8px; }
+  .lpb-interest-selector__link { padding: 12px 16px; }
+  .lpb-illustrated-links__heading--palm-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .lpb-illustrated-links__items { display: flex; flex-direction: column; gap: 0; }
+  .lpb-illustrated-links__item { border-top: 1px solid var(--color-border-default); padding: 16px 0; }
+  .lpb-illustrated-links__item:first-child { border-top: 0; }
+  .lpb-illustrated-links__link { flex-direction: row; gap: 16px; text-align: left; min-height: 64px; }
+  .lpb-illustrated-links__art { flex: 0 0 64px; width: 64px; height: 64px; }
+  .lpb-illustrated-links__label { max-width: none; }
+  .lpb-facts__items { grid-template-columns: 1fr; gap: 48px; }
+  .lpb-facts__disclaimer { margin-top: 32px; }
+}
