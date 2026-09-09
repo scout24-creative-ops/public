@@ -78,14 +78,13 @@
 
 .lpb-product-comparison__plan-identity {
   align-items: center;
-  border-bottom: 8px solid var(--lpb-product-comparison-plan-accent);
   color: var(--color-text-default);
   display: flex;
   flex-direction: column;
   gap: 8px;
   justify-content: flex-end;
-  min-height: 112px;
-  padding: 0 16px 12px;
+  min-height: 136px;
+  padding: 0 16px 16px;
   text-align: center;
   text-decoration: none;
 }
@@ -116,27 +115,48 @@
   width: 32px;
 }
 
+.lpb-product-comparison__plan-identity::after {
+  background-color: var(--lpb-product-comparison-plan-accent);
+  content: "";
+  height: var(--lpb-product-comparison-plan-bar-height);
+  order: 1;
+  width: 100%;
+}
+
 .lpb-product-comparison__plan-identity--bronze {
   --lpb-product-comparison-plan-accent: var(--brand-orange);
+  --lpb-product-comparison-plan-bar-height: 18px;
 }
 
 .lpb-product-comparison__plan-identity--silver {
   --lpb-product-comparison-plan-accent: var(--gray-400);
+  --lpb-product-comparison-plan-bar-height: 40px;
 }
 
 .lpb-product-comparison__plan-identity--gold {
   --lpb-product-comparison-plan-accent: var(--brand-yellow);
+  --lpb-product-comparison-plan-bar-height: 60px;
 }
 
 .lpb-product-comparison__plan-identity-name {
-  font-size: var(--size-heading-small);
-  font-weight: 700;
-  line-height: var(--line-height-heading-small);
+  font-size: var(--size-heading-xsmall);
+  font-weight: 400;
+  line-height: var(--line-height-heading-xsmall);
+  order: 2;
 }
 
 .lpb-product-comparison__plan-identity-action {
   font-size: var(--size-body-small);
   line-height: var(--line-height-body-small);
+  order: 3;
+}
+
+.lpb-product-comparison__plan-identity-action::after {
+  content: "›";
+  font-size: 20px;
+  line-height: 0;
+  margin-left: 8px;
+  vertical-align: -1px;
 }
 
 .lpb-product-comparison__group {
@@ -149,7 +169,8 @@
   color: var(--color-text-default);
   cursor: pointer;
   display: flex;
-  justify-content: space-between;
+  gap: 16px;
+  justify-content: flex-start;
   list-style: none;
   padding: 16px 0;
 }
@@ -171,7 +192,6 @@
   display: inline-block;
   flex: 0 0 auto;
   height: 8px;
-  margin-right: 4px;
   transform: rotate(45deg);
   transition: transform 160ms ease;
   width: 8px;
@@ -238,25 +258,26 @@
 .lpb-product-comparison__feature-inner {
   align-items: flex-start;
   display: flex;
-  gap: 8px;
-  justify-content: space-between;
+  gap: 4px;
+  justify-content: flex-start;
 }
 
 .lpb-product-comparison__row--profi-plus > * {
   background-color: var(--color-background-weak);
 }
 
-.lpb-product-comparison__row--profi-plus .lpb-product-comparison__feature {
+.lpb-product-comparison__table .lpb-product-comparison__row--profi-plus > .lpb-product-comparison__feature {
   background-color: var(--color-background-weak);
 }
 
 .lpb-product-comparison__row--subgroup > * {
   background-color: var(--color-background-default);
-  border-top: 2px solid var(--color-text-default);
+  border-top: 0;
+  border-bottom: 2px solid var(--color-text-default);
   font-weight: 700;
 }
 
-.lpb-product-comparison__row--subgroup .lpb-product-comparison__feature {
+.lpb-product-comparison__table .lpb-product-comparison__row--subgroup > .lpb-product-comparison__feature {
   background-color: var(--color-background-default);
 }
 
@@ -277,6 +298,11 @@
   min-width: 24px;
 }
 
+.lpb-product-comparison__status.lpb-icon--24 {
+  font-size: 16px;
+  line-height: 1;
+}
+
 .lpb-product-comparison__tooltip {
   flex: 0 0 auto;
   position: relative;
@@ -287,6 +313,12 @@
   cursor: pointer;
   display: block;
   list-style: none;
+}
+
+.lpb-product-comparison__feature-inner .lpb-icon--24 {
+  font-size: 14px;
+  line-height: 1;
+  vertical-align: -1px;
 }
 
 .lpb-product-comparison__tooltip-summary::-webkit-details-marker,
@@ -348,7 +380,7 @@
   }
 
   .lpb-product-comparison__plan-identity {
-    min-height: 96px;
+    min-height: 120px;
     padding-left: 8px;
     padding-right: 8px;
   }
