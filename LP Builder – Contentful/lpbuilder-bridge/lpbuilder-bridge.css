@@ -2116,28 +2116,31 @@ a.lpb-chevron-link:active {
 }
 .lpb-illustrated-links__art {
   position: relative;
+  isolation: isolate;
   display: block;
   width: 224px;
   max-width: 100%;
   height: 200px;
 }
 .lpb-illustrated-links__image {
+  position: relative;
+  z-index: 1;
   display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
-/* Lightweight hover indicator above external base artwork; no SVG internals. */
+/* Source-extracted highlight behind the external base illustration. */
 .lpb-illustrated-links__highlight {
   position: absolute;
-  top: 12%;
-  right: 6%;
-  width: 20px;
-  height: 36px;
-  border: solid var(--brand-teal);
-  border-width: 0 6px 6px 0;
-  transform: rotate(45deg);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   pointer-events: none;
+}
+.lpb-illustrated-links__art--masked .lpb-illustrated-links__highlight {
+  z-index: 2;
 }
 .lpb-illustrated-links__label { max-width: 240px; }
 .lpb-illustrated-links__art [data-lpb-highlight] { opacity: 0; transition: opacity .2s ease-out; }
