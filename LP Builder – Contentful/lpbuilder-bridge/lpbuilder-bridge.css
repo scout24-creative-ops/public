@@ -64,16 +64,23 @@
 }
 
 .lpb-product-comparison__plan-identity-viewport {
+  overflow: visible;
+}
+
+.lpb-product-comparison__scroller {
   overflow-x: auto;
   overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
+  color: var(--color-text-default);
+  font-size: var(--size-body-medium);
+  line-height: 1.5;
 }
 
 .lpb-product-comparison__plan-identities {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   min-width: 80rem;
-  padding: 48px 16px 16px;
+  padding: 65px 0 16px;
 }
 
 .lpb-product-comparison__plan-identity {
@@ -81,10 +88,10 @@
   color: var(--color-text-default);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0;
   justify-content: flex-end;
-  min-height: 136px;
-  padding: 0 16px 16px;
+  min-height: 204px;
+  padding: 0 16px;
   text-align: center;
   text-decoration: none;
 }
@@ -101,53 +108,55 @@
 }
 
 .lpb-product-comparison__plan-identity::before {
-  align-items: center;
-  border: 2px solid var(--lpb-product-comparison-plan-accent);
-  border-radius: 50%;
-  box-sizing: border-box;
-  color: var(--lpb-product-comparison-plan-accent);
-  content: "★";
-  display: flex;
-  font-size: 20px;
-  height: 32px;
-  justify-content: center;
-  line-height: 1;
-  width: 32px;
+  background: var(--lpb-product-comparison-plan-emblem) center / contain no-repeat;
+  content: "";
+  display: block;
+  flex: 0 0 48px;
+  height: 48px;
+  width: 48px;
+  margin-bottom: 7px;
 }
 
 .lpb-product-comparison__plan-identity::after {
   background-color: var(--lpb-product-comparison-plan-accent);
   content: "";
   height: var(--lpb-product-comparison-plan-bar-height);
+  flex-shrink: 0;
+  margin-bottom: 16px;
   order: 1;
   width: 100%;
 }
 
 .lpb-product-comparison__plan-identity--bronze {
-  --lpb-product-comparison-plan-accent: var(--brand-orange);
+  /* Source plan identities, not interchangeable COSMA brand accents. */
+  --lpb-product-comparison-plan-accent: #DE925B;
+  --lpb-product-comparison-plan-emblem: url('https://www.immobilienscout24.de/content/dam/is24/anbieten/gewerbliche-anbieter/mgs-24/bronze-star.svg');
   --lpb-product-comparison-plan-bar-height: 18px;
 }
 
 .lpb-product-comparison__plan-identity--silver {
-  --lpb-product-comparison-plan-accent: var(--gray-400);
+  --lpb-product-comparison-plan-accent: #C4C4C4;
+  --lpb-product-comparison-plan-emblem: url('https://www.immobilienscout24.de/content/dam/is24/anbieten/gewerbliche-anbieter/mgs-24/silver-star.svg');
   --lpb-product-comparison-plan-bar-height: 40px;
 }
 
 .lpb-product-comparison__plan-identity--gold {
-  --lpb-product-comparison-plan-accent: var(--brand-yellow);
+  --lpb-product-comparison-plan-accent: #F1CC4E;
+  --lpb-product-comparison-plan-emblem: url('https://www.immobilienscout24.de/content/dam/is24/anbieten/gewerbliche-anbieter/mgs-24/gold-star-one.svg');
   --lpb-product-comparison-plan-bar-height: 60px;
 }
 
 .lpb-product-comparison__plan-identity-name {
-  font-size: var(--size-heading-xsmall);
+  font-size: 24px;
   font-weight: 400;
-  line-height: var(--line-height-heading-xsmall);
+  line-height: 32px;
+  margin-bottom: 8px;
   order: 2;
 }
 
 .lpb-product-comparison__plan-identity-action {
-  font-size: var(--size-body-small);
-  line-height: var(--line-height-body-small);
+  font-size: var(--size-body-medium);
+  line-height: 21px;
   order: 3;
 }
 
@@ -160,19 +169,39 @@
 }
 
 .lpb-product-comparison__group {
-  border-top: 1px solid var(--color-border-default);
-  border-bottom: 1px solid var(--color-border-default);
+  min-width: 80rem;
+  border-top: 1px solid #eee;
+}
+
+.lpb-product-comparison__group:last-child {
+  border-bottom: 1px solid #eee;
 }
 
 .lpb-product-comparison__group-summary {
   align-items: center;
   color: var(--color-text-default);
   cursor: pointer;
-  display: flex;
+  display: grid;
+  grid-template-columns: 154px 8px;
   gap: 16px;
   justify-content: flex-start;
   list-style: none;
-  padding: 16px 0;
+  padding: 16px;
+  font-size: var(--size-body-medium);
+  font-weight: 400;
+  line-height: 23px;
+}
+
+.lpb-product-comparison__group[open] > .lpb-product-comparison__group-summary {
+  font-weight: 700;
+  border-bottom: 1px solid #eee;
+}
+
+.lpb-product-comparison__group-summary > span:first-child {
+  position: sticky;
+  left: 16px;
+  background-color: var(--color-background-default);
+  z-index: 2;
 }
 
 .lpb-product-comparison__group-summary::-webkit-details-marker,
@@ -187,14 +216,17 @@
 }
 
 .lpb-product-comparison__group-chevron {
-  border-bottom: 2px solid currentColor;
-  border-right: 2px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  border-right: 1px solid currentColor;
   display: inline-block;
   flex: 0 0 auto;
   height: 8px;
   transform: rotate(45deg);
   transition: transform 160ms ease;
   width: 8px;
+  position: sticky;
+  left: 186px;
+  z-index: 2;
 }
 
 .lpb-product-comparison__group[open] .lpb-product-comparison__group-chevron {
@@ -202,9 +234,7 @@
 }
 
 .lpb-product-comparison__viewport {
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  -webkit-overflow-scrolling: touch;
+  overflow: visible;
 }
 
 .lpb-product-comparison__table {
@@ -216,7 +246,12 @@
 
 .lpb-product-comparison__table th,
 .lpb-product-comparison__table td {
-  border-bottom: 1px solid var(--color-border-default);
+  border-bottom: 1px solid #eee;
+  box-sizing: border-box;
+  height: 54px;
+  font-size: var(--size-body-medium);
+  font-weight: 400;
+  line-height: 21px;
   padding: 16px;
   text-align: center;
   vertical-align: middle;
@@ -225,12 +260,13 @@
 
 .lpb-product-comparison__table thead th {
   border-bottom: 2px solid var(--color-text-default);
-  font-size: var(--size-body-small);
+  font-size: var(--size-body-medium);
   font-weight: 700;
 }
 
 .lpb-product-comparison__table thead a {
   color: var(--color-text-default);
+  font-weight: inherit;
   text-decoration: none;
 }
 
@@ -256,21 +292,21 @@
 }
 
 .lpb-product-comparison__feature-inner {
-  align-items: flex-start;
+  align-items: baseline;
   display: flex;
   gap: 4px;
   justify-content: flex-start;
 }
 
 .lpb-product-comparison__row--profi-plus > * {
-  background-color: var(--color-background-weak);
+  background-color: #f5f5f5;
 }
 
 .lpb-product-comparison__table .lpb-product-comparison__row--profi-plus > .lpb-product-comparison__feature {
-  background-color: var(--color-background-weak);
+  background-color: #f5f5f5;
 }
 
-.lpb-product-comparison__row--subgroup > * {
+.lpb-product-comparison__table .lpb-product-comparison__row--subgroup > * {
   background-color: var(--color-background-default);
   border-top: 0;
   border-bottom: 2px solid var(--color-text-default);
@@ -329,15 +365,28 @@
 .lpb-product-comparison__tooltip-content {
   background-color: var(--color-text-default);
   border: 0;
-  border-radius: var(--border-radius-400);
+  border-radius: var(--border-radius-200);
   box-sizing: border-box;
   color: var(--color-text-inversive);
-  left: 0;
+  left: -24px;
   padding: 16px;
   position: absolute;
-  bottom: calc(100% + 8px);
-  width: 280px;
-  z-index: 2;
+  bottom: 28px;
+  width: 240px;
+  z-index: 3;
+  text-align: left;
+  font-size: var(--size-body-medium);
+  line-height: 1.5;
+}
+
+.lpb-product-comparison__feature:has(.lpb-product-comparison__tooltip[open]) {
+  z-index: 4;
+}
+
+.lpb-product-comparison__tooltip-content p {
+  font: inherit;
+  color: var(--color-text-inversive);
+  margin: 0 0 0.8em;
 }
 
 .lpb-product-comparison__tooltip-content a {
@@ -351,17 +400,51 @@
   bottom: -8px;
   content: "";
   height: 0;
-  left: 16px;
+  left: 24px;
   position: absolute;
   width: 0;
 }
 
-.lpb-product-comparison__cta-row > * {
+.lpb-product-comparison__table .lpb-product-comparison__cta-row > * {
   border-bottom: 0;
 }
 
 .lpb-product-comparison__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 8px 24px;
+  border: 1px solid var(--color-text-default);
+  border-radius: var(--border-radius-100);
+  background: var(--color-background-default);
+  color: var(--color-text-default);
+  font-size: var(--size-body-medium);
+  font-weight: 400;
+  line-height: 20px;
+  text-decoration: none;
   white-space: nowrap;
+}
+
+.lpb-product-comparison__cta-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.lpb-product-comparison__cta:hover,
+.lpb-product-comparison__cta:active {
+  color: var(--color-text-default);
+  background: #f5f5f5;
+  text-decoration: none;
+}
+
+.lpb-product-comparison__cta:focus-visible {
+  outline: 2px solid var(--color-border-focused);
+  outline-offset: 2px;
 }
 
 @media (max-width: 668px) {
@@ -380,18 +463,17 @@
   }
 
   .lpb-product-comparison__plan-identity {
-    min-height: 120px;
-    padding-left: 8px;
-    padding-right: 8px;
+    min-height: 204px;
   }
 
-  .lpb-product-comparison__table {
+  .lpb-product-comparison__table,
+  .lpb-product-comparison__group {
     min-width: 940px;
   }
 
   .lpb-product-comparison__table th,
   .lpb-product-comparison__table td {
-    padding: 12px 8px;
+    padding: 16px;
   }
 
   .lpb-product-comparison__table th:first-child,
@@ -399,9 +481,14 @@
     min-width: 216px;
   }
 
+  .lpb-product-comparison__tooltip {
+    position: static;
+  }
+
   .lpb-product-comparison__tooltip-content {
-    left: auto;
-    right: 0;
+    left: 0;
+    right: auto;
+    bottom: calc(100% + 8px);
   }
 
   .lpb-product-comparison__tooltip-content::after {
