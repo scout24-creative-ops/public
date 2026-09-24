@@ -1,0 +1,18 @@
+{
+  "title": "Scaling Editorial Lighthouse",
+  "slug": "scaling-editorial-lighthouse",
+  "project": "Scaling Editorial",
+  "sourceRepository": "TODO: source repository not available",
+  "sourcePath": "/Users/dboehme/Projects/Scaling Editorial/index.html",
+  "sourceAbsolutePath": "/Users/dboehme/Projects/Scaling Editorial/index.html",
+  "sourceCommit": "TODO: source commit not available",
+  "sourceHash": "sha256:0ef5038f3c651c421428ac73ca514fd45ae954ff4a95a815b2e75f51d4b04c22",
+  "publicPath": "Scaling Editorial/scaling-editorial-lighthouse/",
+  "publicUrl": "https://scout24-creative-ops.github.io/public/Scaling%20Editorial/scaling-editorial-lighthouse/",
+  "publishedFiles": [
+    "brain.png",
+    "index.html"
+  ],
+  "lastPublished": "2026-09-24T12:06:10Z",
+  "status": "published"
+}

@@ -1,0 +1,978 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Scaling Editorial Lighthouse</title>
+  <style>
+    :root {
+      --ink: #17191c;
+      --muted: #63686f;
+      --line: #d7d9d4;
+      --line-strong: #9da39e;
+      --paper: #f7f7f3;
+      --card: #fff;
+      --accent: #00d6b9;
+      --accent-dark: #006b5e;
+      --accent-soft: #dffff8;
+      --data: #eaf9f5;
+      --data-line: #78bbae;
+      --shadow: 0 18px 50px rgba(19, 28, 26, .12), 0 2px 8px rgba(19, 28, 26, .08);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { min-height: 100%; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, code, pre { font: inherit; }
+    button { color: inherit; }
+
+    .shell {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      padding: 24px clamp(24px, 4vw, 64px) 20px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(247, 247, 243, .96);
+    }
+
+    .topbar h1 {
+      margin: 0;
+      font-size: clamp(30px, 3.2vw, 48px);
+      line-height: 1;
+      letter-spacing: -.05em;
+    }
+
+    main {
+      flex: 1;
+      padding: 22px 0 30px;
+      overflow: hidden;
+    }
+
+    .canvas-wrap {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0 clamp(14px, 2.4vw, 42px) 20px;
+      scrollbar-color: #afb5b1 transparent;
+      scrollbar-width: thin;
+    }
+
+    .canvas {
+      position: relative;
+      min-width: 1760px;
+      max-width: 1840px;
+      height: 470px;
+      margin: 0 auto;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background-color: #fff;
+      background-image:
+        linear-gradient(rgba(28, 36, 33, .035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(28, 36, 33, .035) 1px, transparent 1px);
+      background-size: 24px 24px;
+      box-shadow: 0 2px 0 rgba(22, 27, 25, .03);
+    }
+
+    .flow {
+      position: absolute;
+      inset: 116px auto auto 62px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sources {
+      width: 104px;
+      flex: 0 0 104px;
+    }
+
+    .sources-label {
+      display: block;
+      margin: 0 0 8px 2px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .source-chip {
+      display: block;
+      width: 100%;
+      margin-top: 6px;
+      padding: 7px 8px;
+      border: 1px solid #dfe1dd;
+      border-radius: 8px;
+      background: #fafaf8;
+      color: #4d5257;
+      font-size: 10px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .arrow {
+      position: relative;
+      width: 18px;
+      height: 1px;
+      flex: 0 0 18px;
+      background: var(--line-strong);
+    }
+
+    .arrow::after,
+    .transfer::after {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      width: 6px;
+      height: 6px;
+      border-top: 1.5px solid #747b76;
+      border-right: 1.5px solid #747b76;
+      transform: translateY(-50%) rotate(45deg);
+      content: "";
+    }
+
+    .stage {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 125px;
+      min-height: 132px;
+      flex: 0 0 125px;
+      padding: 17px 14px;
+      border: 1px solid #d6d9d5;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .98);
+      text-align: left;
+      cursor: pointer;
+      appearance: none;
+    }
+
+    .stage[data-stage]:hover,
+    .stage[data-stage]:focus-visible,
+    .stage[data-stage][aria-expanded="true"] {
+      outline: none;
+      border-color: var(--ink);
+      box-shadow: 0 0 0 3px rgba(0, 214, 185, .18);
+    }
+
+    .stage:not([data-stage]) { cursor: default; }
+
+    .stage-title {
+      display: block;
+      font-size: 16px;
+      font-weight: 820;
+      line-height: 1.15;
+      letter-spacing: -.03em;
+    }
+
+    .stage-caption {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 10.5px;
+      line-height: 1.4;
+    }
+
+    .trend-card {
+      border-color: #c9dae5;
+      background: #f0f7fb;
+    }
+
+    .writer-card {
+      border-color: #dfd4bc;
+      background: #fbf6e9;
+    }
+
+    .image-card {
+      border-color: #d8cce8;
+      background: #f5f0fb;
+    }
+
+    .quality-card {
+      border-color: #e1d196;
+      background: #fff8df;
+    }
+
+    .renderer-card {
+      border-color: #cbd6cf;
+      background: #f0f4f1;
+    }
+
+    .story-creator {
+      width: 170px;
+      min-height: 226px;
+      flex-basis: 170px;
+      justify-content: flex-start;
+      padding: 17px 17px 19px;
+      border: 2px solid var(--ink);
+      border-radius: 26px;
+      background: var(--ink);
+      color: #fff;
+      box-shadow: 0 0 0 8px var(--accent-soft), 0 16px 38px rgba(0, 72, 62, .16);
+    }
+
+    .story-creator[data-stage]:hover,
+    .story-creator[data-stage]:focus-visible,
+    .story-creator[data-stage][aria-expanded="true"] {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 8px var(--accent-soft), 0 0 0 11px rgba(0, 214, 185, .18), 0 16px 38px rgba(0, 72, 62, .16);
+    }
+
+    .story-creator .stage-title { font-size: 22px; }
+    .story-creator .stage-caption { color: #d0d5d3; }
+
+    .brain-visual {
+      display: block;
+      width: 78px;
+      height: 62px;
+      margin-bottom: 14px;
+    }
+
+    .brain-visual img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .production {
+      display: grid;
+      gap: 12px;
+      width: 130px;
+      flex: 0 0 130px;
+    }
+
+    .production .stage {
+      width: 130px;
+      min-height: 107px;
+      padding: 14px;
+    }
+
+    .production .stage-title { font-size: 15px; }
+    .production .stage-caption { margin-top: 7px; }
+
+    .news-stage {
+      width: 148px;
+      flex-basis: 148px;
+      min-height: 218px;
+      justify-content: flex-start;
+      padding: 10px;
+      background: #f3f4f1;
+    }
+
+    .news-preview {
+      display: block;
+      overflow: hidden;
+      height: 148px;
+      border: 1px solid #cfd3ce;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 4px 0 #e1e3df, 0 8px 0 #eeefec;
+    }
+
+    .news-nav {
+      display: flex;
+      align-items: center;
+      height: 25px;
+      padding: 0 7px;
+      background: var(--accent);
+      color: #062d28;
+      font-size: 7px;
+      font-weight: 900;
+    }
+
+    .news-hero {
+      display: block;
+      height: 45px;
+      background:
+        linear-gradient(135deg, rgba(14, 28, 25, .08), rgba(14, 28, 25, .52)),
+        linear-gradient(135deg, #d8e7de 0 48%, #8fa89c 48% 52%, #cad9d0 52% 100%);
+    }
+
+    .news-copy { display: block; padding: 8px; }
+    .news-kicker { display: block; color: var(--accent-dark); font-size: 6px; font-weight: 900; text-transform: uppercase; }
+    .news-headline { display: block; margin-top: 3px; font-size: 8px; font-weight: 900; line-height: 1.15; }
+    .news-lines { display: block; width: 85%; height: 3px; margin-top: 7px; background: #dcdeda; box-shadow: 0 6px #e8e9e6, 0 12px #e8e9e6; }
+    .news-stage .stage-title { margin-top: 15px; text-align: center; }
+    .news-stage .stage-caption { margin-top: 4px; text-align: center; }
+
+    .transfer {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 104px;
+      flex: 0 0 104px;
+    }
+
+    .transfer::before {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      left: 0;
+      height: 1px;
+      background: var(--data-line);
+      content: "";
+    }
+
+    .data-object {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: 90px;
+      min-height: 52px;
+      padding: 9px 10px;
+      border: 1px solid var(--data-line);
+      border-radius: 10px 10px 10px 4px;
+      background: var(--data);
+      color: #184f47;
+      font-size: 11px;
+      font-weight: 820;
+      line-height: 1.15;
+      text-align: center;
+      cursor: pointer;
+      appearance: none;
+    }
+
+    .data-object::after {
+      position: absolute;
+      top: -1px;
+      right: -1px;
+      width: 13px;
+      height: 13px;
+      border-bottom: 1px solid var(--data-line);
+      border-left: 1px solid var(--data-line);
+      border-radius: 0 9px 0 3px;
+      background: #fff;
+      content: "";
+    }
+
+    .data-object:hover,
+    .data-object:focus-visible,
+    .data-object[aria-expanded="true"] {
+      outline: none;
+      border-color: var(--accent-dark);
+      background: #d8fff7;
+      box-shadow: 0 0 0 3px rgba(0, 214, 185, .18);
+    }
+
+    .outputs {
+      display: grid;
+      grid-template-rows: repeat(2, 107px);
+      gap: 12px;
+      width: 96px;
+      height: 226px;
+      flex: 0 0 96px;
+    }
+
+    .outputs .transfer { width: 96px; height: 107px; }
+    .outputs .data-object { width: 82px; min-height: 43px; padding: 7px; font-size: 10px; }
+
+    .aux-connectors {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .support-input {
+      position: absolute;
+      z-index: 2;
+    }
+
+    .trend-human-input { top: 42px; left: 202px; }
+    .story-human-input { top: 42px; left: 470px; }
+    .story-data-input { top: 378px; left: 465px; }
+
+    .support-input .data-object { width: 130px; min-height: 54px; }
+
+    .optional-human {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      align-items: center;
+      width: 120px;
+      min-height: 54px;
+      padding: 8px 9px;
+      border: 1px dashed #9ea4a0;
+      border-radius: 12px;
+      background: rgba(247, 248, 246, .92);
+      color: #737975;
+      text-align: left;
+      cursor: default;
+      opacity: .72;
+    }
+
+    .person-icon {
+      display: grid;
+      place-items: center;
+      width: 25px;
+      height: 25px;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+    }
+
+    .person-icon svg { width: 14px; height: 14px; }
+
+    .human-copy strong {
+      display: block;
+      font-size: 10.5px;
+      line-height: 1.1;
+    }
+
+    .human-copy small {
+      display: block;
+      margin-top: 3px;
+      font-size: 8.5px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .human-review {
+      width: 135px;
+      flex-basis: 135px;
+      border: 1px solid #d6d9d5;
+      background: #fff;
+    }
+
+    .human-review .person-icon {
+      margin-bottom: 12px;
+      color: #5f6661;
+    }
+
+    .equation {
+      position: absolute;
+      right: 52px;
+      bottom: 27px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #5f6460;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+
+    .equation strong {
+      padding: 7px 9px;
+      border: 1px solid #d8dbd7;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .popover {
+      position: fixed;
+      z-index: 50;
+      display: none;
+      width: min(390px, calc(100vw - 28px));
+      max-height: min(620px, calc(100vh - 28px));
+      overflow: auto;
+      border: 1px solid #b9bdb8;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      overscroll-behavior: contain;
+    }
+
+    .popover.visible { display: block; }
+    .popover.medium { width: min(470px, calc(100vw - 28px)); }
+
+    .popover-header {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 18px 20px 15px;
+      border-bottom: 1px solid #e1e3df;
+      background: rgba(255, 255, 255, .97);
+      backdrop-filter: blur(8px);
+    }
+
+    .popover h3 {
+      margin: 0;
+      font-size: 21px;
+      line-height: 1.1;
+      letter-spacing: -.035em;
+    }
+
+    .popover-close {
+      width: 28px;
+      height: 28px;
+      flex: 0 0 28px;
+      border: 1px solid #d9dcd7;
+      border-radius: 50%;
+      background: #f8f8f5;
+      color: #666b67;
+      font-size: 18px;
+      line-height: 22px;
+      cursor: pointer;
+    }
+
+    .popover-body {
+      padding: 17px 20px 20px;
+      color: #383d41;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .popover-body p { margin: 0; }
+    .popover-body p + p,
+    .popover-body p + ul,
+    .popover-body ul + p,
+    .popover-body p + pre { margin-top: 11px; }
+    .popover-body ul { margin: 0; padding-left: 18px; }
+    .popover-body li + li { margin-top: 3px; }
+
+    .example {
+      padding: 11px 12px;
+      border-left: 3px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      background: #f1faf7;
+    }
+
+    .example-label {
+      color: var(--accent-dark);
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    pre {
+      margin: 0;
+      padding: 14px;
+      overflow: auto;
+      border-radius: 11px;
+      background: #171b1a;
+      color: #d9fff7;
+      font: 10.5px/1.52 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      tab-size: 2;
+      white-space: pre-wrap;
+    }
+
+    .file-example {
+      overflow: hidden;
+      border: 1px solid #29322f;
+      border-radius: 11px;
+      background: #171b1a;
+    }
+
+    .file-note {
+      display: block;
+      padding: 11px 14px 0;
+      color: #7ed8c6;
+      font: 800 8.5px/1.35 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .file-example pre {
+      padding-top: 9px;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .gate {
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 12px;
+    }
+
+    .gate div {
+      padding: 11px 12px;
+      border: 1px solid #dfe1dd;
+      border-radius: 10px;
+      background: #fafaf8;
+    }
+
+    .gate strong {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 10px;
+    }
+
+    .gate ul { padding: 0; list-style: none; }
+    .check { color: #2e9a63; font-weight: 900; }
+
+    .render-formula {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      align-items: center;
+      gap: 7px;
+      margin-top: 13px;
+      text-align: center;
+    }
+
+    .render-formula span {
+      padding: 9px 7px;
+      border: 1px solid #dfe1dd;
+      border-radius: 8px;
+      background: #fafaf8;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .render-formula b { color: #797f7a; }
+
+    .backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      display: none;
+      background: rgba(18, 22, 21, .12);
+    }
+
+    .backdrop.visible { display: block; }
+
+    @media (max-width: 760px) {
+      .topbar { padding: 20px 18px 17px; }
+      .topbar h1 { font-size: 32px; }
+      main { padding-top: 16px; }
+      .canvas-wrap { padding-inline: 12px; }
+      .canvas { border-radius: 18px; }
+      .gate { grid-template-columns: 1fr; }
+      .render-formula { grid-template-columns: 1fr; }
+      .popover { max-height: calc(100vh - 20px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <!-- Add the official ImmoScout24 PNG here when it is available in this project. -->
+      <h1>Scaling Editorial Lighthouse</h1>
+    </header>
+
+    <main>
+      <div class="canvas-wrap" aria-label="Scrollable Editorial Lighthouse architecture">
+        <section class="canvas">
+          <div class="flow">
+            <div class="sources" aria-label="Sources">
+              <span class="sources-label">Sources</span>
+              <span class="source-chip">News portals</span>
+              <span class="source-chip">Google Trends</span>
+              <span class="source-chip">Competitors</span>
+              <span class="source-chip">Other sources</span>
+            </div>
+
+            <span class="arrow" aria-hidden="true"></span>
+
+            <div class="stage trend-card">
+              <span class="stage-title">Trend Finder</span>
+              <span class="stage-caption">Finds relevant trends and signals.</span>
+            </div>
+
+            <span class="transfer">
+              <button class="data-object" type="button" data-stage="trend-signals" aria-haspopup="dialog" aria-expanded="false">Trend Signals</button>
+            </span>
+
+            <div class="stage story-creator">
+              <span class="brain-visual" aria-hidden="true"><img src="brain.png" alt=""></span>
+              <span class="stage-title">Story Creator</span>
+              <span class="stage-caption">Turns signals and Scout Data into a relevant IS24 story.</span>
+            </div>
+
+            <span class="transfer">
+              <button class="data-object" type="button" data-stage="story-package" aria-haspopup="dialog" aria-expanded="false">Story Package</button>
+            </span>
+
+            <div class="production" aria-label="Content creation">
+              <div class="stage writer-card">
+                <span class="stage-title">Writer</span>
+                <span class="stage-caption">Creates the article from the story instructions.</span>
+              </div>
+              <div class="stage image-card">
+                <span class="stage-title">Image Creator</span>
+                <span class="stage-caption">Creates the visual from the image instructions.</span>
+              </div>
+            </div>
+
+            <div class="outputs" aria-label="Finished assets">
+              <span class="transfer">
+                <button class="data-object" type="button" data-stage="article-text" aria-haspopup="dialog" aria-expanded="false">Article Text</button>
+              </span>
+              <span class="transfer">
+                <button class="data-object" type="button" data-stage="image-asset" aria-haspopup="dialog" aria-expanded="false">Image Asset</button>
+              </span>
+            </div>
+
+            <button class="stage quality-card" type="button" data-stage="quality" aria-haspopup="dialog" aria-expanded="false">
+              <span class="stage-title">Quality Gate</span>
+              <span class="stage-caption">Checks the generated content before human approval.</span>
+            </button>
+
+            <span class="arrow" aria-hidden="true"></span>
+
+            <div class="stage human-review">
+              <span class="person-icon" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="2.4" stroke="currentColor" stroke-width="1.4"/><path d="M3.6 13c.45-2.45 1.9-3.7 4.4-3.7s3.95 1.25 4.4 3.7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </span>
+              <span class="stage-title">Human Review</span>
+              <span class="stage-caption">Reviews and approves the content.</span>
+            </div>
+
+            <span class="transfer">
+              <button class="data-object" type="button" data-stage="approved-package" aria-haspopup="dialog" aria-expanded="false">Approved Package</button>
+            </span>
+
+            <div class="stage renderer-card">
+              <span class="stage-title">Renderer</span>
+              <span class="stage-caption">Loads approved content into the page template.</span>
+            </div>
+
+            <span class="arrow" aria-hidden="true"></span>
+
+            <button class="stage news-stage" type="button" data-stage="news" aria-haspopup="dialog" aria-expanded="false">
+              <span class="news-preview" aria-hidden="true">
+                <span class="news-nav">ImmoScout24 · News</span>
+                <span class="news-hero"></span>
+                <span class="news-copy">
+                  <span class="news-kicker">Financing</span>
+                  <span class="news-headline">Lower mortgage rates: how much more home could buyers afford?</span>
+                  <span class="news-lines"></span>
+                </span>
+              </span>
+              <span class="stage-title">News Page</span>
+              <span class="stage-caption">Final published article.</span>
+            </button>
+          </div>
+
+          <svg class="aux-connectors" viewBox="0 0 1760 470" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <marker id="arrow-data" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 7 3.5 0 7Z" fill="#78bbae"/></marker>
+              <marker id="arrow-human" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 7 3.5 0 7Z" fill="#929894"/></marker>
+            </defs>
+            <path d="M262 96 L262 159" fill="none" stroke="#929894" stroke-width="1.2" stroke-dasharray="5 5" marker-end="url(#arrow-human)"/>
+            <path d="M530 96 L530 112" fill="none" stroke="#929894" stroke-width="1.2" stroke-dasharray="5 5" marker-end="url(#arrow-human)"/>
+            <path d="M530 378 L530 346" fill="none" stroke="#78bbae" stroke-width="1.3" marker-end="url(#arrow-data)"/>
+          </svg>
+
+          <div class="support-input trend-human-input">
+            <div class="optional-human">
+              <span class="person-icon" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="2.4" stroke="currentColor" stroke-width="1.4"/><path d="M3.6 13c.45-2.45 1.9-3.7 4.4-3.7s3.95 1.25 4.4 3.7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </span>
+              <span class="human-copy"><strong>Human Input</strong><small>optional</small></span>
+            </div>
+          </div>
+
+          <div class="support-input story-data-input">
+            <button class="data-object" type="button" data-stage="scout-data" aria-haspopup="dialog" aria-expanded="false">Scout Data</button>
+          </div>
+
+          <div class="support-input story-human-input">
+            <div class="optional-human">
+              <span class="person-icon" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="2.4" stroke="currentColor" stroke-width="1.4"/><path d="M3.6 13c.45-2.45 1.9-3.7 4.4-3.7s3.95 1.25 4.4 3.7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </span>
+              <span class="human-copy"><strong>Human Input</strong><small>optional</small></span>
+            </div>
+          </div>
+
+          <div class="equation" aria-label="Template plus structured content equals news page">
+            <strong>Template</strong><span>+</span><strong>Structured content</strong><span>=</span><strong>News Page</strong>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="backdrop" id="backdrop" aria-hidden="true"></div>
+  <aside class="popover" id="popover" role="dialog" aria-modal="false" aria-labelledby="popover-title">
+    <div class="popover-header">
+      <h3 id="popover-title"></h3>
+      <button class="popover-close" id="popover-close" type="button" aria-label="Close details">×</button>
+    </div>
+    <div class="popover-body" id="popover-body"></div>
+  </aside>
+
+  <script>
+    const stages = {
+      'trend-signals': {
+        title: 'Trend Signals',
+        body: `
+          <div class="file-example">
+            <span class="file-note">Illustrative example · not verified current data</span>
+            <pre>{
+  "topic": "Lower mortgage rates",
+  "signal": "Interest is rising"
+}</pre>
+          </div>`
+      },
+      'scout-data': {
+        title: 'Scout Data',
+        body: `
+          <div class="file-example">
+            <span class="file-note">Illustrative example · not real Scout Data</span>
+            <pre>{
+  "financingDemand": "increasing",
+  "buyingInterest": "increasing"
+}</pre>
+          </div>`
+      },
+      'story-package': {
+        title: 'Story Package',
+        medium: true,
+        body: `
+          <div class="file-example">
+            <span class="file-note">Illustrative example</span>
+            <pre>{
+  "story": "Lower mortgage rates: how much more home could buyers afford?",
+  "writerBrief": "Explain how lower rates can affect home affordability.",
+  "imageBrief": "Home + financing visual, 16:9"
+}</pre>
+          </div>`
+      },
+      'article-text': {
+        title: 'Article Text',
+        body: `
+          <div class="file-example">
+            <span class="file-note">Illustrative example</span>
+            <pre>{
+  "headline": "Lower mortgage rates: how much more home could buyers afford?",
+  "article": "Generated article text..."
+}</pre>
+          </div>`
+      },
+      'image-asset': {
+        title: 'Image Asset',
+        body: `
+          <div class="file-example">
+            <span class="file-note">Illustrative example</span>
+            <pre>{
+  "asset": "home-financing-hero.jpg",
+  "format": "16:9"
+}</pre>
+          </div>`
+      },
+      quality: {
+        title: 'Quality Gate',
+        medium: true,
+        body: `
+          <p>Checks the generated assets against the Story Package.</p>
+          <ul><li><span class="check">✓</span> Article exists</li><li><span class="check">✓</span> Image exists</li><li><span class="check">✓</span> Article matches the Story Package</li><li><span class="check">✓</span> Image matches the Story Package</li><li><span class="check">✓</span> Sources / required information present</li><li><span class="check">✓</span> Basic technical requirements fulfilled</li></ul>`
+      },
+      'approved-package': {
+        title: 'Approved Package',
+        body: `
+          <div class="file-example">
+            <span class="file-note">Illustrative example</span>
+            <pre>{
+  "article": "article-001",
+  "image": "home-financing-hero.jpg",
+  "status": "approved"
+}</pre>
+          </div>`
+      },
+      news: {
+        title: 'News Page',
+        body: `<p>The Approved Package is rendered using the reusable news template.</p>`
+      }
+    };
+
+    const buttons = [...document.querySelectorAll('[data-stage]')];
+    const popover = document.getElementById('popover');
+    const popoverTitle = document.getElementById('popover-title');
+    const popoverBody = document.getElementById('popover-body');
+    const closeButton = document.getElementById('popover-close');
+    const backdrop = document.getElementById('backdrop');
+    let activeButton = null;
+    let pinned = false;
+    let hideTimer = null;
+
+    function positionPopover(button) {
+      const rect = button.getBoundingClientRect();
+      const gap = 12;
+      const width = popover.offsetWidth;
+      const height = popover.offsetHeight;
+      const margin = 14;
+      let left = rect.left + rect.width / 2 - width / 2;
+      left = Math.max(margin, Math.min(left, window.innerWidth - width - margin));
+      let top = rect.bottom + gap;
+      if (top + height > window.innerHeight - margin) top = rect.top - height - gap;
+      top = Math.max(margin, Math.min(top, window.innerHeight - height - margin));
+      popover.style.left = `${Math.round(left)}px`;
+      popover.style.top = `${Math.round(top)}px`;
+    }
+
+    function showPopover(button, shouldPin = false) {
+      clearTimeout(hideTimer);
+      const content = stages[button.dataset.stage];
+      if (!content) return;
+      if (activeButton && activeButton !== button) activeButton.setAttribute('aria-expanded', 'false');
+      activeButton = button;
+      pinned = shouldPin;
+      button.setAttribute('aria-expanded', String(shouldPin));
+      popoverTitle.textContent = content.title;
+      popoverBody.innerHTML = content.body;
+      popover.classList.toggle('medium', Boolean(content.medium));
+      popover.classList.add('visible');
+      backdrop.classList.toggle('visible', shouldPin);
+      popover.setAttribute('aria-modal', String(shouldPin));
+      requestAnimationFrame(() => positionPopover(button));
+    }
+
+    function closePopover(returnFocus = false) {
+      clearTimeout(hideTimer);
+      const previous = activeButton;
+      if (activeButton) activeButton.setAttribute('aria-expanded', 'false');
+      activeButton = null;
+      pinned = false;
+      popover.classList.remove('visible', 'medium');
+      backdrop.classList.remove('visible');
+      if (returnFocus && previous) previous.focus();
+    }
+
+    function scheduleClose() {
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => {
+        if (!pinned && !popover.matches(':hover')) closePopover();
+      }, 120);
+    }
+
+    buttons.forEach(button => {
+      button.addEventListener('mouseenter', () => { if (!pinned) showPopover(button); });
+      button.addEventListener('mouseleave', scheduleClose);
+      button.addEventListener('focus', () => { if (!pinned) showPopover(button); });
+      button.addEventListener('blur', () => { if (!pinned) scheduleClose(); });
+      button.addEventListener('click', event => {
+        event.stopPropagation();
+        if (pinned && activeButton === button) closePopover(true);
+        else showPopover(button, true);
+      });
+    });
+
+    popover.addEventListener('mouseenter', () => clearTimeout(hideTimer));
+    popover.addEventListener('mouseleave', scheduleClose);
+    closeButton.addEventListener('click', () => closePopover(true));
+    backdrop.addEventListener('click', () => closePopover(true));
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') closePopover(true); });
+    window.addEventListener('resize', () => { if (activeButton) positionPopover(activeButton); });
+    document.querySelector('.canvas-wrap').addEventListener('scroll', () => {
+      if (!pinned) closePopover();
+      else if (activeButton) positionPopover(activeButton);
+    }, { passive: true });
+  </script>
+</body>
+</html>
