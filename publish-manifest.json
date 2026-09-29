@@ -187,17 +187,16 @@
       "slug": "scaling-editorial-lighthouse",
       "project": "Scaling Editorial",
       "sourceRepository": "TODO: source repository not available",
-      "sourcePath": "/Users/dboehme/Projects/Scaling Editorial/index.html",
-      "sourceAbsolutePath": "/Users/dboehme/Projects/Scaling Editorial/index.html",
+      "sourcePath": "/Users/dboehme/Projects/Scaling Editorial/Flow-Chart/flow-chart.html",
+      "sourceAbsolutePath": "/Users/dboehme/Projects/Scaling Editorial/Flow-Chart/flow-chart.html",
       "sourceCommit": "TODO: source commit not available",
-      "sourceHash": "sha256:0ef5038f3c651c421428ac73ca514fd45ae954ff4a95a815b2e75f51d4b04c22",
+      "sourceHash": "sha256:2d7260bad750dfc3fd1839bb4ef778552026e24fc3e5a3869e1e7a9def05c8b5",
       "publicPath": "Scaling Editorial/scaling-editorial-lighthouse/",
       "publicUrl": "https://scout24-creative-ops.github.io/public/Scaling%20Editorial/scaling-editorial-lighthouse/",
       "publishedFiles": [
-        "brain.png",
         "index.html"
       ],
-      "lastPublished": "2026-09-24T12:06:10Z",
+      "lastPublished": "2026-09-29T07:13:14Z",
       "status": "published"
     }
   ]
