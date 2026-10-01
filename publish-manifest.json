@@ -183,6 +183,23 @@
       "status": "published"
     },
     {
+      "title": "Content Plan",
+      "slug": "content-plan",
+      "project": "Scaling Editorial",
+      "sourceRepository": "TODO: source repository not available",
+      "sourcePath": "/Users/dboehme/Projects/Scaling Editorial/Flow-Chart/content-planning.html",
+      "sourceAbsolutePath": "/Users/dboehme/Projects/Scaling Editorial/Flow-Chart/content-planning.html",
+      "sourceCommit": "TODO: source commit not available",
+      "sourceHash": "sha256:0ee2a18998cd2ce5a423bd6bbbade916367e67cdef0c714ed8c179008706f77a",
+      "publicPath": "Scaling Editorial/content-plan/",
+      "publicUrl": "https://scout24-creative-ops.github.io/public/Scaling%20Editorial/content-plan/",
+      "publishedFiles": [
+        "index.html"
+      ],
+      "lastPublished": "2026-10-01T11:03:36Z",
+      "status": "published"
+    },
+    {
       "title": "Scaling Editorial Lighthouse",
       "slug": "scaling-editorial-lighthouse",
       "project": "Scaling Editorial",
@@ -190,13 +207,47 @@
       "sourcePath": "/Users/dboehme/Projects/Scaling Editorial/Flow-Chart/flow-chart.html",
       "sourceAbsolutePath": "/Users/dboehme/Projects/Scaling Editorial/Flow-Chart/flow-chart.html",
       "sourceCommit": "TODO: source commit not available",
-      "sourceHash": "sha256:2d7260bad750dfc3fd1839bb4ef778552026e24fc3e5a3869e1e7a9def05c8b5",
+      "sourceHash": "sha256:09886a4c06422dc97fabad6a77c321a56fd0be9e80a0804ca235ea502622591f",
       "publicPath": "Scaling Editorial/scaling-editorial-lighthouse/",
       "publicUrl": "https://scout24-creative-ops.github.io/public/Scaling%20Editorial/scaling-editorial-lighthouse/",
       "publishedFiles": [
         "index.html"
       ],
-      "lastPublished": "2026-09-29T07:13:14Z",
+      "lastPublished": "2026-10-01T11:03:35Z",
+      "status": "published"
+    },
+    {
+      "title": "Trend Finder Matrix",
+      "slug": "trend-finder-matrix",
+      "project": "Scaling Editorial",
+      "sourceRepository": "TODO: source repository not available",
+      "sourcePath": "/Users/dboehme/Projects/Scaling Editorial/Flow-Chart/master-matrix.html",
+      "sourceAbsolutePath": "/Users/dboehme/Projects/Scaling Editorial/Flow-Chart/master-matrix.html",
+      "sourceCommit": "TODO: source commit not available",
+      "sourceHash": "sha256:7401b219882f14ec79a68e647caf1c30624b5e42284b9f0e61700b33f589af9a",
+      "publicPath": "Scaling Editorial/trend-finder-matrix/",
+      "publicUrl": "https://scout24-creative-ops.github.io/public/Scaling%20Editorial/trend-finder-matrix/",
+      "publishedFiles": [
+        "index.html"
+      ],
+      "lastPublished": "2026-10-01T11:03:35Z",
+      "status": "published"
+    },
+    {
+      "title": "Working Plan",
+      "slug": "working-plan",
+      "project": "Scaling Editorial",
+      "sourceRepository": "TODO: source repository not available",
+      "sourcePath": "/Users/dboehme/Projects/Scaling Editorial/Flow-Chart/mvp-workplan.html",
+      "sourceAbsolutePath": "/Users/dboehme/Projects/Scaling Editorial/Flow-Chart/mvp-workplan.html",
+      "sourceCommit": "TODO: source commit not available",
+      "sourceHash": "sha256:f4d77d71c5b3117b36e19c1a3cb48732ad8b7356672e149cef327ff04c6079a3",
+      "publicPath": "Scaling Editorial/working-plan/",
+      "publicUrl": "https://scout24-creative-ops.github.io/public/Scaling%20Editorial/working-plan/",
+      "publishedFiles": [
+        "index.html"
+      ],
+      "lastPublished": "2026-10-01T11:03:36Z",
       "status": "published"
     }
   ]

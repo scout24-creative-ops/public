@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light">
-  <title>Scaling Editorial Lighthouse</title>
+  <meta name="color-scheme" content="dark">
+  <title>Scaling Editorial · Editorial Flow</title>
   <style>
     :root {
       --ink: #17191c;
@@ -100,7 +100,7 @@
 
     .canvas-wrap {
       overflow-x: auto;
-      padding: 0 clamp(12px, 2vw, 34px) 16px;
+      padding: 0 0 16px;
       scrollbar-color: #afb5b1 transparent;
       scrollbar-width: thin;
     }
@@ -109,7 +109,7 @@
       position: relative;
       width: 1840px;
       height: 950px;
-      margin: 0 auto;
+      margin: 0;
       overflow: hidden;
       border: 1px solid var(--line);
       border-radius: 24px;
@@ -753,16 +753,6 @@
       pointer-events: auto;
     }
 
-    .detail-popover::before {
-      display: block;
-      width: 34px;
-      height: 4px;
-      margin-bottom: 15px;
-      border-radius: 99px;
-      background: var(--accent);
-      content: "";
-    }
-
     .detail-popover h2 {
       margin: 0;
       font-size: 24px;
@@ -891,6 +881,98 @@
       line-height: 1.4;
     }
 
+    .detail-popover .detail-step-label {
+      display: inline-grid;
+      min-width: 88px;
+      min-height: 34px;
+      margin: 28px 0 0;
+      place-items: center;
+      padding: 8px 14px;
+      border: 1px solid #456171;
+      border-radius: 9px;
+      color: #eef3f1;
+      background: #21343f;
+      font-size: 13px;
+      font-weight: 750;
+      line-height: 1.15;
+      letter-spacing: 0;
+      text-align: center;
+      text-transform: none;
+    }
+
+    .detail-popover .detail-step-label + p {
+      margin-top: 7px;
+      color: #dce8e4;
+      font-size: 13.5px;
+      font-weight: 650;
+      line-height: 1.4;
+    }
+
+    .detail-popover .detail-step-label + p + p { margin-top: 5px; }
+
+    .detail-popover .detail-example-label {
+      margin: 8px 0 0;
+      color: #dce8e4;
+      font-size: 13.5px;
+      font-weight: 700;
+      line-height: 1.4;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    .detail-popover .detail-example-label + p { margin-top: 3px; }
+    .detail-popover ul + .detail-example-label { margin-top: 8px; }
+
+    .detail-example-card {
+      margin-top: 8px;
+      padding: 11px 12px;
+      border: 1px solid #3d4542;
+      border-radius: 10px;
+      background: #252b29;
+    }
+
+    .detail-example-card .detail-example-label {
+      display: block;
+      margin: 0;
+      color: #dce3e0;
+    }
+
+    .detail-example-card .detail-example-label + p { margin-top: 4px; }
+    .detail-example-card p { margin-top: 7px; }
+    .detail-example-card ul { margin-top: 5px; }
+
+    .detail-popover,
+    .detail-popover * { cursor: default; }
+
+    .detail-popover [data-detail],
+    .detail-popover [data-detail]:hover,
+    .detail-popover [data-detail][aria-expanded="true"] {
+      box-shadow: none;
+      transform: none;
+    }
+
+    .automation-chain {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 7px;
+      margin-top: 14px;
+      color: #c0e9e1;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .automation-chain span {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .automation-chain span:not(:last-child)::after {
+      color: #71807b;
+      content: "→";
+    }
+
     .detail-rule {
       margin-top: 14px;
       padding: 11px 12px;
@@ -963,7 +1045,7 @@
     }
 
     .canvas-wrap {
-      padding: 0 20px;
+      padding: 0;
       overflow-x: auto;
       overflow-y: hidden;
     }
@@ -2286,6 +2368,16 @@
     .presentation-story { left: 415px; width: 300px; }
     .presentation-content { left: 825px; width: 270px; }
 
+    .presentation-story .presentation-internals {
+      right: 14px;
+      left: 14px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .presentation-story .presentation-step { padding: 6px 4px; }
+    .presentation-story .presentation-step h3 { font-size: 10.5px; }
+
     .presentation-card .step-label,
     .presentation-learning .step-label {
       position: absolute;
@@ -2588,6 +2680,49 @@
     .presentation-trend-learning { left: 118px; }
     .presentation-story-learning { left: 523px; }
 
+    .presentation-automation {
+      position: absolute;
+      top: 548px;
+      left: 350px;
+      z-index: 5;
+      display: grid;
+      width: 54px;
+      height: 54px;
+      place-items: center;
+      padding: 0;
+      border: 1px solid #3d6074;
+      border-radius: 50%;
+      color: #eef3f1;
+      background: #192b37;
+    }
+
+    .presentation-automation svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .presentation-mvp-approach {
+      position: absolute;
+      top: 559px;
+      left: 317px;
+      z-index: 5;
+      min-width: 120px;
+      min-height: 32px;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 14px;
+      border: 1px solid #315f56;
+      border-radius: 999px;
+      color: #b3c0bc;
+      background: #183a35;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1;
+      text-align: center;
+    }
+
+    body.mode-mvp .presentation-mvp-approach { display: inline-flex; }
+
     /* Presentation MVP mode */
     .mode-controls {
       position: absolute;
@@ -2604,34 +2739,6 @@
       position: static;
       transform: none;
     }
-
-    .mvp-info-button {
-      width: 26px;
-      height: 26px;
-      padding: 0;
-      border: 1px solid #35423e;
-      border-radius: 50%;
-      color: #9db0aa;
-      background: #171d1b;
-      font: inherit;
-      font-size: 13px;
-      font-weight: 760;
-      line-height: 1;
-      cursor: pointer;
-    }
-
-    .mvp-info-button:hover,
-    .mvp-info-button[aria-expanded="true"] {
-      color: #d7e6e1;
-      background: #23312d;
-    }
-
-    .mvp-info-button:focus-visible {
-      outline: 2px solid #5d8178;
-      outline-offset: 2px;
-    }
-
-    body.mode-mvp .mode-controls .mvp-info-button { display: inline-grid; place-items: center; }
 
     .presentation-mvp-scope {
       position: absolute;
@@ -2871,29 +2978,184 @@
       .mode-controls { position: static; align-self: center; transform: none; }
       .working-note { border-radius: 12px; }
       main { padding-top: 12px; }
-      .canvas-wrap { padding-inline: 10px; overflow-x: auto; }
+      .canvas-wrap { padding-inline: 0; overflow-x: auto; }
       .canvas { border-radius: 18px; }
       .detail-popover { width: calc(100vw - 20px); padding: 18px; }
       .detail-grid,
       .detail-grid.three { grid-template-columns: 1fr; }
+    }
+
+    /* Shared Editorial Lighthouse document frame */
+    html,
+    body { height: auto; min-height: 100%; }
+
+    body { overflow: auto; background: #101514; }
+
+    .shell {
+      display: block;
+      width: min(1380px, calc(100% - 40px));
+      height: auto;
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 38px 0 56px;
+    }
+
+    .topbar {
+      display: block;
+      min-height: 0;
+      padding: 0;
+      background: transparent;
+    }
+
+    .flow-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .updated-label {
+      display: inline-flex;
+      margin: 0;
+      padding: 5px 9px;
+      border: 1px solid #40887b;
+      border-radius: 999px;
+      color: #b9e8df;
+      background: #183a35;
+      font-size: 10px;
+      font-weight: 760;
+      letter-spacing: .075em;
+    }
+
+    .topbar h1 {
+      margin: 13px 0 0;
+      color: #f1f5f3;
+      font-size: clamp(31px, 3.5vw, 48px);
+      line-height: 1.04;
+      letter-spacing: -.045em;
+      text-align: left;
+    }
+
+    .flow-subline {
+      margin: 9px 0 0;
+      color: #91a19b;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .mode-controls {
+      position: static;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      transform: none;
+    }
+
+    .mode-controls .mode-switch,
+    .mode-controls .language-switch {
+      position: static;
+      display: inline-flex;
+      padding: 3px;
+      border: 1px solid #35423e;
+      border-radius: 999px;
+      background: #171d1b;
+      transform: none;
+    }
+
+    .mode-switch button,
+    .language-switch button {
+      min-width: 54px;
+      padding: 7px 10px;
+      font-size: 10px;
+    }
+
+    .mode-switch button:hover,
+    .language-switch button:hover { color: #b8c5c1; }
+
+    .mode-switch button:focus-visible,
+    .language-switch button:focus-visible {
+      outline: 2px solid #6d9a90;
+      outline-offset: 2px;
+    }
+
+    main { min-height: 0; margin-top: 27px; padding: 0; overflow: visible; }
+    .canvas-wrap { padding: 0; overflow-x: auto; overflow-y: hidden; }
+    .canvas { width: 1380px; height: 560px; margin: 0; }
+    .process-lines,
+    .access-lines,
+    .feedback-lines { height: 488px; }
+
+    .presentation-source { top: 10px; height: 64px; }
+    .presentation-source h2 { font-size: 20px; }
+
+    .presentation-card { top: 125px; height: 225px; }
+    .presentation-card > h2 { top: 45px; }
+    .presentation-card > .caption { top: 84px; }
+    .presentation-internals { top: 122px; gap: 7px; }
+    .presentation-step { height: 46px; padding: 6px; }
+    .presentation-agent { height: 66px; gap: 4px; padding: 6px; }
+    .presentation-story .presentation-internals { right: 12px; left: 12px; gap: 5px; }
+
+    .presentation-package { width: 86px; height: 44px; padding: 6px 10px; }
+    .presentation-signal { top: 215px; }
+    .presentation-story-package { top: 215px; }
+
+    .human-review-circle { top: 135px; width: 170px; height: 170px; }
+    .human-review-circle > .step-label { top: -38px; }
+    .human-review-circle .person-icon { margin-top: 18px; }
+    .human-review-circle > h3 { margin-bottom: 9px; }
+    .presentation-production-package { width: 98px; height: 42px; margin-bottom: 8px; }
+
+    .presentation-publish { top: 315px; height: 235px; }
+    .presentation-publish > h3 { top: 43px; min-height: 54px; padding: 8px; }
+    .presentation-publish > .page-stack { top: 116px; }
+
+    .presentation-learning { top: 390px; height: 150px; }
+    .presentation-learning > h3 { top: 40px; }
+    .presentation-learning > .caption { top: 68px; }
+    .presentation-learning .presentation-internals { top: 102px; }
+    .presentation-learning .presentation-step { height: 31px; }
+    .presentation-learning-package { top: 430px; height: 42px; }
+    .presentation-automation { top: 428px; width: 48px; height: 48px; }
+    .presentation-mvp-approach { top: 438px; }
+    .presentation-mvp-scope { top: 112px; padding: 8px 10px; }
+    .presentation-mvp-scope li { padding-block: 3px; }
+
+    @media (min-width: 1200px) and (min-height: 740px) {
+      html,
+      body { overflow: auto; }
+    }
+
+    @media (max-width: 760px) {
+      .shell { width: calc(100% - 24px); padding: 24px 0 36px; }
+      .topbar { display: block; padding: 0; }
+      .flow-top-row { align-items: flex-start; flex-wrap: wrap; }
+      .mode-controls { align-self: auto; flex-wrap: wrap; }
+      .topbar h1 { font-size: clamp(31px, 10vw, 48px); }
+      main { margin-top: 22px; padding: 0; }
+      .canvas-wrap { padding: 0; }
+      .canvas { border-radius: 14px; }
     }
   </style>
 </head>
 <body class="mode-target">
   <div class="shell">
     <header class="topbar">
-      <h1>Scaling Editorial Lighthouse</h1>
-      <div class="mode-controls">
-        <div class="mode-switch" role="group" aria-label="Architekturansicht" data-i18n-aria="architectureView">
-          <button type="button" data-mode="target" aria-pressed="true">Target</button>
-          <button type="button" data-mode="mvp" aria-pressed="false">MVP</button>
+      <div class="flow-top-row">
+        <span class="updated-label">UPDATED · 1 OCT 2026</span>
+        <div class="mode-controls">
+          <div class="mode-switch" role="group" aria-label="Architekturansicht" data-i18n-aria="architectureView">
+            <button type="button" data-mode="target" aria-pressed="true">Target</button>
+            <button type="button" data-mode="mvp" aria-pressed="false">MVP</button>
+          </div>
+          <div class="language-switch" role="group" aria-label="Sprache" data-i18n-aria="language">
+            <button type="button" data-language="de" aria-pressed="true">DE</button>
+            <button type="button" data-language="en" aria-pressed="false">EN</button>
+          </div>
         </div>
-        <div class="language-switch" role="group" aria-label="Sprache" data-i18n-aria="language">
-          <button type="button" data-language="de" aria-pressed="true">DE</button>
-          <button type="button" data-language="en" aria-pressed="false">EN</button>
-        </div>
-        <button class="mvp-info-button mvp-only" type="button" data-detail="detail-mvp-approach" tabindex="0" aria-label="Details zum MVP-Ansatz" aria-haspopup="dialog" aria-expanded="false">ⓘ</button>
       </div>
+      <h1>Scaling Editorial · Editorial Flow</h1>
+      <p class="flow-subline" data-i18n="headerDescription"></p>
     </header>
 
     <main>
@@ -2934,8 +3196,12 @@
             <span class="step-label">1 Discover</span>
             <h2>Trend Finder</h2>
             <span class="caption" data-i18n="trendCaption">Erkennt relevante Marktsignale</span>
-            <div class="presentation-internals target-only" aria-label="Trend Finder Schritte" data-i18n-aria="trendSteps"><span class="presentation-step">Focus</span><span class="presentation-step">Monitor</span><span class="presentation-step">Detect</span></div>
-            <ul class="presentation-mvp-scope mvp-only" aria-label="Trend Finder MVP Umfang" data-i18n-aria="trendScope"><li data-i18n="trendScope1">1–2 Signal Types</li><li data-i18n="trendScope2">Einfach zugängliche Data Sources</li><li data-i18n="trendScope3">Feste Checks pro Signal Type</li><li data-i18n="trendScope4">Manueller Trigger</li></ul>
+            <div class="presentation-internals target-only" aria-label="Trend Finder Schritte" data-i18n-aria="trendSteps">
+              <span class="presentation-step">Focus</span>
+              <span class="presentation-step">Monitor</span>
+              <span class="presentation-step">Detect</span>
+            </div>
+            <ul class="presentation-mvp-scope mvp-only" aria-label="Trend Finder MVP Umfang" data-i18n-aria="trendScope"><li data-i18n="trendScope1">1–2 Trendfelder</li><li data-i18n="trendScope2">Einfach zugängliche Data Sources</li><li data-i18n="trendScope3">Reduzierter Suchraum</li><li data-i18n="trendScope4">Manueller Trigger</li></ul>
           </article>
 
           <div class="data-object package-object presentation-package presentation-signal" data-detail="detail-signal" tabindex="0" aria-label="Details zum Signal Package" aria-haspopup="dialog" aria-expanded="false">
@@ -2947,13 +3213,16 @@
             <h2>Story Creator</h2>
             <span class="caption" data-i18n="storyCaption">Entwickelt Story Angles</span>
             <div class="presentation-internals target-only" aria-label="Story Creator Schritte" data-i18n-aria="storySteps">
-              <section class="presentation-step" data-detail="detail-analyse" tabindex="0" aria-label="Details zu Analyse und Validierung" aria-haspopup="dialog" aria-expanded="false">
+              <section class="presentation-step">
                 <h3>Validate</h3>
               </section>
-              <section class="presentation-step" data-detail="detail-angles" tabindex="0" aria-label="Details zur Entwicklung von Story-Winkeln" aria-haspopup="dialog" aria-expanded="false">
+              <section class="presentation-step">
+                <h3>Human<br>Relevance</h3>
+              </section>
+              <section class="presentation-step">
                 <h3>Shape</h3>
               </section>
-              <section class="presentation-step" data-detail="detail-select" tabindex="0" aria-label="Details zu Bewertung und Auswahl" aria-haspopup="dialog" aria-expanded="false">
+              <section class="presentation-step">
                 <h3>Select</h3>
               </section>
             </div>
@@ -3007,6 +3276,17 @@
           <div class="data-object package-object presentation-package presentation-learning-package presentation-story-learning" data-detail="detail-learning" tabindex="0" aria-label="Details zum Learning Package für den Story Creator" aria-haspopup="dialog" aria-expanded="false">
             <strong>Learning<br>Package</strong>
           </div>
+
+          <div class="presentation-automation target-only" data-detail="detail-workflow-automation" tabindex="0" aria-label="Details zur Workflow Automation" aria-haspopup="dialog" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M18.4 8.1A7.3 7.3 0 0 0 6.2 6.4L4.5 8.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M4.5 4.9v3.2h3.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M5.6 15.9a7.3 7.3 0 0 0 12.2 1.7l1.7-1.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M19.5 19.1v-3.2h-3.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <div class="presentation-mvp-approach mvp-only" data-detail="detail-mvp-approach" tabindex="0" aria-label="Details zum MVP-Ansatz" aria-haspopup="dialog" aria-expanded="false">MVP Approach</div>
         </section>
       </div>
     </main>
@@ -3036,118 +3316,118 @@
 
   <template id="detail-trend">
     <h2>Trend Finder</h2>
-    <p>Der Trend Finder ist das Radar des Editorial-Systems. Er arbeitet in drei Schritten: Focus definiert, welche Themen für uns relevant sind, Monitor legt fest, welche Quellen und Daten wir dafür beobachten, und Detect erkennt konkrete Signale anhand definierter Signal Types und der jeweils zugehörigen Erkennungslogik.</p>
-
-    <h3 class="trend-section-title">Focus</h3>
-    <p><strong>Editorial Plan – Was ist für uns relevant?</strong></p>
-    <ul><li>Themenfelder / Editorial Categories</li><li>Unterthemen und konkrete Beobachtungsfelder</li><li>Zielgruppen und Nutzerbedürfnisse</li><li>redaktionelle Prioritäten</li><li>relevante Formate</li><li>zeitliche oder saisonale Schwerpunkte</li></ul>
-    <p>Focus definiert den redaktionellen Suchraum des Trend Finders.</p>
-
-    <h3 class="trend-section-title">Monitor</h3>
-    <p><strong>Monitoring Plan – Wie und wo beobachten wir diese Themen?</strong></p>
-    <ul><li>relevante interne und externe Quellen</li><li>Datensätze und Data Queries</li><li>Regionen und Marktsegmente</li><li>Beobachtungsrhythmus / Frequenz</li><li>Signal-Kategorien</li></ul>
-    <p>Monitoring beschreibt nicht, ob etwas bereits ein Signal ist, sondern welche Quellen für definierte Themen regelmäßig oder ereignisbasiert beobachtet werden.</p>
-
-    <h3 class="trend-section-title">Detect</h3>
-    <p><strong>Signal Types &amp; Detection – Wann wird aus einer Beobachtung ein relevantes Signal?</strong></p>
-    <p>Die Detection Logic beschreibt, wie der Trend Finder innerhalb definierter Signal Types konkrete Auffälligkeiten erkennt. Die Erkennung kann datenbasiert, ereignisbasiert oder durch verändertes Nutzerinteresse ausgelöst werden.</p>
-    <ul><li>Nachfrage oder Angebot verändert sich auffällig</li><li>Preise weichen deutlich vom bisherigen Verlauf oder Vergleichsmarkt ab</li><li>relevantes neues Markt- oder Regulierungsevent</li><li>Search-Interesse steigt deutlich</li><li>verifiziertes Property Event tritt ein</li></ul>
-
-    <div class="monitoring-plan-scroll">
-      <table class="monitoring-plan trend-monitoring-table">
-        <colgroup><col style="width:14%"><col style="width:24%"><col style="width:27%"><col style="width:15%"><col style="width:20%"></colgroup>
-        <thead><tr><th>Themenfeld</th><th>Unterthemen / Beobachtungsfelder</th><th>Relevante Quellen</th><th>Monitoring</th><th>Signal-Beispiele</th></tr></thead>
-        <tbody>
-          <tr><td>Immobilien &amp; Markt</td><td>Mietpreise, Kaufpreise, Angebot, Nachfrage, Bauzinsen, Regulierung, Neubau, interessante Listings / Inventar</td><td>IS24 Preis- und Marktdaten, WohnBarometer, Angebotsbestand, Nachfrage-/Engagementdaten, Pricing Data, offizielle / regulatorische Quellen, externe Marktdaten</td><td>Preise, Nachfrage und Angebot regelmäßig, z. B. wöchentlich; Politik, Zinsen und News ereignisbasiert bzw. häufiger</td><td>Nachfrage steigt deutlich stärker als ein Vergleichssegment; Preise weichen vom historischen Verlauf ab; Angebot verändert sich auffällig; neue Regulierung; auffälliges Inventar</td></tr>
-          <tr><td>Promis &amp; Immobilien</td><td>Käufe / Verkäufe, Listings, Umzüge, Renovierungen, Home Tours, Architektur prominenter Immobilien</td><td>seriöse News- und Immobilienmedien, öffentliche Statements, autorisierte Home Tours, Listings, geeignete öffentliche Quellen</td><td>eher täglich / ereignisbasiert</td><td>bestätigtes Listing oder Verkauf; veröffentlichte Home Tour; öffentlich bestätigte Renovierung oder Wohnungswechsel</td></tr>
-          <tr><td>Wohnen &amp; Design</td><td>Interior, kleine Räume, Architektur, Umbauten, Umnutzungen, Grundrisse, Wohntrends</td><td>Architektur- und Designmedien, Listings, dokumentierte Projekte, Search-Trends, bestehende Wissen-Inhalte</td><td>mehrmals wöchentlich / trendbasiert</td><td>Wohn- oder Design-Thema gewinnt sichtbar an Relevanz; auffälliges dokumentiertes Projekt; wiederkehrendes Muster in Listings</td></tr>
-          <tr><td>Städte &amp; Regionen</td><td>Viertel, Stadt-Land-Vergleich, Pendeln, Infrastruktur, Wohnlagen, regionale Preis- und Nachfrageentwicklung</td><td>IS24 Geo-, Preis-, Angebots- und Nachfragedaten, öffentliche Regionaldaten, lokale Quellen</td><td>regelmäßig, z. B. wöchentlich; lokale Ereignisse zusätzlich reaktiv</td><td>Region entwickelt sich deutlich anders als Vergleichsregionen; Nachfrage oder Angebot verändert sich auffällig; Infrastrukturprojekt verändert den Wohnkontext</td></tr>
-          <tr><td>Tipps &amp; Orientierung</td><td>Mieten, Kaufen, Finanzierung, Besichtigung, Gesamtkosten, Regulierung, Einordnung aktueller Marktentwicklungen</td><td>Wissen-Inhalte, GSC / Search-Signale, Google Trends, offizielle Quellen, IS24 Services / Calculator, Markt- und News-Signale</td><td>Search regelmäßig; regulatorische Quellen laufend; stark ereignisgetrieben</td><td>neue Regel erzeugt Erklärungsbedarf; wiederkehrende Nutzerfrage; Marktveränderung macht Erklärung nötig; Suchinteresse steigt deutlich</td></tr>
-        </tbody>
-      </table>
+    <p>Der Trend Finder sucht systematisch nach Entwicklungen, die für unsere redaktionellen Themen interessant sein könnten. Er legt fest, was beobachtet wird, untersucht dafür definierte Daten und Quellen und erkennt auffällige Veränderungen oder Muster.</p>
+    <p>Relevante Beobachtungen werden als strukturiertes <strong>Signal Package</strong> an den Story Creator übergeben. Der Trend Finder findet das Signal – er entwickelt daraus noch nicht die Story.</p>
+    <h3 class="detail-step-label">Focus</h3>
+    <p><strong>Was wollen wir beobachten?</strong></p>
+    <p>Focus legt fest, welche Themen und Entwicklungen für uns redaktionell relevant sind. Damit definiert er, in welchen Bereichen der Trend Finder überhaupt nach Signalen sucht.</p>
+    <ul><li>Themen- und Trendfelder</li><li>konkrete Beobachtungsfelder</li><li>Zielgruppen und Nutzerbedürfnisse</li><li>redaktionelle Prioritäten</li><li>saisonale oder zeitliche Schwerpunkte</li></ul>
+    <div class="detail-example-card"><strong class="detail-example-label">Beispiel</strong>
+      <p>Wir wollen beobachten, wie sich die <strong>Angebotspreise von Eigentumswohnungen</strong> entwickeln – insgesamt, aber auch zwischen Regionen und unterschiedlichen Wohnungsgrößen.</p>
     </div>
-
+    <h3 class="detail-step-label">Monitor</h3>
+    <p><strong>Was beobachten wir dafür konkret?</strong></p>
+    <p>Monitor legt fest, welche Daten, Quellen und Vergleiche innerhalb des gewählten Focus beobachtet werden. Dadurch entsteht ein konkreter Monitoring- und Suchraum.</p>
+    <ul><li>Datenquellen</li><li>Kennzahlen</li><li>Regionen</li><li>Marktsegmente</li><li>Zeiträume und Vergleiche</li><li>Monitoring-Frequenz</li></ul>
+    <div class="detail-example-card"><strong class="detail-example-label">Beispiel</strong>
+      <p>Für die Preisentwicklung beobachten wir unter anderem:</p>
+      <ul><li>Angebotspreis pro m²</li><li>Eigentumswohnungen</li><li>unterschiedliche Regionen</li><li>unterschiedliche Wohnungsgrößen</li><li>Vergleich zum Vorjahreszeitraum</li></ul>
+      <p>Für Potsdam vergleichen wir zum Beispiel <strong>2- und 4-Zimmer-Wohnungen im September 2026 mit September 2025</strong>.</p>
+    </div>
+    <h3 class="detail-step-label">Detect</h3>
+    <p><strong>Was ist auffällig?</strong></p>
+    <p>Detect führt die definierten Vergleiche durch und sucht nach Veränderungen oder Unterschieden, die genauer untersucht werden sollten. Dabei wird auch geprüft, ob die Datengrundlage ausreichend belastbar ist.</p>
+    <ul><li>auffällige Veränderungen erkennen</li><li>Regionen oder Segmente vergleichen</li><li>Ausreißer von stabileren Mustern unterscheiden</li><li>Fallzahlen und Datenqualität prüfen</li><li>relevante Signale auswählen</li></ul>
+    <div class="detail-example-card"><strong class="detail-example-label">Beispiel</strong>
+      <p>In Potsdam zeigt sich:</p>
+      <ul><li>4-Zimmer-Wohnungen: <strong>+9,4 %</strong></li><li>2-Zimmer-Wohnungen: <strong>+2,1 %</strong></li><li>Gesamtmarkt: <strong>+4,3 %</strong></li></ul>
+      <p>Die Entwicklung ist außerdem über mehrere Quartale sichtbar.</p>
+      <p>Das Signal lautet:</p>
+      <p><strong>Größere Eigentumswohnungen entwickeln sich in Potsdam deutlich stärker als kleinere.</strong></p>
+      <p>Noch ohne Erklärung, warum das passiert oder welche Story daraus entsteht.</p>
+    </div>
   </template>
 
   <template id="detail-signal">
     <h2>Signal Package</h2>
-    <ul><li><strong>Signal:</strong> Nachfrage nach kleinen Wohnungen steigt auffällig</li><li><strong>Quelle:</strong> IS24 Nachfrage- und Marktdaten</li><li><strong>Zeitraum:</strong> letzte 12 Monate</li><li><strong>Segment:</strong> 1–2-Zimmer-Wohnungen</li><li><strong>Nachfrageentwicklung:</strong> +22 %</li><li><strong>Vergleich:</strong> größere Wohnungen im gleichen Zeitraum +6 %</li><li><strong>Regionen mit stärkstem Anstieg:</strong> Berlin, Hamburg und Köln</li><li><strong>Signaltyp:</strong> Nachfrage-Trend</li></ul>
+    <p>Das Signal Package ist der strukturierte Output des Trend Finders. Es beschreibt die gefundene Auffälligkeit so, dass der Story Creator direkt mit der weiteren Untersuchung beginnen kann.</p>
+    <ul><li>Signal</li><li>Region und Segment</li><li>Zeitraum</li><li>Kennzahl</li><li>Vergleichswerte</li><li>Datenquelle</li><li>Datenqualität</li><li>bekannte Einschränkungen</li></ul>
+    <h3 class="detail-section-title">Beispiel</h3>
+    <p><strong>Signal:</strong> 4-Zimmer-Eigentumswohnungen in Potsdam zeigen deutlich stärker gestiegene Angebotspreise als 2-Zimmer-Wohnungen.</p>
+    <p><strong>Vergleich:</strong></p>
+    <ul><li>4 Zimmer: +9,4 %</li><li>2 Zimmer: +2,1 %</li><li>Gesamtmarkt: +4,3 %</li></ul>
+    <p><strong>Zeitraum:</strong> September 2026 vs. September 2025</p>
+    <p><strong>Hinweis:</strong> Angebotspreise aktiver Inserate, keine erzielten Verkaufspreise.</p>
   </template>
 
   <template id="detail-story-creator">
     <h2>Story Creator</h2>
-    <p>Der Story Creator macht aus einem relevanten Signal eine belastbare redaktionelle Story. Er recherchiert und validiert zusätzlichen Kontext, entwickelt unterschiedliche Story-Richtungen und wählt anschließend den stärksten belegbaren Ansatz für die Produktion.</p>
+    <p>Der Story Creator untersucht und validiert das Signal, recherchiert zusätzlichen Kontext und entwickelt daraus unterschiedliche journalistische Perspektiven. Anschließend trifft er die redaktionelle Entscheidung für genau eine Story.</p>
 
-    <h3 class="detail-section-title">Validate</h3>
+    <h3 class="detail-step-label">Validate</h3>
     <p class="detail-subline"><strong>Research &amp; Validation – Ist das Signal belastbar und ausreichend verstanden?</strong></p>
+    <p>Validate prüft, ob das eingehende Signal genügend Substanz für eine Story hat und welcher zusätzliche Kontext benötigt wird.</p>
     <ul><li>Signal und zugrunde liegende Daten prüfen</li><li>historische Entwicklung und Vergleichswerte einordnen</li><li>Regionen oder Marktsegmente vergleichen</li><li>zusätzlichen internen und externen Kontext recherchieren</li><li>Datenqualität, Aktualität und Quellen prüfen</li><li>alternative Erklärungen berücksichtigen</li><li>keine Kausalität ableiten, die die Daten nicht tragen</li></ul>
     <p>Ziel ist zunächst Verständnis und Belastbarkeit – noch nicht die aufmerksamkeitsstärkste Story.</p>
+    <div class="detail-rule">Claims müssen durch belastbare Quellen oder Daten gestützt sein. Korrelation und mögliche Ursache dürfen nicht miteinander verwechselt werden.</div>
 
-    <h3 class="detail-section-title">Shape</h3>
-    <p class="detail-subline"><strong>Story Development – Welche belastbaren Geschichten lassen sich aus dem Signal entwickeln?</strong></p>
-    <ul><li>mehrere mögliche Story-Angles entwickeln</li><li>Nutzerrelevanz sichtbar machen</li><li>IS24 Daten oder Expertise gezielt einbringen</li><li>mögliche regionale, segmentbezogene oder serviceorientierte Perspektiven prüfen</li><li>Search / Discover als mögliche Distribution berücksichtigen, aber nicht zum alleinigen Auswahlkriterium machen</li></ul>
-    <p><strong>Mögliche Angle-Typen:</strong> Marktentwicklung · Angebot vs. Nachfrage · Städte- / Regionenvergleich · bestimmtes Marktsegment · lokale Perspektive · konkrete Auswirkung für Nutzer:innen · überraschende Abweichung von einem größeren Trend</p>
-
-    <h3 class="detail-section-title">Select</h3>
-    <p class="detail-subline"><strong>Editorial Selection – Welcher Story-Angle ist am stärksten und am besten belegbar?</strong></p>
-    <ul><li>Datengrundlage / Quellenstärke</li><li>Nutzerrelevanz</li><li>Informationswert</li><li>Differenzierung</li><li>IS24 Daten / Expertise</li><li>Search / Discover Potenzial</li><li>Spekulations- bzw. Faktenrisiko</li></ul>
-    <p>Ein interessanter Angle wird verworfen, wenn er mit den vorhandenen Fakten nicht ausreichend gestützt werden kann.</p>
-
-    <div class="detail-rule">
-      <strong>Beispiel</strong>
-      <p><strong>Signal:</strong> Die Nachfrage nach kleinen Wohnungen steigt auffällig.</p>
-      <p><strong>Mögliche Story-Richtungen:</strong></p>
-      <ul><li>Klein, gefragt, teuer? Wie sich der Markt für kleine Wohnungen verändert</li><li>Wo kleine Wohnungen besonders knapp werden</li><li>Hohe Nachfrage, wenig Angebot: Welche Städte besonders betroffen sind</li></ul>
+    <h3 class="detail-step-label">Human Relevance</h3>
+    <p><strong>Warum ist das für Menschen interessant?</strong></p>
+    <p>Nach der Validierung wird geprüft, welche Bedeutung die beobachtete Entwicklung für Menschen haben könnte. Der Story Creator übersetzt die Daten dabei noch nicht in künstliche Auswirkungen, sondern sucht nach einer verständlichen und belegbaren menschlichen Perspektive.</p>
+    <ul><li>Wen könnte die Entwicklung betreffen?</li><li>In welcher realen Lebens- oder Entscheidungssituation ist sie relevant?</li><li>Welche natürliche Frage würde ein Leser dazu stellen?</li><li>Was ist überraschend, nützlich oder erklärungsbedürftig?</li><li>Was soll ein Leser nach dem Artikel besser verstehen?</li></ul>
+    <p>Die menschliche Relevanz darf nie stärker formuliert werden, als es die Evidenz erlaubt.</p>
+    <div class="detail-example-card"><strong class="detail-example-label">Beispiel</strong>
+      <p>Aus dem Potsdam-Signal entsteht die Frage:</p>
+      <p><strong>Was bedeutet der deutlich stärkere Preisanstieg größerer Wohnungen für Menschen, die mehr Platz suchen?</strong></p>
+      <p>Eine belastbare menschliche Perspektive wäre:</p>
+      <p><strong>Wer in Potsdam eine größere Eigentumswohnung sucht, trifft auf ein Angebotssegment, dessen Preise deutlich stärker gestiegen sind als bei kleineren Wohnungen.</strong></p>
+      <p>Nicht belegt wäre dagegen beispielsweise die Behauptung, dass Familien dadurch ihre Finanzierung nicht mehr stemmen können.</p>
     </div>
 
-  </template>
+    <h3 class="detail-step-label">Shape</h3>
+    <p><strong>Welche journalistischen Perspektiven lassen sich entwickeln?</strong></p>
+    <p>Shape entwickelt aus validierter Evidenz, zusätzlichem Kontext und Human Relevance zwei bis drei unterschiedliche journalistische Story Angles.</p>
+    <p>Ein guter Angle verbindet:</p>
+    <ul><li>belastbare Evidenz</li><li>menschliche Bedeutung</li><li>eine klare Erkenntnis, Frage oder Spannung</li></ul>
+    <p>Story Angles dürfen unterschiedliche Perspektiven ausprobieren, aber keine Fakten oder Ursachen erfinden.</p>
+    <div class="detail-example-card"><strong class="detail-example-label">Beispiel</strong>
+      <p>Mögliche Angles:</p>
+      <ul><li>Mehr Platz wird in Potsdam deutlich teurer</li><li>Der Gesamtmarkt verdeckt große Unterschiede zwischen Wohnungsgrößen</li><li>4-Zimmer-Wohnungen entwickeln sich deutlich stärker als kleinere Wohnungen</li></ul>
+    </div>
 
-  <template id="detail-analyse">
-    <h2>Validate</h2>
-    <p>Validate prüft, ob das eingehende Signal genügend Substanz für eine Story hat und welcher zusätzliche Kontext benötigt wird.</p>
-    <h3 class="detail-section-title">What gets validated</h3>
-    <p class="detail-subline"><strong>Research &amp; Evidence</strong></p>
-    <ul><li>zugrunde liegende Daten und Zeiträume</li><li>historische Entwicklung</li><li>Angebot und Nachfrage</li><li>Preisentwicklung</li><li>regionale und segmentbezogene Unterschiede</li><li>relevante Vergleichsmärkte</li><li>externe oder regulatorische Einordnung</li><li>Qualität, Aktualität und Herkunft der Quellen</li><li>mögliche alternative Erklärungen</li></ul>
-    <div class="detail-rule">Claims müssen durch belastbare Quellen oder Daten gestützt sein. Korrelation und mögliche Ursache dürfen nicht miteinander verwechselt werden.</div>
-  </template>
-
-  <template id="detail-angles">
-    <h2>Shape</h2>
-    <p>Shape entwickelt aus den validierten Fakten mehrere mögliche redaktionelle Story-Richtungen. Die Perspektive darf variieren – die Faktenbasis nicht.</p>
-    <h3 class="detail-section-title">Possible Story Angles</h3>
-    <ul><li>Marktentwicklung</li><li>Angebot vs. Nachfrage</li><li>Städte- oder Regionenvergleich</li><li>bestimmtes Marktsegment</li><li>lokaler Blickwinkel</li><li>Auswirkungen für Mieter:innen, Käufer:innen oder Eigentümer:innen</li><li>Service- / Orientierungsperspektive</li><li>überraschende Abweichung von einem bekannten Trend</li></ul>
-    <div class="detail-rule">Ein Nachfrage-Signal für kleine Wohnungen könnte beispielsweise als Marktstory, Regionenvergleich oder Service-orientierte Einordnung entwickelt werden.</div>
-    <p><strong>Der Angle soll zusätzlichen Informationswert schaffen und möglichst Scout24 Daten oder Expertise sinnvoll nutzen.</strong></p>
-  </template>
-
-  <template id="detail-select">
-    <h2>Select</h2>
-    <p>Select bewertet die entwickelten Story-Angles und wählt die stärkste belastbare Variante für die weitere Produktion.</p>
-    <h3 class="detail-section-title">Selection Criteria</h3>
-    <ul><li>Stärke der Datengrundlage</li><li>Nutzerrelevanz</li><li>Informationswert</li><li>Differenzierung gegenüber vorhandener Berichterstattung</li><li>Möglichkeit, IS24 Daten oder Expertise einzubringen</li><li>Search / Discover Potenzial</li><li>Spekulations- und Faktenrisiko</li></ul>
-    <div class="detail-rule">Qualität, Distinctiveness und Nutzwert haben Vorrang vor einem Angle, der nur Aufmerksamkeit verspricht.</div>
-    <p>Ein Angle kann verworfen werden, wenn er interessant klingt, aber nicht ausreichend belegt werden kann.</p>
+    <h3 class="detail-step-label">Select</h3>
+    <p><strong>Welche Story soll produziert werden?</strong></p>
+    <p>Select entscheidet sich für <strong>genau einen</strong> Story Angle. Aus diesem werden anschließend Core Story Claim, Story Promise, Primary Headline Direction und Writer Briefing geschärft.</p>
+    <p>Die Auswahl berücksichtigt unter anderem:</p>
+    <ul><li>Evidenzstärke</li><li>Nutzer- und redaktionelle Relevanz</li><li>Informationswert</li><li>Differenzierung</li><li>Search- / Discover-Potenzial</li><li>Spekulations- und Faktenrisiko</li><li>sinnvolle Nutzung von IS24-Daten oder Expertise</li></ul>
+    <p>Ein interessanter Angle wird verworfen, wenn er mit den vorhandenen Fakten nicht ausreichend gestützt werden kann.</p>
+    <div class="detail-example-card"><strong class="detail-example-label">Beispiel</strong>
+      <p><strong>Ausgewählter Angle:</strong> Mehr Platz wird in Potsdam deutlich teurer.</p>
+      <p><strong>Core Story Claim:</strong> In Potsdam verteuern sich größere Eigentumswohnungen deutlich stärker als kleinere.</p>
+      <p><strong>Primary Headline Direction:</strong> Wer in Potsdam mehr Platz braucht, trifft auf deutlich stärker gestiegene Angebotspreise.</p>
+    </div>
   </template>
 
   <template id="detail-story-package">
     <h2>Story Package</h2>
-    <ul><li><strong>Story:</strong> Klein, gefragt, teuer? Wie sich der Markt für kleine Wohnungen verändert</li><li><strong>Kernbotschaft:</strong> Die Nachfrage nach kleinen Wohnungen steigt deutlich stärker als in größeren Segmenten. Gleichzeitig sinkt das verfügbare Angebot und die Angebotsmieten steigen in mehreren großen Städten überdurchschnittlich.</li><li><strong>Zielgruppe / Relevanz:</strong> Wohnungssuchende und Mieter:innen in angespannten urbanen Märkten</li><li><strong>Wichtigste Daten:</strong> Nachfrage 1–2 Zimmer +22 %; größere Wohnungen +6 %; rückläufiges Angebot kleiner Wohnungen; stärkere Mietentwicklung in mehreren Großstädten</li><li><strong>Quellen:</strong> IS24 Nachfrage-, Angebots- und Marktdaten</li><li><strong>Writer-Briefing:</strong> Entwicklung verständlich erklären, regionale Unterschiede zeigen und keine Kausalität behaupten, die sich aus den Daten nicht belegen lässt</li><li><strong>Visual-Briefing:</strong> Nachfrageentwicklung nach Wohnungsgröße sowie Vergleich von Angebot und Angebotsmieten</li></ul>
+    <p>Das Story Package ist die redaktionelle Entscheidung des Story Creators. Es definiert, welche Geschichte produziert werden soll und auf welcher Evidenz sie basiert.</p>
+    <p>Es enthält insbesondere:</p>
+    <ul><li>ausgewählten Story Angle</li><li>Core Story Claim</li><li>Story Promise</li><li>Human Relevance</li><li>Reader Question</li><li>Primary Headline Direction</li><li>Core Evidence</li><li>Supporting Evidence</li><li>Claim Boundaries</li><li>Sources</li><li>Writer Briefing</li><li>Visual Briefing</li></ul>
+    <p>Das Story Package ist damit nicht nur eine Sammlung von Daten, sondern der klare redaktionelle Auftrag für die Produktion.</p>
   </template>
 
   <template id="detail-asset">
     <h2>Content Creator</h2>
-    <p>Der Content Creator setzt das Story Package in konkrete redaktionelle Assets um. Writer, Image Creator und Chart Creator arbeiten auf derselben geprüften Story-Grundlage und produzieren die Bestandteile, die später gemeinsam menschlich geprüft werden.</p>
-    <h3 class="detail-section-title">Writer</h3>
-    <p class="detail-subline"><strong>Article Draft</strong></p>
-    <ul><li>entwickelt den vollständigen Artikelentwurf aus dem Story Package</li><li>übernimmt geprüfte Fakten, Quellen und Vergleiche</li><li>erklärt die Story aus Sicht der relevanten Zielgruppe</li><li>erstellt Headline, Subline und Artikelstruktur</li><li>berücksichtigt definierte Editorial- und SEO-Anforderungen</li><li>ergänzt keine unbelegten Ursachen oder Aussagen</li></ul>
-    <h3 class="detail-section-title">Image Creator</h3>
-    <p class="detail-subline"><strong>Visual Assets</strong></p>
-    <ul><li>erstellt bzw. bereitet passende visuelle Assets vor</li><li>arbeitet auf Basis des Visual Briefings</li><li>berücksichtigt redaktionelle und Brand-Anforderungen</li><li>Bildrechte, Herkunft und zulässige Nutzung müssen nachvollziehbar sein</li><li>Darstellung darf keine Fakten oder Eigenschaften suggerieren, die nicht belegt sind</li></ul>
-    <h3 class="detail-section-title">Chart Creator</h3>
-    <p class="detail-subline"><strong>Data Visualisation</strong></p>
-    <ul><li>übersetzt geprüfte Daten in verständliche Visualisierungen</li><li>macht Entwicklungen und Vergleiche leichter erfassbar</li><li>verwendet ausschließlich die validierte Datengrundlage der Story</li><li>Beschriftung, Zeitraum, Einheit und Vergleichsbasis müssen eindeutig sein</li></ul>
-    <h3 class="detail-section-title">Publishing Requirements</h3>
-    <p>Die Produktion muss die definierten Anforderungen für Titles, Imagery, Metadata, Authorship, Structured Data, Internal Linking und weitere Publishing-Felder berücksichtigen. Diese Anforderungen sind Teil des Editorial- und SEO-Setups, nicht ein zusätzlicher sichtbarer Agent im Flow.</p>
+    <p>Der Content Creator setzt die bereits entschiedene Story in konkrete redaktionelle Assets um. Writer, Image Creator und Chart Creator arbeiten dabei auf derselben geprüften Story-Grundlage und verändern die redaktionelle Entscheidung des Story Creators nicht.</p>
+    <h3 class="detail-step-label">Writer</h3>
+    <p>Der Writer übersetzt das Writer Briefing in einen vollständigen journalistischen Artikel. Die Geschichte ist zu diesem Zeitpunkt bereits entschieden.</p>
+    <ul><li>folgt Core Story Claim und Story Promise</li><li>orientiert sich an der Primary Headline Direction</li><li>nutzt ausschließlich übergebene Fakten und Quellen</li><li>schreibt aus Sicht der relevanten Leser</li><li>verwendet Zahlen als Evidenz, nicht automatisch als Storystruktur</li><li>erfindet keine Ursachen, Auswirkungen oder neuen Fakten</li></ul>
+    <h3 class="detail-step-label">Image Creator</h3>
+    <p>Der Image Creator erstellt oder bereitet passende visuelle Assets auf Basis des Visual Briefings vor.</p>
+    <ul><li>unterstützt die ausgewählte Story</li><li>berücksichtigt Brand- und Editorial-Anforderungen</li><li>berücksichtigt Bildrechte und Herkunft</li><li>darf keine nicht belegten Aussagen visuell suggerieren</li></ul>
+    <h3 class="detail-step-label">Chart Creator</h3>
+    <p>Der Chart Creator übersetzt validierte Daten in verständliche Visualisierungen.</p>
+    <ul><li>verwendet ausschließlich geprüfte Daten</li><li>macht Vergleiche und Entwicklungen leichter erfassbar</li><li>kennzeichnet Zeitraum, Einheit und Vergleichsbasis eindeutig</li><li>darf die Aussage der Daten nicht verzerren</li></ul>
   </template>
 
   <template id="detail-production-package">
@@ -3161,7 +3441,7 @@
 
   <template id="detail-review">
     <h2>Human Review</h2>
-    <p>Vor der Veröffentlichung bleibt eine menschliche redaktionelle, faktische und – wo relevant – Compliance-Prüfung verpflichtend. Der Human Reviewer trägt die Verantwortung für die Freigabe des Beitrags.</p>
+    <p>Vor der Veröffentlichung bleibt eine menschliche redaktionelle, faktische und – wo relevant – fachliche oder Compliance-Prüfung verpflichtend. Der Human Reviewer entscheidet, ob der Beitrag veröffentlicht, überarbeitet oder verworfen wird.</p>
     <h3 class="detail-section-title">Editorial Review</h3>
     <ul><li>Verständlichkeit und redaktionelle Qualität</li><li>Nutzwert und klare Storyline</li><li>angemessene Headline und Tonalität</li><li>Distinctiveness gegenüber generischem bzw. austauschbarem Content</li></ul>
     <h3 class="detail-section-title">Factual &amp; Source Review</h3>
@@ -3187,18 +3467,16 @@
 
   <template id="detail-performance">
     <h2>Learning Agent</h2>
-    <p>Der Learning Agent übersetzt die Performance veröffentlichter Inhalte in wiederverwendbare Learnings für zukünftige Editorial Decisions. Ziel ist nicht reines Reporting, sondern ein evidenzbasierter Learning Loop.</p>
-    <h3 class="detail-section-title">Measure</h3>
-    <p class="detail-subline"><strong>What happened?</strong></p>
-    <ul><li>Search Performance</li><li>Discover Performance</li><li>Content Performance / Readership</li><li>Engagement</li><li>Returning Users, soweit verfügbar</li><li>Downstream IS24 Engagement</li><li>Operating Health, soweit für den Workflow relevant</li></ul>
-    <h3 class="detail-section-title">Interpret</h3>
-    <p class="detail-subline"><strong>What can we learn from it?</strong></p>
-    <ul><li>welche Themen und Editorial Categories funktionieren wiederholt?</li><li>welche Signaltypen führen zu guten Stories?</li><li>welche Quellen liefern wertvolle Signale?</li><li>welche Story-Angles funktionieren?</li><li>welche Formate und Visual Treatments funktionieren?</li><li>welche Muster zeigen sich über Search, Discover und andere Distribution?</li><li>welche Inhalte führen sinnvoll in IS24 Journeys weiter?</li></ul>
-    <p>Der Learning Agent sucht nach wiederholbaren Mustern über vergleichbare Inhalte und Zeiträume hinweg.</p>
-    <h3 class="detail-section-title">Improve</h3>
-    <p class="detail-subline"><strong>How should the next cycle change?</strong></p>
-    <ul><li>relevante Themen stärker oder schwächer priorisieren</li><li>Monitoring und Quellen anpassen</li><li>Signal Types und Detection Logic weiterentwickeln</li><li>Story-Angles anders gewichten</li><li>erfolgreiche Formate gezielt weiter testen</li><li>schwache oder wenig differenzierende Muster reduzieren</li></ul>
-    <div class="detail-rule">Performance entscheidet nicht automatisch, was produziert wird. Learnings unterstützen die nächste redaktionelle Priorisierung und Entscheidung.</div>
+    <p>Der Learning Agent übersetzt die Performance veröffentlichter Inhalte in wiederverwendbare Learnings für zukünftige Editorial Decisions. Er entscheidet nicht automatisch, was als Nächstes produziert wird, sondern verbessert die Grundlage für zukünftige Priorisierung.</p>
+    <h3 class="detail-step-label">Measure</h3>
+    <p>Measure sammelt die relevanten Performance-Signale der veröffentlichten Inhalte.</p>
+    <ul><li>Search Performance</li><li>Discover Performance</li><li>Content Performance / Readership</li><li>Engagement</li><li>Returning Users, soweit verfügbar</li><li>Downstream IS24 Engagement</li><li>relevante Operating-Health-Signale</li></ul>
+    <h3 class="detail-step-label">Interpret</h3>
+    <p>Interpret sucht nach wiederholbaren Mustern in der Performance und versucht zu verstehen, welche Elemente zu guten Ergebnissen beitragen.</p>
+    <ul><li>welche Themen funktionieren?</li><li>welche Signal Types führen zu guten Stories?</li><li>welche Quellen liefern wertvolle Signale?</li><li>welche Story Angles funktionieren?</li><li>welche Formate und Visual Treatments funktionieren?</li><li>welche Muster zeigen sich über verschiedene Distribution Channels?</li></ul>
+    <h3 class="detail-step-label">Improve</h3>
+    <p>Improve übersetzt die Learnings in konkrete Empfehlungen für zukünftige Durchläufe.</p>
+    <ul><li>Themen stärker oder schwächer priorisieren</li><li>Monitoring oder Quellen anpassen</li><li>Detection Logic weiterentwickeln</li><li>Story Angles anders gewichten</li><li>erfolgreiche Formate weiter testen</li><li>schwache Muster reduzieren</li></ul>
   </template>
 
   <template id="detail-learning">
@@ -3216,28 +3494,40 @@
     <p><strong>Performance entscheidet nicht automatisch, was produziert wird. Die Learnings verbessern die Priorisierung und Entscheidungslogik im nächsten Durchlauf.</strong></p>
   </template>
 
+  <template id="detail-workflow-automation">
+    <h2>Workflow Automation</h2>
+    <p>Der Editorial Flow ist überwiegend eine lineare Automatisierung: Jeder Agent übernimmt eine klar abgegrenzte Aufgabe und übergibt sein Ergebnis als strukturiertes Package an den nächsten Schritt.</p>
+    <p>Die Agents arbeiten nicht gleichzeitig miteinander und verändern nicht gegenseitig ihre Arbeitsweise. Dadurch benötigen wir keine komplexe Multi-Agent-Orchestrierung.</p>
+    <p>Die technische Verkettung kann über die bestehende Agent Factory erfolgen. Entscheidend ist, dass die einzelnen Agents einen klar begrenzten Scope, definierte Inputs und definierte Outputs haben.</p>
+    <div class="automation-chain" aria-label="Agent, Package, Agent, Package, Agent"><span>Agent</span><span>Package</span><span>Agent</span><span>Package</span><span>Agent</span></div>
+    <div class="detail-rule">Dies beschreibt das geplante technische Verbindungsprinzip – nicht eine bereits vollständig produktiv umgesetzte End-to-End-Automatisierung.</div>
+  </template>
+
   <template id="detail-mvp-approach">
     <h2>MVP Approach</h2>
-    <div class="mvp-logic-chain" aria-label="Few Signal Types, then Targeted Playbooks, then Selected Story Angle, then Lean Content Package, then Manual Review, then Existing Publishing Path"><span>Few Signal Types</span><span>Targeted Playbooks</span><span>Selected Story Angle</span><span>Lean Content Package</span><span>Manual Review</span><span>Existing Publishing Path</span></div>
-    <p>Der MVP durchläuft weiterhin den gesamten Editorial-Prozess, reduziert aber den Scope stark. Wir starten mit nur 1–2 Signaltypen, für die Datenzugang und Checks einfach beherrschbar sind.</p>
-    <p>Für jeden Signaltyp definieren wir ein gezieltes Story Playbook: feste Research-Schritte und wenige passende Story Patterns. Daraus entwickelt der Story Creator 2–3 konkrete Story Angles und wählt den am besten belegten aus.</p>
-    <p>Der ausgewählte Angle wird anschließend in ein schlankes, aber vollständiges Content Package übersetzt, menschlich geprüft und über den bestehenden LP Builder veröffentlicht. Ziel ist ein funktionierender End-to-End-Beweis – nicht die vollständige Target Architecture.</p>
+    <p>Der MVP testet den kompletten Editorial Flow zunächst mit einem bewusst kleinen Scope. Wir starten nur mit wenigen Trendfeldern, bei denen die benötigten Daten bereits einfach und zuverlässig verfügbar sind.</p>
+    <p>So testen wir zuerst, ob die Kette von <strong>Signal → Story → Content → Review → Publish</strong> zuverlässig funktioniert.</p>
+    <p>Wenn das gelingt, skalieren wir schrittweise:</p>
+    <ul><li>weitere Datenquellen anbinden</li><li>dadurch weitere Trendfelder und Themen ermöglichen</li><li>zusätzliche Signal Types und Playbooks ergänzen</li><li>Produktions- und Publishing-Schritte weiter automatisieren</li><li>später den Learning Loop hinzufügen</li></ul>
+    <div class="detail-rule"><strong>Prinzip:</strong> Erst den End-to-End-Prozess mit wenig zusätzlicher Unsicherheit beweisen, danach den inhaltlichen und technischen Scope erweitern.</div>
   </template>
 
   <template id="detail-mvp-trend">
     <h2>Trend Finder · MVP</h2>
-    <p>Im MVP unterstützen wir nur wenige klar definierte Signaltypen. Dafür nutzen wir Datenquellen, auf die wir einfach und verlässlich zugreifen können, und definieren pro Signaltyp einen festen Check. Der Trend Finder wird zunächst manuell gestartet.</p>
-    <div class="monitoring-plan-scroll" role="region" aria-label="Working Example für MVP Signal Types" tabindex="0">
+    <p>Im MVP starten wir bewusst mit nur 1–2 Trendfeldern, bei denen die notwendigen Signale aus bereits einfach und verlässlich zugänglichen internen Daten erzeugt werden können. Innerhalb dieser Trendfelder beobachten wir konkrete Trendindikatoren. Der grundsätzlich größere Suchraum wird für den MVP gezielt reduziert.</p>
+    <div class="mvp-logic-chain" aria-label="Trendfeld, Trendindikator, reduzierter Suchraum, Vergleich, Signal, Signal Package"><span>Trendfeld</span><span>Trendindikator</span><span>Reduzierter Suchraum</span><span>Vergleich</span><span>Signal</span><span>Signal Package</span></div>
+    <p>Innerhalb des reduzierten Suchraums führt der Trend Finder definierte Vergleiche durch und erkennt Signale. Ein vollständiger Scan kann mehrere Signal Packages erzeugen und stoppt nicht beim ersten Treffer. Der Scan wird im MVP zunächst manuell gestartet.</p>
+    <div class="monitoring-plan-scroll" role="region" aria-label="Working Example für Trend Finder MVP" tabindex="0">
       <table class="monitoring-plan mvp-working-table">
-        <thead><tr><th>Signal Type</th><th>Topic / Context</th><th>Data Source</th><th>Fixed Check</th></tr></thead>
+        <thead><tr><th>Trendfeld</th><th>Trendindikator</th><th>Data Source</th><th>MVP-Suchraum / Vergleich</th></tr></thead>
         <tbody>
-          <tr><td><strong>Price Change</strong></td><td>Immobilien &amp; Markt · Mietpreisentwicklung</td><td>IS24 Mietpreis- / Marktdaten, z. B. WohnBarometer oder geeigneter interner Preisdatensatz</td><td>Aktuelle Entwicklung gegen vorherigen Zeitraum, historische Entwicklung und relevante Vergleichsmärkte prüfen.</td></tr>
-          <tr><td><strong>Demand Change</strong></td><td>Immobilien &amp; Markt · Nachfrage nach Wohnungssegmenten</td><td>verfügbare IS24 Nachfrage- / Engagementdaten</td><td>Entwicklung nach Zeitraum, Region und Segment vergleichen und auffällige Veränderungen identifizieren.</td></tr>
+          <tr><td><strong>Preisentwicklung</strong></td><td>Veränderung der Angebotsmiete pro m²</td><td>IS24 Mietpreis- / Marktdaten, z. B. WohnBarometer oder geeigneter interner Preisdatensatz</td><td>Ausgewählte Regionen · Miete · Wohnung; aktueller Monat vs. Vorjahresmonat</td></tr>
+          <tr><td><strong>Nachfrageentwicklung</strong></td><td>Veränderung der aktiven gespeicherten Suchen</td><td>verfügbare IS24 Nachfrage- / Engagementdaten</td><td>Ausgewählte Regionen · Miete; aktueller Monat vs. Vorjahresmonat</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="mvp-working-note">Working example – die finalen Signaltypen werden anhand von Datenzugang, Qualität und technischer Einfachheit ausgewählt.</p>
-    <div class="detail-rule">Handoff: Signal Package zunächst manuell an den Story Creator.</div>
+    <p class="mvp-working-note">Working Example – die finalen 1–2 Trendfelder und die dafür verwendeten Dimensionen werden anhand von verlässlichem Datenzugang und technischer Machbarkeit ausgewählt.</p>
+    <div class="detail-rule">Design, Celebrities, Regulation, Search Trends und externe News-Signale bleiben Teil der Target Architecture. Der MVP testet zunächst den End-to-End-Prozess mit intern verlässlich abbildbaren Trendfeldern.</div>
   </template>
 
   <template id="detail-mvp-story">
@@ -3313,13 +3603,14 @@
 
       const uiTranslations = {
         de: {
+          headerDescription: 'Der Flow zeigt Target und MVP des Editorial Lighthouse vom Signal über Story und Content bis zu Human Review, Publishing und Learning.',
           trendCaption: 'Erkennt relevante Marktsignale',
           storyCaption: 'Entwickelt Story Angles',
           contentCaption: 'Erstellt publish-ready Inhalte',
           learningCaption: 'Übersetzt Performance in konkrete Learnings',
-          trendScope1: '1–2 Signal Types',
+          trendScope1: '1–2 Trendfelder',
           trendScope2: 'Einfach zugängliche Data Sources',
-          trendScope3: 'Feste Checks pro Signal Type',
+          trendScope3: 'Reduzierter Suchraum',
           trendScope4: 'Manueller Trigger',
           storyScope1: '1 Playbook pro Signal Type',
           storyScope2: 'Feste Research Steps',
@@ -3340,13 +3631,14 @@
           learningSteps: 'Learning Schritte'
         },
         en: {
+          headerDescription: 'The flow shows the Target and MVP setup of the Editorial Lighthouse from signal to story and content through Human Review, Publishing and Learning.',
           trendCaption: 'Finds relevant market signals',
           storyCaption: 'Turns signals into strong story angles',
           contentCaption: 'Creates publish-ready content',
           learningCaption: 'Turns performance into actionable learnings',
-          trendScope1: '1–2 Signal Types',
+          trendScope1: '1–2 Trend Fields',
           trendScope2: 'Easy-access Data Sources',
-          trendScope3: 'Fixed Checks per Signal Type',
+          trendScope3: 'Reduced Search Space',
           trendScope4: 'Manual Trigger',
           storyScope1: '1 Playbook per Signal Type',
           storyScope2: 'Fixed Research Steps',
@@ -3376,9 +3668,6 @@
           'detail-signal': 'Details zum Signal Package',
           'detail-story-creator': 'Details zum Story Creator',
           'detail-mvp-story': 'Details zum Story Creator MVP',
-          'detail-analyse': 'Details zu Validate',
-          'detail-angles': 'Details zu Shape',
-          'detail-select': 'Details zu Select',
           'detail-story-package': 'Details zum Story Package',
           'detail-asset': 'Details zum Content Creator',
           'detail-mvp-content': 'Details zum Content Creator MVP',
@@ -3390,6 +3679,7 @@
           'detail-performance': 'Details zum Learning Agent',
           'detail-mvp-learning': 'Details zum späteren Learning Agent',
           'detail-learning': 'Details zum Learning Package',
+          'detail-workflow-automation': 'Details zur Workflow Automation',
           'detail-mvp-approach': 'Details zum MVP-Ansatz'
         },
         en: {
@@ -3399,9 +3689,6 @@
           'detail-signal': 'Signal Package details',
           'detail-story-creator': 'Story Creator details',
           'detail-mvp-story': 'Story Creator MVP details',
-          'detail-analyse': 'Validate details',
-          'detail-angles': 'Shape details',
-          'detail-select': 'Select details',
           'detail-story-package': 'Story Package details',
           'detail-asset': 'Content Creator details',
           'detail-mvp-content': 'Content Creator MVP details',
@@ -3413,6 +3700,7 @@
           'detail-performance': 'Learning Agent details',
           'detail-mvp-learning': 'Later Learning Agent details',
           'detail-learning': 'Learning Package details',
+          'detail-workflow-automation': 'Workflow Automation details',
           'detail-mvp-approach': 'MVP approach details'
         }
       };
@@ -3431,51 +3719,49 @@
           <div class="detail-rule">Not every story needs every source. The sources used depend on the topic area, signal and specific research need.</div>`,
         'detail-trend': `
           <h2>Trend Finder</h2>
-          <p>The Trend Finder is the radar of the editorial system. It works in three steps: Focus defines which topics matter, Monitor defines which sources and data to observe, and Detect identifies concrete signals within defined Signal Types using the corresponding detection logic.</p>
-          <h3 class="trend-section-title">Focus</h3>
-          <p><strong>Editorial Plan – What is relevant to us?</strong></p>
-          <ul><li>topic areas / editorial categories</li><li>subtopics and concrete monitoring fields</li><li>audiences and user needs</li><li>editorial priorities</li><li>relevant formats</li><li>time-based or seasonal priorities</li></ul>
-          <p>Focus defines the editorial search space of the Trend Finder.</p>
-          <h3 class="trend-section-title">Monitor</h3>
-          <p><strong>Monitoring Plan – How and where do we observe these topics?</strong></p>
-          <ul><li>relevant internal and external sources</li><li>datasets and data queries</li><li>regions and market segments</li><li>monitoring cadence / frequency</li><li>signal categories</li></ul>
-          <p>Monitoring does not determine whether something is already a signal. It defines which sources are observed regularly or in response to events for the selected topics.</p>
-          <h3 class="trend-section-title">Detect</h3>
-          <p><strong>Signal Types &amp; Detection – When does an observation become a relevant signal?</strong></p>
-          <p>Detection Logic describes how the Trend Finder identifies concrete anomalies within defined Signal Types. Detection can be data-based, event-based or triggered by changing user interest.</p>
-          <ul><li>demand or supply changes unusually</li><li>prices deviate significantly from their previous trend or a comparison market</li><li>a relevant new market or regulatory event occurs</li><li>search interest rises significantly</li><li>a verified property event occurs</li></ul>
-          <div class="monitoring-plan-scroll"><table class="monitoring-plan trend-monitoring-table"><colgroup><col style="width:14%"><col style="width:24%"><col style="width:27%"><col style="width:15%"><col style="width:20%"></colgroup><thead><tr><th>Topic Area</th><th>Subtopics / Monitoring Fields</th><th>Relevant Sources</th><th>Monitoring</th><th>Signal Examples</th></tr></thead><tbody>
-          <tr><td>Real Estate &amp; Market</td><td>rental prices, purchase prices, supply, demand, mortgage rates, regulation, new construction, notable listings / inventory</td><td>IS24 price and market data, WohnBarometer, inventory, demand / engagement data, pricing data, official / regulatory sources, external market data</td><td>prices, demand and supply regularly, e.g. weekly; policy, rates and news event-based or more frequently</td><td>demand rises much faster than in a comparison segment; prices deviate from the historical trend; supply changes unusually; new regulation; notable inventory</td></tr>
-          <tr><td>Celebrities &amp; Real Estate</td><td>purchases / sales, listings, moves, renovations, home tours, architecture of celebrity properties</td><td>reputable news and real-estate media, public statements, authorised home tours, listings, suitable public sources</td><td>mainly daily / event-based</td><td>confirmed listing or sale; published home tour; publicly confirmed renovation or move</td></tr>
-          <tr><td>Living &amp; Design</td><td>interiors, small spaces, architecture, conversions, reuse, floor plans, living trends</td><td>architecture and design media, listings, documented projects, search trends, existing knowledge content</td><td>several times a week / trend-based</td><td>a living or design topic gains visible relevance; a notable documented project; a recurring pattern in listings</td></tr>
-          <tr><td>Cities &amp; Regions</td><td>neighbourhoods, urban-rural comparisons, commuting, infrastructure, locations, regional price and demand trends</td><td>IS24 geo, price, supply and demand data, public regional data, local sources</td><td>regularly, e.g. weekly; local events additionally monitored reactively</td><td>a region develops differently from comparison regions; demand or supply changes unusually; an infrastructure project changes the housing context</td></tr>
-          <tr><td>Advice &amp; Guidance</td><td>renting, buying, financing, viewings, total cost, regulation, interpretation of current market developments</td><td>knowledge content, GSC / search signals, Google Trends, official sources, IS24 services / calculators, market and news signals</td><td>search regularly; regulatory sources continuously; strongly event-driven</td><td>a new rule creates an explanation need; a recurring user question; a market change requires context; search interest rises significantly</td></tr>
-          </tbody></table></div>`,
-        'detail-signal': `<h2>Signal Package</h2><ul><li><strong>Signal:</strong> Demand for small apartments is rising unusually strongly</li><li><strong>Source:</strong> IS24 demand and market data</li><li><strong>Period:</strong> last 12 months</li><li><strong>Segment:</strong> 1–2-room apartments</li><li><strong>Demand trend:</strong> +22%</li><li><strong>Comparison:</strong> larger apartments in the same period +6%</li><li><strong>Regions with the strongest increase:</strong> Berlin, Hamburg and Cologne</li><li><strong>Signal Type:</strong> Demand Trend</li></ul>`,
+          <p>The Trend Finder systematically searches for developments that could be relevant to our editorial topics. It defines what to observe, examines defined data and sources, and identifies unusual changes or patterns.</p>
+          <p>Relevant observations are passed to the Story Creator as a structured <strong>Signal Package</strong>. The Trend Finder finds the signal – it does not yet develop the story from it.</p>
+          <h3 class="detail-step-label">Focus</h3><p><strong>What do we want to observe?</strong></p><p>Focus defines which topics and developments are editorially relevant to us. This determines the areas in which the Trend Finder searches for signals.</p><ul><li>topics and Trend Fields</li><li>specific monitoring areas</li><li>audiences and user needs</li><li>editorial priorities</li><li>seasonal or time-based priorities</li></ul><div class="detail-example-card"><strong class="detail-example-label">Example</strong><p>We want to observe how <strong>asking prices for owner-occupied apartments</strong> are developing – overall, but also across regions and different apartment sizes.</p></div>
+          <h3 class="detail-step-label">Monitor</h3><p><strong>What exactly do we observe?</strong></p><p>Monitor defines which data, sources and comparisons are observed within the selected Focus. This creates a concrete monitoring and search space.</p><ul><li>data sources</li><li>metrics</li><li>regions</li><li>market segments</li><li>time periods and comparisons</li><li>monitoring frequency</li></ul><div class="detail-example-card"><strong class="detail-example-label">Example</strong><p>For price development, we observe, among other things:</p><ul><li>asking price per m²</li><li>owner-occupied apartments</li><li>different regions</li><li>different apartment sizes</li><li>comparison with the same period in the previous year</li></ul><p>For Potsdam, for example, we compare <strong>2- and 4-room apartments in September 2026 with September 2025</strong>.</p></div>
+          <h3 class="detail-step-label">Detect</h3><p><strong>What stands out?</strong></p><p>Detect runs the defined comparisons and looks for changes or differences that should be investigated more closely. It also checks whether the underlying data is sufficiently robust.</p><ul><li>identify unusual changes</li><li>compare regions or segments</li><li>distinguish outliers from more stable patterns</li><li>check sample sizes and data quality</li><li>select relevant signals</li></ul><div class="detail-example-card"><strong class="detail-example-label">Example</strong><p>In Potsdam, the data shows:</p><ul><li>4-room apartments: <strong>+9.4%</strong></li><li>2-room apartments: <strong>+2.1%</strong></li><li>overall market: <strong>+4.3%</strong></li></ul><p>The development is also visible across several quarters.</p><p>The signal is:</p><p><strong>Larger owner-occupied apartments are developing significantly more strongly in Potsdam than smaller ones.</strong></p><p>This does not yet explain why it is happening or what story might emerge from it.</p></div>`,
+        'detail-signal': `<h2>Signal Package</h2><p>The Signal Package is the structured output of the Trend Finder. It describes the identified anomaly so that the Story Creator can immediately begin the next stage of investigation.</p><ul><li>signal</li><li>region and segment</li><li>period</li><li>metric</li><li>comparison values</li><li>data source</li><li>data quality</li><li>known limitations</li></ul><h3 class="detail-section-title">Example</h3><p><strong>Signal:</strong> Asking prices for 4-room owner-occupied apartments in Potsdam have risen significantly more strongly than those for 2-room apartments.</p><p><strong>Comparison:</strong></p><ul><li>4 rooms: +9.4%</li><li>2 rooms: +2.1%</li><li>overall market: +4.3%</li></ul><p><strong>Period:</strong> September 2026 vs. September 2025</p><p><strong>Note:</strong> Asking prices for active listings, not achieved sale prices.</p>`,
         'detail-story-creator': `
-          <h2>Story Creator</h2><p>The Story Creator turns a relevant signal into a robust editorial story. It researches and validates additional context, develops different story directions and then selects the strongest supportable approach for production.</p>
-          <h3 class="detail-section-title">Validate</h3><p class="detail-subline"><strong>Research &amp; Validation – Is the signal robust and sufficiently understood?</strong></p><ul><li>check the signal and underlying data</li><li>interpret historical trends and comparison values</li><li>compare regions or market segments</li><li>research additional internal and external context</li><li>check data quality, recency and sources</li><li>consider alternative explanations</li><li>do not infer causality that the data cannot support</li></ul><p>The first goal is understanding and reliability, not the most attention-grabbing story.</p>
-          <h3 class="detail-section-title">Shape</h3><p class="detail-subline"><strong>Story Development – Which robust stories can be developed from the signal?</strong></p><ul><li>develop several possible Story Angles</li><li>make user relevance visible</li><li>use IS24 data or expertise selectively</li><li>consider regional, segment-specific or service-oriented perspectives</li><li>consider Search / Discover as possible distribution, but not as the sole selection criterion</li></ul><p><strong>Possible angle types:</strong> market development · supply vs. demand · city / regional comparison · specific market segment · local perspective · concrete user impact · surprising deviation from a broader trend</p>
-          <h3 class="detail-section-title">Select</h3><p class="detail-subline"><strong>Editorial Selection – Which Story Angle is strongest and best supported?</strong></p><ul><li>data and source strength</li><li>user relevance</li><li>information value</li><li>differentiation</li><li>IS24 data / expertise</li><li>Search / Discover potential</li><li>speculation and factual risk</li></ul><p>An interesting angle is rejected if the available facts do not support it sufficiently.</p>
-          <div class="detail-rule"><strong>Example</strong><p><strong>Signal:</strong> Demand for small apartments is rising unusually strongly.</p><p><strong>Possible story directions:</strong></p><ul><li>Small, sought-after, expensive? How the market for small apartments is changing</li><li>Where small apartments are becoming particularly scarce</li><li>High demand, low supply: Which cities are most affected</li></ul></div>`,
-        'detail-analyse': `<h2>Validate</h2><p>Validate checks whether the incoming signal has enough substance for a story and which additional context is needed.</p><h3 class="detail-section-title">What gets validated</h3><p class="detail-subline"><strong>Research &amp; Evidence</strong></p><ul><li>underlying data and periods</li><li>historical development</li><li>supply and demand</li><li>price development</li><li>regional and segment differences</li><li>relevant comparison markets</li><li>external or regulatory context</li><li>quality, recency and origin of sources</li><li>possible alternative explanations</li></ul><div class="detail-rule">Claims must be supported by reliable sources or data. Correlation and possible cause must not be confused.</div>`,
-        'detail-angles': `<h2>Shape</h2><p>Shape develops several possible editorial story directions from the validated facts. The perspective may vary; the factual basis may not.</p><h3 class="detail-section-title">Possible Story Angles</h3><ul><li>market development</li><li>supply vs. demand</li><li>city or regional comparison</li><li>specific market segment</li><li>local perspective</li><li>impact on renters, buyers or owners</li><li>service / guidance perspective</li><li>surprising deviation from a known trend</li></ul><div class="detail-rule">A demand signal for small apartments could, for example, become a market story, a regional comparison or a service-oriented explanation.</div><p><strong>The angle should add information value and make meaningful use of Scout24 data or expertise where possible.</strong></p>`,
-        'detail-select': `<h2>Select</h2><p>Select evaluates the developed Story Angles and chooses the strongest supportable option for production.</p><h3 class="detail-section-title">Selection Criteria</h3><ul><li>strength of the data</li><li>user relevance</li><li>information value</li><li>differentiation from existing coverage</li><li>opportunity to use IS24 data or expertise</li><li>Search / Discover potential</li><li>speculation and factual risk</li></ul><div class="detail-rule">Quality, distinctiveness and user value take priority over an angle that only promises attention.</div><p>An angle may be rejected if it sounds interesting but cannot be supported sufficiently.</p>`,
-        'detail-story-package': `<h2>Story Package</h2><ul><li><strong>Story:</strong> Small, sought-after, expensive? How the market for small apartments is changing</li><li><strong>Core message:</strong> Demand for small apartments is rising much faster than in larger segments. At the same time, available supply is falling and asking rents are rising above average in several major cities.</li><li><strong>Audience / relevance:</strong> apartment seekers and renters in tight urban markets</li><li><strong>Key data:</strong> demand for 1–2 rooms +22%; larger apartments +6%; declining supply of small apartments; stronger rent growth in several major cities</li><li><strong>Sources:</strong> IS24 demand, supply and market data</li><li><strong>Writer briefing:</strong> explain the development clearly, show regional differences and do not claim causality that the data cannot support</li><li><strong>Visual briefing:</strong> demand development by apartment size and a comparison of supply and asking rents</li></ul>`,
-        'detail-asset': `<h2>Content Creator</h2><p>The Content Creator turns the Story Package into concrete editorial assets. Writer, Image Creator and Chart Creator work from the same validated story basis and produce the elements that will later be reviewed together by a human.</p><h3 class="detail-section-title">Writer</h3><p class="detail-subline"><strong>Article Draft</strong></p><ul><li>develops the full article draft from the Story Package</li><li>uses validated facts, sources and comparisons</li><li>explains the story from the relevant audience's perspective</li><li>creates headline, subline and article structure</li><li>follows defined editorial and SEO requirements</li><li>adds no unsupported causes or claims</li></ul><h3 class="detail-section-title">Image Creator</h3><p class="detail-subline"><strong>Visual Assets</strong></p><ul><li>creates or prepares suitable visual assets</li><li>works from the visual briefing</li><li>follows editorial and brand requirements</li><li>image rights, origin and permitted use must be traceable</li><li>visuals must not imply unsupported facts or properties</li></ul><h3 class="detail-section-title">Chart Creator</h3><p class="detail-subline"><strong>Data Visualisation</strong></p><ul><li>turns validated data into clear visualisations</li><li>makes developments and comparisons easier to understand</li><li>uses only the validated story data</li><li>labels, period, unit and comparison basis must be unambiguous</li></ul><h3 class="detail-section-title">Publishing Requirements</h3><p>Production must meet the defined requirements for titles, imagery, metadata, authorship, structured data, internal linking and other publishing fields. These requirements are part of the editorial and SEO setup, not an additional visible agent in the flow.</p>`,
+          <h2>Story Creator</h2><p>The Story Creator investigates and validates the signal, researches additional context and develops different journalistic perspectives. It then makes the editorial decision for exactly one story.</p>
+          <h3 class="detail-step-label">Validate</h3><p><strong>Is the signal robust and sufficiently understood?</strong></p><p>Validate checks whether the incoming signal has enough substance for a story and which additional context is needed.</p><ul><li>check the signal and underlying data</li><li>interpret historical trends and comparison values</li><li>compare regions or market segments</li><li>research additional internal and external context</li><li>check data quality, recency and sources</li><li>consider alternative explanations</li><li>do not infer causality that the data cannot support</li></ul><p>The first goal is understanding and reliability, not the most attention-grabbing story.</p><div class="detail-rule">Claims must be supported by reliable sources or data. Correlation and possible cause must not be confused.</div>
+          <h3 class="detail-step-label">Human Relevance</h3><p><strong>Why is this interesting to people?</strong></p><p>After validation, the Story Creator examines what the observed development could mean for people. It does not invent impacts; it looks for an understandable, evidence-based human perspective.</p><ul><li>Who might be affected by the development?</li><li>In which real-life or decision-making situation is it relevant?</li><li>What natural question would a reader ask?</li><li>What is surprising, useful or in need of explanation?</li><li>What should a reader understand better after the article?</li></ul><p>Human relevance must never be framed more strongly than the evidence allows.</p><div class="detail-example-card"><strong class="detail-example-label">Example</strong><p>The Potsdam signal raises the question:</p><p><strong>What does the much stronger price increase for larger apartments mean for people looking for more space?</strong></p><p>A supportable human perspective would be:</p><p><strong>Anyone looking for a larger owner-occupied apartment in Potsdam is encountering a segment in which asking prices have risen much more strongly than for smaller apartments.</strong></p><p>By contrast, a claim that families can no longer afford their financing would not be supported.</p></div>
+          <h3 class="detail-step-label">Shape</h3><p><strong>Which journalistic perspectives can be developed?</strong></p><p>Shape develops two or three different journalistic Story Angles from validated evidence, additional context and Human Relevance.</p><p>A strong angle connects:</p><ul><li>robust evidence</li><li>human meaning</li><li>a clear insight, question or tension</li></ul><p>Story Angles may explore different perspectives, but they must not invent facts or causes.</p><div class="detail-example-card"><strong class="detail-example-label">Example</strong><p>Possible angles:</p><ul><li>More space is becoming significantly more expensive in Potsdam</li><li>The overall market hides major differences between apartment sizes</li><li>4-room apartments are developing much more strongly than smaller apartments</li></ul></div>
+          <h3 class="detail-step-label">Select</h3><p><strong>Which story should be produced?</strong></p><p>Select chooses <strong>exactly one</strong> Story Angle. It is then refined into a Core Story Claim, Story Promise, Primary Headline Direction and Writer Briefing.</p><p>The selection considers, among other things:</p><ul><li>strength of evidence</li><li>user and editorial relevance</li><li>information value</li><li>differentiation</li><li>Search / Discover potential</li><li>speculation and factual risk</li><li>meaningful use of IS24 data or expertise</li></ul><p>An interesting angle is rejected if the available facts do not support it sufficiently.</p><div class="detail-example-card"><strong class="detail-example-label">Example</strong><p><strong>Selected angle:</strong> More space is becoming significantly more expensive in Potsdam.</p><p><strong>Core Story Claim:</strong> In Potsdam, larger owner-occupied apartments are becoming significantly more expensive than smaller ones.</p><p><strong>Primary Headline Direction:</strong> Anyone needing more space in Potsdam is facing asking prices that have risen much more sharply.</p></div>`,
+        'detail-story-package': `<h2>Story Package</h2><p>The Story Package is the editorial decision made by the Story Creator. It defines which story should be produced and the evidence on which it is based.</p><p>It includes in particular:</p><ul><li>selected Story Angle</li><li>Core Story Claim</li><li>Story Promise</li><li>Human Relevance</li><li>Reader Question</li><li>Primary Headline Direction</li><li>Core Evidence</li><li>Supporting Evidence</li><li>Claim Boundaries</li><li>Sources</li><li>Writer Briefing</li><li>Visual Briefing</li></ul><p>The Story Package is therefore not just a collection of data, but the clear editorial brief for production.</p>`,
+        'detail-asset': `<h2>Content Creator</h2><p>The Content Creator turns the already-decided story into concrete editorial assets. Writer, Image Creator and Chart Creator work from the same validated story foundation and do not change the editorial decision made by the Story Creator.</p><h3 class="detail-step-label">Writer</h3><p>The Writer turns the Writer Briefing into a complete journalistic article. The story has already been decided at this point.</p><ul><li>follows the Core Story Claim and Story Promise</li><li>uses the Primary Headline Direction as guidance</li><li>uses only the supplied facts and sources</li><li>writes from the perspective of the relevant readers</li><li>uses numbers as evidence, not automatically as the story structure</li><li>does not invent causes, impacts or new facts</li></ul><h3 class="detail-step-label">Image Creator</h3><p>The Image Creator creates or prepares suitable visual assets based on the Visual Briefing.</p><ul><li>supports the selected story</li><li>follows brand and editorial requirements</li><li>accounts for image rights and provenance</li><li>must not visually imply unsupported claims</li></ul><h3 class="detail-step-label">Chart Creator</h3><p>The Chart Creator turns validated data into clear visualisations.</p><ul><li>uses only validated data</li><li>makes comparisons and developments easier to understand</li><li>labels the period, unit and comparison basis unambiguously</li><li>must not distort what the data shows</li></ul>`,
         'detail-production-package': `<h2>Production Package</h2><p>The Production Package bundles all produced story elements and makes them available for Human Review. It is the nearly publication-ready version of the article, but it has not yet been approved.</p><h3>Includes</h3><ul><li>complete article draft</li><li>headline and subline</li><li>featured image and other visual assets</li><li>data visualisations or interactive charts</li><li>sources and references used</li><li>relevant metadata and SEO information</li><li>planned internal links or onward IS24 destinations</li></ul><h3>Next step</h3><p>The Production Package is made available in storage for Human Review. Content may only be passed to Contentful after human approval.</p>`,
-        'detail-review': `<h2>Human Review</h2><p>Before publication, a human editorial, factual and, where relevant, compliance review remains mandatory. The Human Reviewer is responsible for approving the article.</p><h3 class="detail-section-title">Editorial Review</h3><ul><li>clarity and editorial quality</li><li>user value and a clear storyline</li><li>appropriate headline and tone</li><li>distinctiveness from generic or interchangeable content</li></ul><h3 class="detail-section-title">Factual &amp; Source Review</h3><ul><li>key claims and figures</li><li>sources used</li><li>data visualisations and their interpretation</li><li>recency and correct context</li><li>no unsupported causality or speculation</li></ul><h3 class="detail-section-title">Compliance &amp; Expert Review</h3><p>Depending on the topic, additional expert, legal or compliance review may be required.</p><ul><li>have financing, legal, regulatory or other sensitive topics reviewed by suitable experts where needed</li><li>image rights / usage</li><li>personal or sensitive content</li><li>transparent and correct author / reviewer attribution</li></ul><div class="detail-rule">A “Reviewed by an expert” note is only appropriate when a substantive expert review has actually taken place.</div><h3 class="detail-section-title">Decision</h3><ul><li>Approve</li><li>Request Changes</li><li>Reject</li></ul><div class="detail-rule">AI supports the process but does not replace human responsibility for editorial quality, facts and compliance.</div>`,
+        'detail-review': `<h2>Human Review</h2><p>Before publication, a human editorial, factual and, where relevant, expert or compliance review remains mandatory. The Human Reviewer decides whether the article is published, revised or rejected.</p><h3 class="detail-section-title">Editorial Review</h3><ul><li>clarity and editorial quality</li><li>user value and a clear storyline</li><li>appropriate headline and tone</li><li>distinctiveness from generic or interchangeable content</li></ul><h3 class="detail-section-title">Factual &amp; Source Review</h3><ul><li>key claims and figures</li><li>sources used</li><li>data visualisations and their interpretation</li><li>recency and correct context</li><li>no unsupported causality or speculation</li></ul><h3 class="detail-section-title">Compliance &amp; Expert Review</h3><p>Depending on the topic, additional expert, legal or compliance review may be required.</p><ul><li>have financing, legal, regulatory or other sensitive topics reviewed by suitable experts where needed</li><li>image rights / usage</li><li>personal or sensitive content</li><li>transparent and correct author / reviewer attribution</li></ul><div class="detail-rule">A “Reviewed by an expert” note is only appropriate when a substantive expert review has actually taken place.</div><h3 class="detail-section-title">Decision</h3><ul><li>Approve</li><li>Request Changes</li><li>Reject</li></ul><div class="detail-rule">AI supports the process but does not replace human responsibility for editorial quality, facts and compliance.</div>`,
         'detail-publish': `<h2>Publish</h2><p>After human approval, the article enters the technical publishing path and is delivered as a News Page. The editorial decision has already been made at this point.</p><h3 class="detail-section-title">Contentful Rendering</h3><ul><li>take over approved content elements</li><li>combine text, images, charts and metadata</li><li>use defined article templates</li><li>deliver authorship, structured data and internal linking</li><li>ensure mobile performance and consistent presentation</li></ul><h3 class="detail-section-title">News Pages</h3><ul><li>new editorial coverage should be delivered in the planned <code>/news/</code> experience</li><li>enable relevant connections to <code>/wissen/</code> and suitable IS24 search, product or service journeys</li><li>News Pages serve not only Discover, but also Search, News, direct usage and other distribution</li></ul><div class="detail-rule">Contentful is the publishing layer. Story selection, production and human approval happen earlier in the editorial flow.</div>`,
-        'detail-performance': `<h2>Learning Agent</h2><p>The Learning Agent turns the performance of published content into reusable learnings for future editorial decisions. The goal is not reporting alone, but an evidence-based learning loop.</p><h3 class="detail-section-title">Measure</h3><p class="detail-subline"><strong>What happened?</strong></p><ul><li>Search Performance</li><li>Discover Performance</li><li>Content Performance / Readership</li><li>Engagement</li><li>Returning Users, where available</li><li>Downstream IS24 Engagement</li><li>Operating Health, where relevant to the workflow</li></ul><h3 class="detail-section-title">Interpret</h3><p class="detail-subline"><strong>What can we learn from it?</strong></p><ul><li>which topics and editorial categories perform repeatedly?</li><li>which Signal Types lead to good stories?</li><li>which sources deliver valuable signals?</li><li>which Story Angles work?</li><li>which formats and visual treatments work?</li><li>which patterns appear across Search, Discover and other distribution?</li><li>which content leads meaningfully into IS24 journeys?</li></ul><p>The Learning Agent looks for repeatable patterns across comparable content and time periods.</p><h3 class="detail-section-title">Improve</h3><p class="detail-subline"><strong>How should the next cycle change?</strong></p><ul><li>prioritise relevant topics more or less strongly</li><li>adjust monitoring and sources</li><li>develop Signal Types and Detection Logic</li><li>weight Story Angles differently</li><li>continue testing successful formats selectively</li><li>reduce weak or insufficiently differentiated patterns</li></ul><div class="detail-rule">Performance does not automatically decide what gets produced. Learnings support the next editorial prioritisation and decision.</div>`,
+        'detail-performance': `<h2>Learning Agent</h2><p>The Learning Agent turns the performance of published content into reusable learnings for future editorial decisions. It does not automatically decide what should be produced next; it improves the basis for future prioritisation.</p><h3 class="detail-step-label">Measure</h3><p>Measure collects the relevant performance signals from published content.</p><ul><li>Search Performance</li><li>Discover Performance</li><li>Content Performance / Readership</li><li>Engagement</li><li>Returning Users, where available</li><li>Downstream IS24 Engagement</li><li>relevant Operating Health signals</li></ul><h3 class="detail-step-label">Interpret</h3><p>Interpret looks for repeatable performance patterns and seeks to understand which elements contribute to strong results.</p><ul><li>which topics work?</li><li>which Signal Types lead to good stories?</li><li>which sources deliver valuable signals?</li><li>which Story Angles work?</li><li>which formats and Visual Treatments work?</li><li>which patterns appear across different Distribution Channels?</li></ul><h3 class="detail-step-label">Improve</h3><p>Improve turns the learnings into concrete recommendations for future cycles.</p><ul><li>prioritise topics more or less strongly</li><li>adjust monitoring or sources</li><li>develop Detection Logic further</li><li>weight Story Angles differently</li><li>continue testing successful formats</li><li>reduce weak patterns</li></ul>`,
         'detail-learning': `<h2>Learning Package</h2><p>The Learning Package is the structured output of the Learning Agent. It turns performance data into concrete recommendations for future decisions in Trend Finder and Story Creator.</p><h3>Includes</h3><ul><li>topic performance</li><li>source performance</li><li>signal performance</li><li>Story Angle performance</li><li>format performance</li><li>Search / Discover performance</li><li>relevant engagement signals</li><li>recommended adjustments</li></ul><h3>Example</h3><p>If explanatory rental-market stories with supply-and-demand context repeatedly outperform simple price rankings, the Learning Package could recommend:</p><ul><li>prioritising corresponding signals more strongly in the Trend Finder</li><li>checking supply development more often as additional context</li><li>weighting explanatory market angles more strongly in the Story Creator</li><li>producing weak or insufficiently differentiated variants less often</li></ul><h3>Feedback to Trend Finder</h3><p>The Trend Finder can learn which topics, sources and Signal Types more often lead to relevant stories.</p><h3>Feedback to Story Creator</h3><p>The Story Creator can learn which Story Angles, formats and editorial patterns perform particularly well.</p><p><strong>Performance does not automatically decide what gets produced. Learnings improve prioritisation and decision logic in the next cycle.</strong></p>`,
-        'detail-mvp-approach': `<h2>MVP Approach</h2><div class="mvp-logic-chain" aria-label="Few Signal Types, then Targeted Playbooks, then Selected Story Angle, then Lean Content Package, then Manual Review, then Existing Publishing Path"><span>Few Signal Types</span><span>Targeted Playbooks</span><span>Selected Story Angle</span><span>Lean Content Package</span><span>Manual Review</span><span>Existing Publishing Path</span></div><p>The MVP still covers the full editorial flow, but deliberately reduces scope. We start with only 1–2 signal types where data access and detection checks are simple and reliable.</p><p>For each signal type, we define a targeted Story Playbook with fixed research steps and a small set of relevant Story Patterns. The Story Creator uses these to generate 2–3 concrete Story Angles and selects the best-supported one.</p><p>The selected angle is then turned into a lean but complete Content Package, reviewed by a human and published through the existing LP Builder. The goal is to prove a working end-to-end flow, not to build the full Target Architecture.</p>`,
-        'detail-mvp-trend': `<h2>Trend Finder · MVP</h2><p>In the MVP, we support only a few clearly defined Signal Types. We use Data Sources that are easy and reliable to access, define a fixed check for each Signal Type and initially trigger the Trend Finder manually.</p><div class="monitoring-plan-scroll" role="region" aria-label="Working example for MVP Signal Types" tabindex="0"><table class="monitoring-plan mvp-working-table"><thead><tr><th>Signal Type</th><th>Topic / Context</th><th>Data Source</th><th>Fixed Check</th></tr></thead><tbody><tr><td><strong>Price Change</strong></td><td>Real Estate &amp; Market · rental price development</td><td>IS24 rental price / market data, e.g. WohnBarometer or a suitable internal price dataset</td><td>Compare the current development with the previous period, the historical trend and relevant comparison markets.</td></tr><tr><td><strong>Demand Change</strong></td><td>Real Estate &amp; Market · demand for housing segments</td><td>available IS24 demand / engagement data</td><td>Compare development by period, region and segment and identify unusual changes.</td></tr></tbody></table></div><p class="mvp-working-note">Working example – the final Signal Types will be selected based on data access, quality and technical simplicity.</p><div class="detail-rule">Handoff: initially pass the Signal Package to the Story Creator manually.</div>`,
+        'detail-workflow-automation': `<h2>Workflow Automation</h2><p>The Editorial Flow is primarily a linear automation: each agent owns a clearly defined task and passes its result to the next step as a structured package.</p><p>The agents do not continuously coordinate with each other or change each other's behaviour. This means the setup does not require complex multi-agent orchestration.</p><p>The existing Agent Factory can provide the technical connection between the agents. The important requirement is that every agent has a clearly limited scope and defined inputs and outputs.</p><div class="automation-chain" aria-label="Agent, Package, Agent, Package, Agent"><span>Agent</span><span>Package</span><span>Agent</span><span>Package</span><span>Agent</span></div><div class="detail-rule">This describes the planned technical connection principle, not an end-to-end automation that is already fully implemented in production.</div>`,
+        'detail-mvp-approach': `<h2>MVP Approach</h2><p>The MVP first tests the complete Editorial Flow with a deliberately small scope. We start with only a few Trend Fields where the required data is already easy and reliable to access.</p><p>This allows us to test first whether the chain from <strong>Signal → Story → Content → Review → Publish</strong> works reliably.</p><p>If it does, we scale step by step:</p><ul><li>connect additional data sources</li><li>enable additional Trend Fields and topics</li><li>add further Signal Types and Playbooks</li><li>automate more production and publishing steps</li><li>add the Learning Loop later</li></ul><div class="detail-rule"><strong>Principle:</strong> Prove the end-to-end process with as little additional uncertainty as possible, then expand the editorial and technical scope.</div>`,
+        'detail-mvp-trend': `<h2>Trend Finder · MVP</h2><p>In the MVP, we deliberately start with only 1–2 Trend Fields where the necessary signals can be generated from internal data that is already easy and reliable to access. Within these Trend Fields, we observe concrete Trend Indicators. The potentially broader Search Space is deliberately reduced for the MVP.</p><div class="mvp-logic-chain" aria-label="Trend Field, Trend Indicator, Reduced Search Space, Comparison, Signal, Signal Package"><span>Trend Field</span><span>Trend Indicator</span><span>Reduced Search Space</span><span>Comparison</span><span>Signal</span><span>Signal Package</span></div><p>Within the Reduced Search Space, the Trend Finder runs defined comparisons and detects signals. A complete scan can generate multiple Signal Packages and does not stop at the first match. In the MVP, the scan is initially triggered manually.</p><div class="monitoring-plan-scroll" role="region" aria-label="Working example for the Trend Finder MVP" tabindex="0"><table class="monitoring-plan mvp-working-table"><thead><tr><th>Trend Field</th><th>Trend Indicator</th><th>Data Source</th><th>MVP Search Space / Comparison</th></tr></thead><tbody><tr><td><strong>Price Development</strong></td><td>Change in asking rent per m²</td><td>IS24 rental price / market data, e.g. WohnBarometer or a suitable internal price dataset</td><td>Selected regions · Rent · Apartment; current month vs. same month of the previous year</td></tr><tr><td><strong>Demand Development</strong></td><td>Change in active saved searches</td><td>available IS24 demand / engagement data</td><td>Selected regions · Rent; current month vs. same month of the previous year</td></tr></tbody></table></div><p class="mvp-working-note">Working example – the final 1–2 Trend Fields and the dimensions used for them will be selected based on reliable data access and technical feasibility.</p><div class="detail-rule">Design, Celebrities, Regulation, Search Trends and external news signals remain part of the Target Architecture. The MVP initially tests the end-to-end process with Trend Fields that can be represented reliably using internal data.</div>`,
         'detail-mvp-story': `<h2>Story Creator · MVP</h2><p>For each Signal Type, the MVP defines a compact Story Playbook with fixed Research Steps and relevant Story Patterns. The Story Creator uses it to develop 2–3 concrete Story Angles and selects the best-supported one.</p><div class="mvp-story-chain" aria-label="MVP Story Creator logic"><span>Signal</span><b aria-hidden="true">→</b><span>Follow-up Research</span><b aria-hidden="true">→</b><span>Story Patterns</span><b aria-hidden="true">→</b><span>2–3 Story Angles</span><b aria-hidden="true">→</b><span>Select 1</span></div><p class="mvp-working-note">Working example – the Signal Types and Story Patterns are a proposed starting point, not a final selection.</p><div class="monitoring-plan-scroll" role="region" aria-label="Working example for MVP Story Playbooks" tabindex="0"><table class="monitoring-plan mvp-working-table"><thead><tr><th>Signal Type</th><th>Follow-up Research</th><th>Story Patterns</th><th>Angle Selection</th></tr></thead><tbody><tr><td><strong>Price Change</strong></td><td>Check historical development, comparison cities or regions, housing segments and, where relevant, supply and demand.</td><td><ul><li>Regional Comparison</li><li>Segment Difference</li><li>Price + Supply Context</li><li>User Impact</li></ul></td><td>Generate 2–3 concrete Story Angles and select the angle best supported by the available data and editorially relevant.</td></tr><tr><td><strong>Demand Change</strong></td><td>Check development over time and compare it with other regions, segments and, where available, supply development.</td><td><ul><li>Regional Difference</li><li>Segment Difference</li><li>Demand + Supply Context</li><li>User Impact</li></ul></td><td>Generate 2–3 concrete Story Angles and select the angle that shows a clear, robust difference.</td></tr></tbody></table></div><h3 class="detail-section-title">Story Pattern ≠ Story Angle</h3><div class="mvp-concept-pair"><div class="detail-rule"><strong>Story Pattern</strong><br>A predefined possible perspective.</div><div class="detail-rule"><strong>Story Angle</strong><br>A concrete story idea based on the actual signal and research.</div></div><p>Select chooses the angle that is best supported by the available data and editorially relevant.</p>`,
         'detail-mvp-content': `<h2>Content Creator · MVP</h2><p>In the MVP, we produce only the elements needed for a complete, publishable test page.</p><p>The selected Story Angle defines what the Content Creator turns into the article.</p><h3 class="detail-section-title">Production Package</h3><ul><li>Article</li><li>1 Image</li><li>Author / Attribution</li><li>relevant metadata</li><li>required SEO and publishing information</li></ul><div class="detail-rule">The goal is a small but complete Production Package that can be reviewed by a human and then published directly.</div>`,
         'detail-mvp-review': `<h2>Human Review · MVP</h2><p>Human approval remains mandatory in the MVP. Only the technical workflow is simplified, not editorial responsibility.</p><h3 class="detail-section-title">Review</h3><ul><li>editorial quality</li><li>facts and sources</li><li>image / image rights</li><li>Author / Attribution</li><li>relevant publishing information</li><li>expert or compliance review where needed</li></ul><h3 class="detail-section-title">Decision</h3><div class="detail-rule">Approve · Request Changes · Reject</div><h3 class="detail-section-title">MVP Setup</h3><p>The MVP does not require a dedicated review tool. A simple existing preview or document workflow is sufficient as long as the article, sources and relevant assets can be reviewed transparently.</p>`,
         'detail-mvp-publish': `<h2>LP Builder · MVP</h2><p>For the MVP, we use the existing LP Builder as the automated publishing path. It is prepared once for the editorial use case; after that, an approved Production Package can automatically create and publish a page.</p><h3 class="detail-section-title">One-time Setup</h3><ul><li>prepare a suitable editorial template in the LP Builder</li><li>connect the required package fields to the template</li><li>configure the editorial use case once</li></ul><h3 class="detail-section-title">MVP Run</h3><div class="mvp-run-sequence" aria-label="MVP publishing sequence"><span>Approved Production Package</span><b aria-hidden="true">↓</b><span>Upload to LP Builder</span><b aria-hidden="true">↓</b><span>Create + Publish</span><b aria-hidden="true">↓</b><span>LP Builder builds the page automatically</span><b aria-hidden="true">↓</b><span>Live Page</span></div><div class="detail-rule">The user does not build the page manually. After the one-time setup, the existing LP Builder handles the page build and publication from the approved package.</div><p>The MVP therefore does not require a new storage, rendering or publishing architecture.</p>`,
         'detail-mvp-learning': `<h2>Learning Agent · Later</h2><p>The Learning Agent is not part of the first MVP. Reliable conclusions about which Signal Types, Story Angles, formats or content work require several published stories and sufficient comparison data.</p><h3 class="detail-section-title">Later</h3><ul><li>compare signal and story performance</li><li>identify repeatable patterns</li><li>evaluate topics, Story Angles and formats</li><li>feed learnings back into Trend Finder and Story Creator</li></ul><div class="detail-rule">The first MVP deliberately ends with a working published page. The automated learning loop follows in a later stage.</div>`
       }};
+
+      const visualStepLabels = new Set([
+        'Focus', 'Monitor', 'Detect',
+        'Validate', 'Human Relevance', 'Shape', 'Select',
+        'Writer', 'Image Creator', 'Chart Creator',
+        'Measure', 'Interpret', 'Improve'
+      ]);
+
+      const decorateDetailContent = () => {
+        content.querySelectorAll('h3').forEach((heading) => {
+          const label = heading.textContent.trim();
+          if (visualStepLabels.has(label)) heading.classList.add('detail-step-label');
+          if (label === 'Beispiel' || label === 'Example') heading.classList.add('detail-example-label');
+        });
+      };
 
       const clearClose = () => window.clearTimeout(closeTimer);
 
@@ -3552,6 +3838,7 @@
         } else {
           content.replaceChildren(template.content.cloneNode(true));
         }
+        decorateDetailContent();
         const heading = content.querySelector('h2');
         if (heading) heading.id = 'detail-popover-title';
         trigger.setAttribute('aria-expanded', 'true');
