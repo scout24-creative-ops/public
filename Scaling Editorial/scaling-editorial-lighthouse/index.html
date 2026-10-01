@@ -3116,10 +3116,18 @@
     .presentation-learning .presentation-internals { top: 102px; }
     .presentation-learning .presentation-step { height: 31px; }
     .presentation-learning-package { top: 430px; height: 42px; }
-    .presentation-automation { top: 428px; width: 48px; height: 48px; }
-    .presentation-mvp-approach { top: 438px; }
+    .presentation-automation { top: 370px; left: 353px; width: 48px; height: 48px; }
+    .presentation-mvp-approach { top: 378px; }
     .presentation-mvp-scope { top: 112px; padding: 8px 10px; }
     .presentation-mvp-scope li { padding-block: 3px; }
+
+    .canvas .presentation-step-copy {
+      font-size: 10.5px;
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -.035em;
+      text-align: center;
+    }
 
     @media (min-width: 1200px) and (min-height: 740px) {
       html,
@@ -3197,9 +3205,9 @@
             <h2>Trend Finder</h2>
             <span class="caption" data-i18n="trendCaption">Erkennt relevante Marktsignale</span>
             <div class="presentation-internals target-only" aria-label="Trend Finder Schritte" data-i18n-aria="trendSteps">
-              <span class="presentation-step">Focus</span>
-              <span class="presentation-step">Monitor</span>
-              <span class="presentation-step">Detect</span>
+              <span class="presentation-step presentation-step-copy">Focus</span>
+              <span class="presentation-step presentation-step-copy">Monitor</span>
+              <span class="presentation-step presentation-step-copy">Detect</span>
             </div>
             <ul class="presentation-mvp-scope mvp-only" aria-label="Trend Finder MVP Umfang" data-i18n-aria="trendScope"><li data-i18n="trendScope1">1–2 Trendfelder</li><li data-i18n="trendScope2">Einfach zugängliche Data Sources</li><li data-i18n="trendScope3">Reduzierter Suchraum</li><li data-i18n="trendScope4">Manueller Trigger</li></ul>
           </article>
@@ -3238,9 +3246,9 @@
             <h2>Content Creator</h2>
             <span class="caption" data-i18n="contentCaption">Erstellt publish-ready Inhalte</span>
             <div class="presentation-internals target-only" aria-label="Content Creator Agents" data-i18n-aria="contentAgents">
-              <div class="presentation-agent"><span class="agent-marker">Agent</span><h3>Writer</h3></div>
-              <div class="presentation-agent"><span class="agent-marker">Agent</span><h3>Image<br>Creator</h3></div>
-              <div class="presentation-agent"><span class="agent-marker">Agent</span><h3>Chart<br>Creator</h3></div>
+              <div class="presentation-agent"><span class="agent-marker">Agent</span><h3 class="presentation-step-copy">Writer</h3></div>
+              <div class="presentation-agent"><span class="agent-marker">Agent</span><h3 class="presentation-step-copy">Image<br>Creator</h3></div>
+              <div class="presentation-agent"><span class="agent-marker">Agent</span><h3 class="presentation-step-copy">Chart<br>Creator</h3></div>
             </div>
             <ul class="presentation-mvp-scope mvp-only" aria-label="Content Creator MVP Umfang" data-i18n-aria="contentScope"><li>Article</li><li>1 Image</li><li>Author + Metadata</li></ul>
           </section>
@@ -3265,7 +3273,7 @@
             <span class="step-label">6 Learn</span>
             <h3 class="target-only">Learning Agent</h3>
             <span class="caption target-only" data-i18n="learningCaption">Übersetzt Performance in konkrete Learnings</span>
-            <div class="presentation-internals target-only" aria-label="Learning Schritte" data-i18n-aria="learningSteps"><span class="presentation-step">Measure</span><span class="presentation-step">Interpret</span><span class="presentation-step">Improve</span></div>
+            <div class="presentation-internals target-only" aria-label="Learning Schritte" data-i18n-aria="learningSteps"><span class="presentation-step presentation-step-copy">Measure</span><span class="presentation-step presentation-step-copy">Interpret</span><span class="presentation-step presentation-step-copy">Improve</span></div>
             <div class="presentation-mvp-learning mvp-only"><h3>Learning Agent</h3><strong>Later</strong></div>
           </article>
 
