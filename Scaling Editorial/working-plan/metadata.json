@@ -1,0 +1,17 @@
+{
+  "title": "Working Plan",
+  "slug": "working-plan",
+  "project": "Scaling Editorial",
+  "sourceRepository": "scout24-creative-ops/scaling-editorial",
+  "sourcePath": "documents/mvp-workplan.html",
+  "sourceAbsolutePath": "/workspace/scratch/63faf04277f8/wiki-link-repair-20261115/Scaling Editorial/documents/mvp-workplan.html",
+  "sourceCommit": "861020a934d168d323b62ce2876358fb94202bf7",
+  "sourceHash": "sha256:f4d77d71c5b3117b36e19c1a3cb48732ad8b7356672e149cef327ff04c6079a3",
+  "publicPath": "Scaling Editorial/working-plan/",
+  "publicUrl": "https://scout24-creative-ops.github.io/public/Scaling%20Editorial/working-plan/",
+  "publishedFiles": [
+    "index.html"
+  ],
+  "lastPublished": "2026-11-15T07:42:40Z",
+  "status": "published"
+}

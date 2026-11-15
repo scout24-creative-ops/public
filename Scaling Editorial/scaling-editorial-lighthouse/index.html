@@ -1,0 +1,4006 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Scaling Editorial · Editorial Flow</title>
+  <style>
+    :root {
+      --ink: #17191c;
+      --muted: #63686f;
+      --line: #d7d9d4;
+      --line-strong: #969d98;
+      --paper: #f7f7f3;
+      --card: #fff;
+      --accent: #00d6b9;
+      --accent-dark: #006b5e;
+      --accent-soft: #dffff8;
+      --data: #eaf9f5;
+      --data-line: #78bbae;
+      --blue: #f0f7fb;
+      --blue-line: #c9dae5;
+      --warm: #fbf6e9;
+      --warm-line: #dfd4bc;
+      --violet: #f5f0fb;
+      --violet-line: #d8cce8;
+      --learn: #f1eef7;
+      --learn-line: #c9bedc;
+      --danger: #fff4f1;
+      --danger-line: #d9a89b;
+      --shadow: 0 18px 50px rgba(19, 28, 26, .12), 0 2px 8px rgba(19, 28, 26, .08);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { min-height: 100%; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "Make It Better", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .shell {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 28px;
+      padding: 23px clamp(22px, 3.8vw, 62px) 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(247, 247, 243, .97);
+    }
+
+    .topbar h1 {
+      margin: 0;
+      font-size: clamp(31px, 3.2vw, 48px);
+      line-height: 1;
+      letter-spacing: -.05em;
+    }
+
+    .working-note {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      max-width: 550px;
+      padding: 7px 10px;
+      border: 1px solid var(--data-line);
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-size: 9px;
+      font-weight: 820;
+      line-height: 1.35;
+    }
+
+    .working-note::before {
+      width: 7px;
+      height: 7px;
+      flex: 0 0 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      content: "";
+      box-shadow: 0 0 0 3px rgba(0, 214, 185, .13);
+    }
+
+    main {
+      flex: 1;
+      padding: 18px 0 28px;
+      overflow: hidden;
+    }
+
+    .canvas-wrap {
+      overflow-x: auto;
+      padding: 0 0 16px;
+      scrollbar-color: #afb5b1 transparent;
+      scrollbar-width: thin;
+    }
+
+    .canvas {
+      position: relative;
+      width: 1840px;
+      height: 950px;
+      margin: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background-color: #fff;
+      background-image:
+        linear-gradient(rgba(28, 36, 33, .035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(28, 36, 33, .035) 1px, transparent 1px);
+      background-size: 24px 24px;
+      box-shadow: 0 2px 0 rgba(22, 27, 25, .03);
+    }
+
+    .process-lines,
+    .access-lines,
+    .feedback-lines {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .process-lines { z-index: 1; }
+    .access-lines,
+    .feedback-lines { z-index: 3; }
+
+    .panel,
+    .stage,
+    .data-object {
+      position: absolute;
+      z-index: 2;
+    }
+
+    .panel,
+    .stage {
+      border: 1px solid #d6d9d5;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .98);
+    }
+
+    .panel,
+    .stage { text-align: center; }
+
+    .panel { padding: 17px 18px; }
+
+    .eyebrow {
+      display: block;
+      margin-bottom: 7px;
+      color: #7e847f;
+      font-size: 8px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .panel h2,
+    .stage h2,
+    .stage h3 {
+      margin: 0;
+      letter-spacing: -.035em;
+    }
+
+    .panel h2 { font-size: 21px; }
+    .stage h2 { font-size: 20px; }
+    .stage h3 { font-size: 16px; }
+
+    .caption {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .source-chips,
+    .metric-chips,
+    .learning-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 5px 8px;
+      border: 1px solid #d9ddd8;
+      border-radius: 8px;
+      background: #fff;
+      color: #4e5551;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1.15;
+    }
+
+    .source-panel {
+      top: 35px;
+      left: 60px;
+      width: 1720px;
+      height: 170px;
+      border-color: var(--data-line);
+      background: #f4fbf9;
+      text-align: center;
+    }
+
+    .source-panel::after {
+      display: none;
+      content: "";
+    }
+
+    .source-chips {
+      justify-content: center;
+      margin-top: 11px;
+      padding-right: 20px;
+    }
+
+    .source-chips .chip {
+      min-height: 28px;
+      border-color: #b8d5cd;
+      background: #fff;
+      color: #315f57;
+    }
+
+    .stage {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .step-label {
+      display: inline-flex;
+      align-items: center;
+      align-self: center;
+      justify-content: center;
+      min-height: 27px;
+      margin-bottom: 12px;
+      padding: 5px 10px;
+      border: 1px solid var(--data-line);
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .035em;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .shared-label { margin-bottom: 8px; }
+
+    .trend-card {
+      top: 320px;
+      left: 55px;
+      width: 250px;
+      height: 230px;
+      border-color: #b7cfdd;
+      background: #e6f1f7;
+    }
+
+    .agent-label {
+      display: inline-flex;
+      align-self: center;
+      margin-bottom: 9px;
+      padding: 5px 8px;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      color: #4c7183;
+      font-size: 8px;
+      font-weight: 900;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .rule-box {
+      margin-top: 10px;
+      padding: 8px;
+      border: 1px solid #ccdae1;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, .72);
+    }
+
+    .rule-box strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #4c7183;
+      font-size: 8px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .mini-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 5px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .mini-list li {
+      padding: 3px 5px;
+      border-radius: 5px;
+      background: #fff;
+      color: #5d6560;
+      font-size: 7.5px;
+      font-weight: 740;
+    }
+
+    .taxonomy-box {
+      margin-top: 9px;
+      padding: 8px;
+      border: 1px dashed #c8d3d7;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, .55);
+    }
+
+    .taxonomy-box strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #5f7882;
+      font-size: 7.5px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .taxonomy-chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .taxonomy-chips span {
+      padding: 3px 5px;
+      border-radius: 5px;
+      background: #fff;
+      color: #68716d;
+      font-size: 6.5px;
+      font-weight: 740;
+    }
+
+    .radar-equation {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      align-items: center;
+      gap: 4px;
+      margin-top: 10px;
+    }
+
+    .radar-equation span {
+      display: grid;
+      place-items: center;
+      min-height: 27px;
+      padding: 5px;
+      border: 1px solid #c9d9e0;
+      border-radius: 7px;
+      background: #fff;
+      color: #466a7a;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1.15;
+      text-align: center;
+    }
+
+    .radar-equation span:last-child {
+      border-color: var(--data-line);
+      background: var(--data);
+      color: var(--accent-dark);
+    }
+
+    .radar-equation b { color: #78817c; font-size: 12px; }
+
+    .data-object {
+      display: grid;
+      place-items: center;
+      padding: 10px;
+      border: 1px solid #b8c4bf;
+      border-radius: 12px 12px 12px 4px;
+      background: #fafaf8;
+      color: #29322f;
+      font-size: 12px;
+      font-weight: 850;
+      line-height: 1.15;
+      text-align: center;
+      box-shadow: 0 3px 9px rgba(31, 39, 36, .05);
+    }
+
+    .data-object::after {
+      position: absolute;
+      top: -1px;
+      right: -1px;
+      width: 15px;
+      height: 15px;
+      border-bottom: 1px solid #b8c4bf;
+      border-left: 1px solid #b8c4bf;
+      border-radius: 0 10px 0 4px;
+      background: #fff;
+      content: "";
+    }
+
+    .package-object {
+      width: 170px;
+      height: 100px;
+      padding: 12px 14px;
+      align-content: center;
+    }
+
+    .package-label {
+      display: inline-flex;
+      margin-bottom: 10px;
+      padding: 4px 7px;
+      border: 1px solid #c1ccc7;
+      border-radius: 999px;
+      background: #eef2f0;
+      color: #53635d;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .package-object strong { color: #29322f; font-size: 16px; font-weight: 800; }
+
+    .package-note {
+      display: block;
+      margin-top: 9px;
+      color: #557b74;
+      font-size: 6.8px;
+      font-weight: 760;
+      line-height: 1.25;
+    }
+
+    .signal-object {
+      top: 385px;
+      left: 350px;
+    }
+
+    .query-note {
+      display: block;
+      margin-top: 6px;
+      padding: 4px 6px;
+      border-left: 2px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      background: #29302d;
+      color: #9be8d9;
+      font-size: 6.3px;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    .brain-card {
+      top: 325px;
+      left: 545px;
+      width: 650px;
+      height: 220px;
+      justify-content: flex-start;
+      padding: 20px 24px;
+      border: 2px solid var(--ink);
+      border-radius: 28px;
+      background: var(--ink);
+      color: #fff;
+      box-shadow: 0 0 0 9px var(--accent-soft), 0 18px 42px rgba(0, 72, 62, .17);
+    }
+
+    .brain-head {
+      position: relative;
+      z-index: 4;
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 84px;
+      background: var(--ink);
+      text-align: center;
+    }
+
+    .brain-card h2 { font-size: 26px; }
+    .brain-card .caption { max-width: 540px; margin: 5px auto 0; color: #cdd4d1; }
+    .brain-card .step-label { margin-bottom: 9px; }
+
+    .brain-badge {
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #073c35;
+      font-size: 8px;
+      font-weight: 950;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .brain-phases {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .brain-phase {
+      display: grid;
+      min-height: 58px;
+      place-items: center;
+      padding: 10px 12px;
+      border: 1px solid #3b4340;
+      border-radius: 11px;
+      background: #222624;
+      text-align: center;
+    }
+
+    .phase-no {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--accent);
+      font-size: 7px;
+      font-weight: 950;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .brain-phase h3 { font-size: 14px; line-height: 1.2; }
+
+    .story-package {
+      top: 385px;
+      left: 1370px;
+    }
+
+    .production-package {
+      top: 755px;
+      left: 1030px;
+      z-index: 4;
+    }
+
+    .production-zone {
+      top: 690px;
+      left: 1275px;
+      width: 350px;
+      height: 230px;
+      padding: 15px;
+      border-color: #c8cbc3;
+      background: #f4f4ef;
+    }
+
+    .production-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 11px;
+      margin-top: 8px;
+    }
+
+    .production-agent {
+      min-height: 96px;
+      padding: 12px;
+      border: 1px solid #d6c496;
+      border-radius: 13px;
+      background: #f7edcf;
+      text-align: center;
+    }
+
+    .production-agent.image { border-color: #c9b6de; background: #ece3f6; }
+    .production-agent h3 { font-size: 17px; }
+    .production-agent .caption { margin-top: 8px; font-size: 10.5px; }
+
+    .output-pill {
+      display: inline-flex;
+      margin-top: 12px;
+      padding: 5px 7px;
+      border: 1px solid var(--data-line);
+      border-radius: 7px;
+      background: var(--data);
+      color: #245f55;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .review-context {
+      position: absolute;
+      top: 650px;
+      left: 1000px;
+      z-index: 2;
+      display: flex;
+      width: 230px;
+      height: 92px;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .review-context h3 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.15;
+      letter-spacing: -.035em;
+    }
+
+    .person-icon {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      margin: 0 auto 9px;
+      border: 1.5px solid #5f6661;
+      border-radius: 50%;
+      color: #5f6661;
+    }
+
+    .person-icon svg { width: 22px; height: 22px; }
+
+    .publish-card {
+      top: 700px;
+      left: 690px;
+      width: 280px;
+      height: 210px;
+      display: grid;
+      grid-template-columns: 1fr 104px;
+      grid-template-rows: auto 1fr;
+      gap: 10px;
+      border-color: #b8c9bf;
+      background: #e8efeb;
+    }
+
+    .publish-copy { align-self: center; text-align: center; }
+
+    .tech-tag {
+      display: inline-flex;
+      margin-top: 10px;
+      padding: 5px 7px;
+      border: 1px solid #c5cdc7;
+      border-radius: 7px;
+      background: #fff;
+      color: #5b665f;
+      font-size: 9px;
+      font-weight: 700;
+    }
+
+    .news-preview {
+      align-self: center;
+      overflow: hidden;
+      height: 148px;
+      border: 1px solid #cfd3ce;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 4px 0 #dfe2de, 0 8px 0 #e8eae7;
+    }
+
+    .news-nav {
+      display: flex;
+      align-items: center;
+      height: 24px;
+      padding: 0 6px;
+      background: var(--accent);
+      color: #062d28;
+      font-size: 6px;
+      font-weight: 900;
+    }
+
+    .news-hero {
+      display: block;
+      height: 42px;
+      background:
+        linear-gradient(135deg, rgba(14, 28, 25, .08), rgba(14, 28, 25, .52)),
+        linear-gradient(135deg, #d8e7de 0 48%, #8fa89c 48% 52%, #cad9d0 52% 100%);
+    }
+
+    .news-copy { display: block; padding: 7px; }
+    .news-kicker { display: block; color: var(--accent-dark); font-size: 5.5px; font-weight: 900; text-transform: uppercase; }
+    .news-headline { display: block; margin-top: 3px; font-size: 7px; font-weight: 900; line-height: 1.18; }
+    .news-lines { display: block; width: 82%; height: 3px; margin-top: 7px; background: #dcdeda; box-shadow: 0 6px #e8e9e6, 0 12px #e8e9e6; }
+
+    .performance-card {
+      top: 715px;
+      left: 395px;
+      width: 245px;
+      height: 180px;
+      padding: 14px;
+      border-color: #b9acd0;
+      background: #e8e1f0;
+    }
+
+    .performance-card h3 { font-size: 16px; }
+    .performance-card .caption { margin-top: 6px; font-size: 10.5px; }
+    .learning-package {
+      top: 755px;
+      left: 175px;
+    }
+
+    [data-detail] {
+      cursor: help;
+      transition: box-shadow .16s ease, transform .16s ease;
+    }
+
+    [data-detail]:hover,
+    [data-detail][aria-expanded="true"] {
+      box-shadow: 0 0 0 3px rgba(0, 214, 185, .14), 0 10px 28px rgba(20, 34, 30, .1);
+    }
+
+    [data-detail]:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 4px;
+    }
+
+    .brain-phase[data-detail]:hover,
+    .brain-phase[data-detail][aria-expanded="true"] {
+      box-shadow: inset 0 0 0 1px var(--accent), 0 8px 22px rgba(0, 0, 0, .2);
+    }
+
+    .review-context[data-detail]:hover,
+    .review-context[data-detail][aria-expanded="true"] {
+      box-shadow: none;
+    }
+
+    .detail-popover {
+      position: fixed;
+      z-index: 1000;
+      width: min(460px, calc(100vw - 24px));
+      max-height: calc(100vh - 26px);
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 22px;
+      border: 1px solid var(--data-line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .985);
+      color: var(--ink);
+      box-shadow: 0 24px 70px rgba(18, 34, 30, .22), 0 3px 12px rgba(18, 34, 30, .12);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(4px) scale(.985);
+      transform-origin: center;
+      transition: opacity .14s ease, transform .14s ease, visibility 0s linear .14s;
+      pointer-events: none;
+    }
+
+    .detail-popover.is-open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+      transition-delay: 0s;
+      pointer-events: auto;
+    }
+
+    .detail-popover h2 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.08;
+      letter-spacing: -.035em;
+    }
+
+    .detail-popover h3 {
+      margin: 18px 0 7px;
+      color: var(--accent-dark);
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .detail-popover p {
+      margin: 9px 0 0;
+      color: #555e59;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .detail-popover ul {
+      margin: 7px 0 0;
+      padding-left: 18px;
+      color: #303733;
+      font-size: 13.5px;
+      line-height: 1.55;
+    }
+
+    .detail-popover li::marker { color: var(--accent-dark); }
+
+    .detail-kicker {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--accent-dark);
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 18px;
+      margin-top: 5px;
+    }
+
+    .detail-grid.three { grid-template-columns: repeat(3, 1fr); }
+    .detail-grid h3 { margin-top: 14px; }
+
+    #detail-popover-content { min-width: 0; }
+
+    .monitoring-plan-scroll {
+      width: 100%;
+      max-width: 100%;
+      margin-top: 7px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-inline: contain;
+      border: 1px solid rgba(159, 228, 215, .25);
+      border-radius: 10px;
+    }
+
+    .monitoring-plan {
+      width: 100%;
+      min-width: 1160px;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
+      color: #e0e6e3;
+      font-size: 12.25px;
+      line-height: 1.45;
+      text-align: left;
+    }
+
+    .monitoring-plan th,
+    .monitoring-plan td {
+      padding: 9px 10px;
+      border-right: 1px solid rgba(159, 228, 215, .18);
+      border-bottom: 1px solid rgba(159, 228, 215, .18);
+      overflow-wrap: anywhere;
+      vertical-align: top;
+    }
+
+    .monitoring-plan th {
+      background: #1a302b;
+      color: #c0e9e1;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .035em;
+    }
+
+    .monitoring-plan tbody tr:nth-child(even) td {
+      background: rgba(255, 255, 255, .018);
+    }
+
+    .monitoring-plan th:last-child,
+    .monitoring-plan td:last-child { border-right: 0; }
+    .monitoring-plan tbody tr:last-child td { border-bottom: 0; }
+
+    .monitoring-plan.story-evaluation {
+      min-width: 1000px;
+    }
+
+    .monitoring-plan.trend-monitoring-table {
+      min-width: 1500px;
+    }
+
+    .detail-popover .trend-section-title,
+    .detail-popover .detail-section-title {
+      margin: 22px 0 4px;
+      color: #dce8e4;
+      font-size: 17px;
+      font-weight: 760;
+      line-height: 1.15;
+      letter-spacing: -.015em;
+      text-transform: none;
+    }
+
+    .detail-popover .detail-subline {
+      margin-top: 4px;
+      color: #b8c5c0;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .detail-popover .detail-step-label {
+      display: inline-grid;
+      min-width: 88px;
+      min-height: 34px;
+      margin: 28px 0 0;
+      place-items: center;
+      padding: 8px 14px;
+      border: 1px solid #456171;
+      border-radius: 9px;
+      color: #eef3f1;
+      background: #21343f;
+      font-size: 13px;
+      font-weight: 750;
+      line-height: 1.15;
+      letter-spacing: 0;
+      text-align: center;
+      text-transform: none;
+    }
+
+    .detail-popover .detail-step-label + p {
+      margin-top: 7px;
+      color: #dce8e4;
+      font-size: 13.5px;
+      font-weight: 650;
+      line-height: 1.4;
+    }
+
+    .detail-popover .detail-step-label + p + p { margin-top: 5px; }
+
+    .detail-popover .detail-example-label {
+      margin: 8px 0 0;
+      color: #dce8e4;
+      font-size: 13.5px;
+      font-weight: 700;
+      line-height: 1.4;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    .detail-popover .detail-example-label + p { margin-top: 3px; }
+    .detail-popover ul + .detail-example-label { margin-top: 8px; }
+
+    .detail-example-card {
+      margin-top: 8px;
+      padding: 11px 12px;
+      border: 1px solid #3d4542;
+      border-radius: 10px;
+      background: #252b29;
+    }
+
+    .detail-example-card .detail-example-label {
+      display: block;
+      margin: 0;
+      color: #dce3e0;
+    }
+
+    .detail-example-card .detail-example-label + p { margin-top: 4px; }
+    .detail-example-card p { margin-top: 7px; }
+    .detail-example-card ul { margin-top: 5px; }
+
+    .detail-popover,
+    .detail-popover * { cursor: default; }
+
+    .detail-popover [data-detail],
+    .detail-popover [data-detail]:hover,
+    .detail-popover [data-detail][aria-expanded="true"] {
+      box-shadow: none;
+      transform: none;
+    }
+
+    .automation-chain {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 7px;
+      margin-top: 14px;
+      color: #c0e9e1;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .automation-chain span {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .automation-chain span:not(:last-child)::after {
+      color: #71807b;
+      content: "→";
+    }
+
+    .detail-rule {
+      margin-top: 14px;
+      padding: 11px 12px;
+      border: 1px solid #bee0d8;
+      border-radius: 10px;
+      background: var(--data);
+      color: #285d54;
+      font-size: 12.5px;
+      font-weight: 750;
+      line-height: 1.45;
+    }
+
+
+    /* Presentation layout: native 1440 × 780 composition */
+    :root {
+      --ink: #f1f5f3;
+      --muted: #aeb8b4;
+      --line: #343d39;
+      --line-strong: #87938e;
+      --paper: #101514;
+      --card: #1b211f;
+      --accent: #49d8bf;
+      --accent-dark: #b9f2e7;
+      --accent-soft: #183a34;
+      --data: #1a2d28;
+      --data-line: #4a9386;
+      --shadow: 0 16px 42px rgba(0, 0, 0, .28), 0 2px 8px rgba(0, 0, 0, .2);
+    }
+
+    html,
+    body { height: 100%; }
+
+    body {
+      overflow: auto;
+      background: #101514;
+    }
+
+    .shell {
+      height: 100vh;
+      min-height: 0;
+    }
+
+    .topbar {
+      min-height: 60px;
+      flex: 0 0 60px;
+      padding: 11px 20px 10px;
+      border-color: #303936;
+      background: rgba(16, 21, 20, .98);
+    }
+
+    .topbar h1 {
+      color: #f4f7f6;
+      font-size: clamp(29px, 2.3vw, 35px);
+      letter-spacing: -.045em;
+    }
+
+    .working-note {
+      max-width: 520px;
+      padding: 6px 9px;
+      border-color: #397c70;
+      background: #16332e;
+      color: #c3f3e9;
+      font-size: 8.5px;
+    }
+
+    main {
+      min-height: 0;
+      padding: 6px 0;
+      overflow: hidden;
+    }
+
+    .canvas-wrap {
+      padding: 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    .canvas {
+      width: 1400px;
+      height: 690px;
+      border-color: #343d39;
+      border-radius: 18px;
+      background-color: #151a19;
+      background-image:
+        linear-gradient(rgba(232, 243, 239, .035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(232, 243, 239, .035) 1px, transparent 1px);
+      background-size: 22px 22px;
+      box-shadow: 0 2px 0 rgba(0, 0, 0, .22);
+    }
+
+    .panel,
+    .stage {
+      border-color: #3b4541;
+      background: #1b211f;
+    }
+
+    .panel { padding: 12px; }
+    .stage { padding: 12px; }
+
+    .panel h2 { font-size: 20px; }
+    .stage h2 { font-size: 20px; }
+    .stage h3 { font-size: 16px; }
+
+    .caption {
+      margin-top: 6px;
+      color: #adb7b3;
+      font-size: 11.5px;
+      line-height: 1.35;
+    }
+
+    .step-label {
+      min-height: 24px;
+      margin-bottom: 9px;
+      padding: 4px 9px;
+      border-color: #438f82;
+      background: #183b35;
+      color: #c1f2e8;
+      font-size: 9.5px;
+    }
+
+    .source-panel {
+      top: 12px;
+      left: 18px;
+      width: 1364px;
+      height: 132px;
+      padding: 9px 14px;
+      border-color: #3e776c;
+      background: #172724;
+    }
+
+    .shared-label {
+      min-height: 22px;
+      margin-bottom: 5px;
+    }
+
+    .source-panel h2 { font-size: 20px; }
+
+    .source-chips {
+      display: grid;
+      grid-template-columns: repeat(7, max-content);
+      justify-content: center;
+      gap: 4px 7px;
+      margin-top: 6px;
+      padding: 0;
+    }
+
+    .source-chips .chip {
+      min-height: 24px;
+      padding: 4px 6px;
+      border-color: #49685f;
+      background: #202e2a;
+      color: #e4ece9;
+      font-size: 10px;
+    }
+
+    .trend-card {
+      top: 185px;
+      left: 25px;
+      width: 210px;
+      height: 190px;
+      border-color: #3d6074;
+      background: #192b37;
+    }
+
+    .radar-equation {
+      gap: 3px;
+      margin-top: 8px;
+    }
+
+    .radar-equation span {
+      min-height: 29px;
+      padding: 4px;
+      border-color: #456171;
+      background: #21343f;
+      color: #d8e8ee;
+      font-size: 9.5px;
+    }
+
+    .radar-equation span:last-child {
+      border-color: #4a9386;
+      background: #193a34;
+      color: #c7f2e9;
+    }
+
+    .radar-equation b { color: #9ea9a5; }
+
+    .data-object {
+      border-color: #66736e;
+      background: #202523;
+      color: #eef2f0;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, .18);
+    }
+
+    .data-object::after {
+      border-color: #66736e;
+      background: #151a19;
+    }
+
+    .package-object {
+      width: 145px;
+      height: 90px;
+      padding: 10px 11px;
+    }
+
+    .package-label {
+      margin-bottom: 8px;
+      padding: 4px 6px;
+      border-color: #62706b;
+      background: #29312e;
+      color: #cbd4d1;
+      font-size: 7.8px;
+    }
+
+    .package-object strong {
+      color: #f1f4f3;
+      font-size: 15px;
+    }
+
+    .signal-object {
+      top: 230px;
+      left: 260px;
+    }
+
+    .brain-card {
+      top: 180px;
+      left: 430px;
+      width: 520px;
+      height: 195px;
+      padding: 14px 18px;
+      border-color: #52635e;
+      border-radius: 23px;
+      background: #101514;
+      box-shadow: 0 0 0 6px #173a34, 0 16px 36px rgba(0, 0, 0, .34);
+    }
+
+    .brain-head {
+      min-height: 0;
+      background: #101514;
+    }
+
+    .brain-card h2 { font-size: 25px; }
+    .brain-card .caption { max-width: 460px; color: #bdc7c3; font-size: 11.5px; }
+    .brain-card .step-label { margin-bottom: 7px; }
+
+    .brain-phases {
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .brain-phase {
+      min-height: 50px;
+      padding: 8px 9px;
+      border-color: #3b4743;
+      border-radius: 9px;
+      background: #1c2321;
+    }
+
+    .brain-phase h3 { color: #f0f3f2; font-size: 13px; }
+
+    .story-package {
+      top: 230px;
+      left: 1100px;
+    }
+
+    .production-zone {
+      top: 475px;
+      left: 990px;
+      width: 365px;
+      height: 195px;
+      padding: 12px;
+      border-color: #5d594d;
+      background: #28261f;
+    }
+
+    .production-zone .step-label { margin-bottom: 8px; }
+
+    .production-grid {
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .production-agent {
+      min-height: 105px;
+      padding: 9px 7px;
+      border-color: #76633e;
+      background: #39311f;
+      color: #f4efe2;
+    }
+
+    .production-agent.image {
+      border-color: #69547e;
+      background: #30273c;
+      color: #eee7f6;
+    }
+
+    .production-agent h3 { font-size: 16px; }
+
+    .output-pill {
+      margin-top: 8px;
+      padding: 4px 5px;
+      border-color: #4a9386;
+      background: #193a34;
+      color: #c7f2e9;
+      font-size: 10px;
+    }
+
+    .review-context {
+      top: 445px;
+      left: 785px;
+      width: 205px;
+      height: 82px;
+      color: #f0f4f2;
+    }
+
+    .review-context h3 { font-size: 17px; }
+
+    .person-icon {
+      width: 38px;
+      height: 38px;
+      margin-bottom: 7px;
+      border-color: #aab5b0;
+      color: #dce4e1;
+    }
+
+    .person-icon svg { width: 20px; height: 20px; }
+
+    .production-package {
+      top: 540px;
+      left: 815px;
+    }
+
+    .publish-card {
+      top: 500px;
+      left: 595px;
+      width: 190px;
+      height: 170px;
+      grid-template-columns: 1fr 76px;
+      gap: 8px;
+      padding: 10px;
+      border-color: #45675f;
+      background: #1c2d29;
+    }
+
+    .publish-card .step-label { margin-bottom: 8px; }
+    .publish-card h3 { font-size: 15px; }
+    .publish-card .caption { font-size: 10.8px; }
+
+    .news-preview {
+      height: 125px;
+      border-color: #65706b;
+      background: #edf1ee;
+      color: #17201d;
+      box-shadow: 0 3px 0 #3a4742, 0 6px 0 #2a3430;
+    }
+
+    .news-copy { color: #17201d; }
+    .news-lines { background: #bfc6c2; box-shadow: 0 6px #d1d6d3, 0 12px #d1d6d3; }
+
+    .performance-card {
+      top: 510px;
+      left: 375px;
+      width: 190px;
+      height: 150px;
+      padding: 11px;
+      border-color: #5a4b74;
+      background: #292238;
+    }
+
+    .performance-card h3 { color: #f0ebf7; font-size: 15px; }
+    .performance-card .caption { color: #bbb1c8; font-size: 10.8px; }
+
+    .learning-package {
+      top: 540px;
+      left: 200px;
+    }
+
+    [data-detail]:hover,
+    [data-detail][aria-expanded="true"] {
+      box-shadow: 0 0 0 3px rgba(73, 216, 191, .2), 0 10px 28px rgba(0, 0, 0, .3);
+    }
+
+    .detail-popover {
+      border-color: #4a9386;
+      background: rgba(23, 30, 28, .985);
+      color: #f0f4f2;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, .52), 0 3px 12px rgba(0, 0, 0, .32);
+    }
+
+    .detail-popover h3,
+    .detail-kicker { color: #9fe4d7; }
+
+    .detail-popover p { color: #bdc7c3; }
+    .detail-popover ul { color: #e0e6e3; }
+    .detail-popover li::marker { color: #71c9b9; }
+
+    .detail-rule {
+      border-color: #3d796e;
+      background: #1a302b;
+      color: #c0e9e1;
+    }
+
+    /* Unified presentation system */
+    .topbar {
+      position: relative;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 0;
+      background: #101514;
+    }
+
+    .topbar h1 {
+      font-size: 32px;
+      text-align: center;
+    }
+
+    .canvas {
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .source-panel {
+      border-color: #355f57;
+      background: #15231f;
+    }
+
+    .source-chips .chip {
+      border-color: #425f57;
+      background: #1d2a26;
+    }
+
+    .trend-card,
+    .brain-card,
+    .production-zone,
+    .performance-card {
+      border: 1px solid #3d6074;
+      border-radius: 18px;
+      background: #192b37;
+      color: #f1f5f3;
+      box-shadow: none;
+    }
+
+    .trend-card .caption,
+    .brain-card .caption,
+    .performance-card .caption {
+      color: #adb7b3;
+    }
+
+    .brain-head { background: transparent; }
+
+    .radar-equation span,
+    .brain-phase,
+    .production-agent,
+    .production-agent.image {
+      border: 1px solid #456171;
+      border-radius: 8px;
+      background: #21343f;
+      color: #eef3f1;
+    }
+
+    .brain-phase h3,
+    .production-agent h3,
+    .production-agent.image h3,
+    .performance-card h3 {
+      color: #eef3f1;
+    }
+
+    .radar-equation span:last-child {
+      border-color: #4a9386;
+      background: #193a34;
+      color: #c7f2e9;
+    }
+
+    .publish-card {
+      border-color: #45675f;
+      background: #1c2d29;
+    }
+
+    .review-context {
+      color: #e6ece9;
+    }
+
+    .person-icon {
+      border-color: #8f9b96;
+      color: #cbd4d0;
+    }
+
+    /* v6 — simplified horizontal presentation */
+    .source-panel {
+      top: 18px;
+      left: 30px;
+      width: 600px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 13px;
+      padding: 14px 18px;
+      text-align: left;
+    }
+
+    .source-panel h2 {
+      font-size: 22px;
+      line-height: 1.1;
+    }
+
+    .source-icon {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      flex: 0 0 34px;
+      place-items: center;
+      color: #90aaa2;
+    }
+
+    .source-icon svg { width: 29px; height: 29px; }
+
+    .agent-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 15px;
+      border: 1px solid #3d6074;
+      border-radius: 18px;
+      background: #192b37;
+      color: #f1f5f3;
+      text-align: center;
+    }
+
+    .agent-card .step-label {
+      margin-bottom: 11px;
+    }
+
+    .agent-card h2,
+    .agent-card h3 {
+      color: #f1f5f3;
+      font-size: 21px;
+      line-height: 1.1;
+    }
+
+    .agent-card .caption {
+      margin-top: 9px;
+      color: #adb7b3;
+      font-size: 11.5px;
+      line-height: 1.38;
+    }
+
+    .trend-card {
+      top: 175px;
+      left: 25px;
+      width: 185px;
+      height: 255px;
+    }
+
+    .signal-object {
+      top: 260px;
+      left: 225px;
+    }
+
+    .brain-card {
+      top: 175px;
+      left: 345px;
+      width: 285px;
+      height: 255px;
+      padding: 15px;
+    }
+
+    .brain-head {
+      display: block;
+      min-height: 0;
+    }
+
+    .brain-card h2 { font-size: 21px; }
+    .brain-card .caption { max-width: none; font-size: 11.5px; }
+
+    .story-package {
+      top: 260px;
+      left: 645px;
+    }
+
+    .production-zone {
+      top: 175px;
+      left: 765px;
+      width: 250px;
+      height: 255px;
+      padding: 15px;
+    }
+
+    .production-package {
+      top: 260px;
+      left: 1030px;
+    }
+
+    .package-object {
+      width: 105px;
+      height: 90px;
+      padding: 10px;
+    }
+
+    .package-object strong {
+      max-width: 88px;
+      color: #f1f4f3;
+      font-size: 15px;
+      line-height: 1.16;
+    }
+
+    .agent-internals {
+      display: grid;
+      gap: 8px;
+      width: 100%;
+      margin-top: auto;
+    }
+
+    .trend-inputs,
+    .asset-internals { grid-template-columns: repeat(2, 1fr); }
+    .story-internals { grid-template-columns: repeat(3, 1fr); }
+
+    .agent-internal,
+    .brain-phase,
+    .production-agent,
+    .production-agent.image {
+      display: grid;
+      min-height: 64px;
+      place-items: center;
+      padding: 8px;
+      border: 1px solid #456171;
+      border-radius: 9px;
+      background: #21343f;
+      color: #eef3f1;
+      font-size: 12px;
+      font-weight: 720;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    .brain-phases,
+    .production-grid {
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .brain-phase h3,
+    .production-agent h3 {
+      font-size: 12px;
+      line-height: 1.2;
+    }
+
+    .review-context {
+      top: 210px;
+      left: 1145px;
+      width: 120px;
+      height: 90px;
+    }
+
+    .review-context h3 {
+      font-size: 16px;
+      white-space: nowrap;
+    }
+
+    .person-icon {
+      width: 38px;
+      height: 38px;
+      margin-bottom: 7px;
+    }
+
+    .publish-destination {
+      position: absolute;
+      top: 220px;
+      left: 1285px;
+      z-index: 2;
+      display: flex;
+      width: 105px;
+      height: 200px;
+      flex-direction: column;
+      align-items: center;
+      color: #edf2f0;
+      text-align: center;
+    }
+
+    .publish-destination h3 {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.16;
+      letter-spacing: -.025em;
+    }
+
+    .page-stack {
+      position: relative;
+      width: 76px;
+      height: 112px;
+      margin-top: 14px;
+    }
+
+    .page-stack i {
+      position: absolute;
+      width: 58px;
+      height: 90px;
+      border: 1px solid #66736e;
+      border-radius: 7px;
+      background: #202523;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, .16);
+    }
+
+    .page-stack i:nth-child(1) { top: 0; left: 0; }
+    .page-stack i:nth-child(2) { top: 8px; left: 8px; }
+    .page-stack i:nth-child(3) { top: 16px; left: 16px; }
+
+    .performance-card {
+      top: 520px;
+      left: 1160px;
+      width: 220px;
+      height: 125px;
+      justify-content: center;
+      padding: 14px;
+    }
+
+    .performance-card .step-label { margin-bottom: 8px; }
+    .performance-card h3 { font-size: 19px; }
+    .performance-card .caption { margin-top: 7px; font-size: 11px; }
+
+    .learning-package {
+      top: 545px;
+      left: 1015px;
+    }
+
+    /* v7 — stronger central hierarchy and compact handoffs */
+    .source-panel {
+      left: 30px;
+      width: 650px;
+    }
+
+    .trend-card {
+      top: 180px;
+      left: 25px;
+      width: 190px;
+      height: 260px;
+    }
+
+    .signal-object {
+      top: 276px;
+      left: 225px;
+    }
+
+    .brain-card {
+      top: 140px;
+      left: 318px;
+      width: 355px;
+      height: 340px;
+      padding: 20px;
+    }
+
+    .brain-card .step-label { margin-bottom: 15px; }
+    .brain-card h2 { font-size: 26px; }
+    .brain-card .caption {
+      max-width: 305px;
+      margin: 12px auto 0;
+      font-size: 12px;
+      line-height: 1.42;
+    }
+
+    .brain-card .story-internals { gap: 10px; }
+    .brain-card .brain-phase {
+      min-height: 82px;
+      padding: 12px 9px;
+    }
+    .brain-card .brain-phase h3 {
+      font-size: 12.5px;
+      line-height: 1.25;
+    }
+
+    .story-package {
+      top: 276px;
+      left: 688px;
+    }
+
+    .production-zone {
+      top: 180px;
+      left: 781px;
+      width: 215px;
+      height: 260px;
+    }
+
+    .production-package {
+      top: 276px;
+      left: 1011px;
+    }
+
+    .package-object {
+      width: 78px;
+      height: 68px;
+      padding: 7px;
+      border-radius: 10px 10px 10px 4px;
+    }
+
+    .data-object::after {
+      width: 12px;
+      height: 12px;
+      border-radius: 0 8px 0 3px;
+    }
+
+    .package-object strong {
+      max-width: 64px;
+      font-size: 13px;
+      line-height: 1.14;
+    }
+
+    .review-context {
+      top: 215px;
+      left: 1100px;
+    }
+
+    .publish-destination {
+      top: 220px;
+      left: 1245px;
+      width: 110px;
+    }
+
+    .performance-card {
+      top: 520px;
+      left: 1200px;
+      width: 200px;
+      height: 125px;
+    }
+
+    .learning-package {
+      top: 548px;
+      left: 1065px;
+    }
+
+    /* v8 — attached review gate, explicit learning consumers and tighter card rhythm */
+    .trend-card,
+    .brain-card,
+    .production-zone {
+      justify-content: center;
+    }
+
+    .trend-inputs,
+    .story-internals,
+    .asset-internals,
+    .brain-phases,
+    .production-grid {
+      margin-top: 22px;
+    }
+
+    .review-context {
+      top: 145px;
+      left: 990px;
+      width: 120px;
+      height: 115px;
+    }
+
+    .review-context .step-label {
+      margin-bottom: 6px;
+    }
+
+    .review-context .person-icon {
+      width: 34px;
+      height: 34px;
+      margin-bottom: 5px;
+    }
+
+    .publish-destination {
+      top: 180px;
+      height: 240px;
+    }
+
+    .publish-destination .step-label {
+      margin-bottom: 8px;
+    }
+
+    .publish-destination .page-stack {
+      margin-top: 12px;
+    }
+
+    .learning-package {
+      top: 530px;
+    }
+
+    .trend-learning-package { left: 81px; }
+    .story-learning-package { left: 456.5px; }
+
+    /* v9 — center the review gate between production and publishing */
+    .review-context { left: 1090px; }
+    .production-package { left: 1211px; }
+
+    /* Storage-backed review flow */
+    .trend-card {
+      left: 25px;
+      width: 250px;
+    }
+
+    .signal-object { left: 295px; }
+
+    .brain-card {
+      left: 395px;
+      width: 325px;
+    }
+
+    .story-package { left: 742px; }
+
+    .production-zone {
+      top: 145px;
+      left: 842px;
+      width: 270px;
+      height: 330px;
+    }
+
+    .production-zone .caption {
+      font-size: 11px;
+    }
+
+    .trend-inputs {
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 5px;
+      align-items: center;
+    }
+
+    .trend-inputs .agent-internal {
+      min-height: 64px;
+      padding: 7px 3px;
+      font-size: 10px;
+    }
+
+    .input-plus {
+      color: #8fa19a;
+      font-size: 14px;
+      font-weight: 750;
+      line-height: 1;
+    }
+
+    .story-internals {
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 6px;
+      align-items: center;
+    }
+
+    .step-chevron {
+      color: #799086;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .production-zone .asset-internals {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-rows: 74px 32px;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .production-zone .production-agent {
+      min-height: 0;
+    }
+
+    .production-zone .specialist-agent {
+      display: flex;
+      min-width: 0;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      padding: 8px 4px;
+    }
+
+    .agent-marker {
+      color: #81cdbf;
+      font-size: 7px;
+      font-weight: 850;
+      letter-spacing: .1em;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .production-zone .seo-gate {
+      display: flex;
+      grid-column: 1 / -1;
+      width: 86%;
+      height: 32px;
+      min-height: 32px;
+      padding: 6px 14px;
+      align-items: center;
+      justify-content: center;
+      justify-self: center;
+      border: 1px solid #456171;
+      border-radius: 999px;
+      background: #21343f;
+      color: #eef3f1;
+    }
+
+    .production-zone .seo-gate h3 {
+      margin: 0;
+      font-size: 11.5px;
+      line-height: 1;
+      text-align: center;
+    }
+
+    .storage-zone {
+      position: absolute;
+      top: 225px;
+      left: 1140px;
+      z-index: 2;
+      width: 220px;
+      height: 175px;
+      border: 1px dashed #65706b;
+      border-radius: 13px;
+      color: #edf2f0;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .storage-zone h3 {
+      margin: 10px 0 0;
+      font-size: 15px;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+    }
+
+    .review-context {
+      top: 105px;
+      left: 1190px;
+    }
+
+    .step-label {
+      border-color: transparent;
+      background: rgba(24, 59, 53, .55);
+      color: rgba(193, 242, 232, .66);
+      box-shadow: none;
+      font-weight: 650;
+    }
+
+    .approval-label {
+      position: absolute;
+      top: 365px;
+      left: 1238px;
+      z-index: 4;
+      display: inline-grid;
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      min-height: 24px;
+      aspect-ratio: 1 / 1;
+      place-items: center;
+      flex: 0 0 24px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: #202523;
+      color: #8f9b96;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0;
+      line-height: 1;
+      text-transform: none;
+    }
+
+    .publish-destination {
+      top: 434px;
+      left: 1180px;
+      width: 140px;
+      height: 228px;
+    }
+
+    .publish-destination h3 {
+      display: grid;
+      width: 120px;
+      min-height: 64px;
+      place-items: center;
+      padding: 10px;
+      border: 1px solid #456171;
+      border-radius: 10px;
+      background: #21343f;
+      font-size: 14px;
+      line-height: 1.2;
+    }
+
+    .publish-destination .page-stack {
+      margin-top: 36px;
+    }
+
+    .performance-card {
+      top: 535px;
+      left: 650px;
+      width: 260px;
+      height: 120px;
+    }
+
+    .trend-learning-package { left: 111px; }
+    .story-learning-package { left: 518.5px; }
+
+    /* Target / MVP scope layer */
+    .mode-switch,
+    .language-switch {
+      position: absolute;
+      top: 50%;
+      right: 22px;
+      display: inline-flex;
+      padding: 3px;
+      border: 1px solid #35423e;
+      border-radius: 999px;
+      background: #171d1b;
+      transform: translateY(-50%);
+    }
+
+    .mode-switch button,
+    .language-switch button {
+      min-width: 58px;
+      padding: 5px 10px;
+      border: 0;
+      border-radius: 999px;
+      color: #88938f;
+      background: transparent;
+      font: inherit;
+      font-size: 10px;
+      font-weight: 720;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .mode-switch button[aria-pressed="true"],
+    .language-switch button[aria-pressed="true"] {
+      color: #d7e6e1;
+      background: #23312d;
+    }
+
+    .mode-switch button:focus-visible,
+    .language-switch button:focus-visible {
+      outline: 2px solid #5d8178;
+      outline-offset: 2px;
+    }
+
+    .mvp-only { display: none; }
+
+    .mvp-mode-tag,
+    .mvp-inline-note,
+    .mvp-handoff,
+    .mvp-later-tag,
+    .mvp-live-label,
+    .mvp-storage-note {
+      z-index: 5;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      color: #a9c8c0;
+      background: rgba(31, 48, 44, .94);
+      font-size: 8px;
+      font-weight: 760;
+      line-height: 1;
+      letter-spacing: .02em;
+      white-space: nowrap;
+    }
+
+    body.mode-mvp .target-only { display: none; }
+
+    body.mode-mvp .mvp-mode-tag {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      display: inline-flex;
+      min-height: 18px;
+      padding: 4px 7px;
+    }
+
+    body.mode-mvp .mvp-trend-scope {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 5px;
+      width: 100%;
+      margin-top: 14px;
+    }
+
+    .mvp-scope-chip,
+    .mvp-knowledge-chip {
+      display: grid;
+      min-height: 25px;
+      place-items: center;
+      padding: 4px 5px;
+      border: 1px solid #456171;
+      border-radius: 7px;
+      color: #dce8e4;
+      background: #21343f;
+      font-size: 8.5px;
+      font-weight: 670;
+      line-height: 1.15;
+      text-align: center;
+    }
+
+    .mvp-trigger-note {
+      grid-column: 1 / -1;
+      color: #9eaaa6;
+      font-size: 8px;
+      font-weight: 650;
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    body.mode-mvp .mvp-handoff {
+      position: absolute;
+      display: inline-flex;
+      min-height: 18px;
+      padding: 4px 7px;
+    }
+
+    .mvp-handoff-signal { top: 350px; left: 296px; }
+    .mvp-handoff-story { top: 350px; left: 743px; }
+
+    body.mode-mvp .mvp-knowledge {
+      position: absolute;
+      right: 15px;
+      bottom: 13px;
+      left: 15px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 5px;
+    }
+
+    .mvp-knowledge-chip {
+      min-height: 20px;
+      border-color: #3d504a;
+      color: #9fb2ac;
+      background: #1d2926;
+      font-size: 7.5px;
+    }
+
+    .chart-agent { position: relative; }
+
+    body.mode-mvp .chart-agent {
+      opacity: .28;
+      filter: saturate(.45);
+    }
+
+    body.mode-mvp .chart-agent .mvp-later-tag {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      display: inline-flex;
+      padding: 3px 5px;
+      color: #c1cbc7;
+      background: #28302e;
+      font-size: 6px;
+    }
+
+    body.mode-mvp .storage-zone {
+      opacity: .48;
+    }
+
+    body.mode-mvp .mvp-storage-note {
+      position: absolute;
+      top: 405px;
+      left: 1176px;
+      display: inline-flex;
+      min-height: 18px;
+      padding: 4px 7px;
+    }
+
+    body.mode-mvp .mvp-review-note {
+      position: absolute;
+      top: 108px;
+      left: 50%;
+      display: inline-flex;
+      min-height: 18px;
+      padding: 4px 7px;
+      transform: translateX(-50%);
+    }
+
+    body.mode-mvp .contentful-card,
+    body.mode-mvp .target-publish-line {
+      opacity: .22;
+      filter: saturate(.35);
+    }
+
+    body.mode-mvp .mvp-lines {
+      display: block;
+      z-index: 3;
+    }
+
+    body.mode-mvp .mvp-lp-builder {
+      position: absolute;
+      top: 490px;
+      left: 1065px;
+      z-index: 4;
+      display: flex;
+      width: 110px;
+      height: 64px;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      border: 1px solid #456171;
+      border-radius: 10px;
+      color: #edf2f0;
+      background: #21343f;
+      text-align: center;
+    }
+
+    .mvp-lp-builder strong {
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .mvp-lp-builder small {
+      color: #9fc5bc;
+      font-size: 7px;
+      font-weight: 750;
+      letter-spacing: .03em;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    body.mode-mvp .mvp-live-label {
+      position: absolute;
+      top: 118px;
+      left: 50%;
+      display: inline-flex;
+      padding: 3px 6px;
+      transform: translateX(-50%);
+    }
+
+    body.mode-mvp .performance-card,
+    body.mode-mvp .learning-package,
+    body.mode-mvp .feedback-lines,
+    body.mode-mvp .learning-loop-line {
+      opacity: .2;
+      filter: saturate(.3);
+    }
+
+    body.mode-mvp .performance-card .mvp-later-tag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: inline-flex;
+      padding: 4px 6px;
+    }
+
+    body.mode-mvp .mvp-legend {
+      position: absolute;
+      bottom: 10px;
+      left: 18px;
+      z-index: 5;
+      display: flex;
+      gap: 12px;
+      color: #71807b;
+      font-size: 8px;
+      line-height: 1;
+    }
+
+    .mvp-legend b { color: #9cb7af; font-weight: 760; }
+
+    /* Presentation view */
+    .presentation-source {
+      top: 18px;
+      left: 25px;
+      display: flex;
+      width: 650px;
+      height: 90px;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 0;
+      border: 1px solid #315f56;
+      border-radius: 16px;
+      background: #172724;
+      text-align: left;
+    }
+
+    .presentation-source .source-icon {
+      position: static;
+      width: 28px;
+      height: 28px;
+      color: #84958f;
+      transform: none;
+    }
+
+    .presentation-source h2 {
+      margin: 0;
+      color: #f0f3f2;
+      font-size: 22px;
+      letter-spacing: -.025em;
+    }
+
+    .presentation-card {
+      top: 190px;
+      height: 300px;
+      padding: 0;
+      overflow: visible;
+      border: 1px solid #3d6074;
+      border-radius: 15px;
+      background: #192b37;
+      color: #eef3f1;
+    }
+
+    .presentation-trend { left: 25px; width: 270px; }
+    .presentation-story { left: 415px; width: 300px; }
+    .presentation-content { left: 825px; width: 270px; }
+
+    .presentation-story .presentation-internals {
+      right: 14px;
+      left: 14px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .presentation-story .presentation-step { padding: 6px 4px; }
+    .presentation-story .presentation-step h3 { font-size: 10.5px; }
+
+    .presentation-card .step-label,
+    .presentation-learning .step-label {
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      min-width: 88px;
+      min-height: 26px;
+      margin: 0;
+      padding: 6px 14px;
+      border: 0;
+      border-radius: 999px;
+      color: #b3b3b3;
+      background: #183A35;
+      font-size: 12px;
+      font-weight: 680;
+      line-height: 1;
+      transform: translateX(-50%);
+    }
+
+    .presentation-card > h2 {
+      position: absolute;
+      top: 72px;
+      right: 18px;
+      left: 18px;
+      margin: 0;
+      color: #f4f6f5;
+      font-size: 28px;
+      line-height: 1.05;
+      letter-spacing: -.035em;
+      text-align: center;
+    }
+
+    .presentation-card > .caption {
+      position: absolute;
+      top: 125px;
+      right: 18px;
+      left: 18px;
+      margin: 0;
+      color: #8f9b97;
+      font-size: 15px;
+      line-height: 1.25;
+      text-align: center;
+    }
+
+    .presentation-internals {
+      position: absolute;
+      top: 160px;
+      right: 25px;
+      left: 25px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      width: auto;
+      margin: 0;
+    }
+
+    .presentation-step,
+    .presentation-agent {
+      display: grid;
+      height: 56px;
+      min-height: 0;
+      place-items: center;
+      padding: 8px;
+      border: 1px solid #456171;
+      border-radius: 9px;
+      color: #dce4e1;
+      background: #21343f;
+      font-size: 14px;
+      line-height: 1.15;
+      text-align: center;
+    }
+
+    .presentation-step h3,
+    .presentation-agent h3 {
+      margin: 0;
+      color: #eef3f1;
+      font-size: 13px;
+      line-height: 1.15;
+    }
+
+    .presentation-agent {
+      height: 84px;
+      align-content: center;
+      gap: 7px;
+    }
+
+    .presentation-agent .agent-marker {
+      color: #4f7e8c;
+      font-size: 9px;
+    }
+
+    .presentation-package {
+      z-index: 4;
+      display: grid;
+      width: 90px;
+      height: 54px;
+      place-items: center;
+      padding: 8px 12px;
+      border: 0;
+      border-radius: 999px;
+      color: #b3b3b3;
+      background: #142C29;
+      text-align: center;
+    }
+
+    .presentation-package::after { display: none; }
+
+    .presentation-package strong {
+      max-width: none;
+      color: inherit;
+      font-size: 12px;
+      font-weight: 680;
+      line-height: 1.15;
+    }
+
+    .presentation-signal { top: 308px; left: 310px; }
+    .presentation-story-package { top: 308px; left: 725px; }
+
+    .human-review-circle {
+      position: absolute;
+      top: 205px;
+      left: 1160px;
+      z-index: 4;
+      display: flex;
+      width: 190px;
+      height: 190px;
+      aspect-ratio: 1 / 1;
+      align-items: center;
+      flex-direction: column;
+      justify-content: flex-start;
+      border: 1px dashed #65706b;
+      border-radius: 50%;
+      color: #edf2f0;
+      background: #151a19;
+      text-align: center;
+    }
+
+    .human-review-circle > .step-label {
+      position: absolute;
+      top: -48px;
+      left: 50%;
+      min-width: 132px;
+      min-height: 26px;
+      padding: 6px 14px;
+      border: 0;
+      border-radius: 999px;
+      color: #b3b3b3;
+      background: #183A35;
+      font-size: 12px;
+      font-weight: 680;
+      line-height: 1;
+      transform: translateX(-50%);
+    }
+
+    .human-review-circle .person-icon {
+      width: 28px;
+      height: 28px;
+      margin: 22px 0 7px;
+      border: 0;
+      color: #edf2f0;
+    }
+
+    .human-review-circle > h3 {
+      margin: 0 0 12px;
+      color: #e8ecea;
+      font-size: 15px;
+      font-weight: 520;
+      line-height: 1;
+    }
+
+    .presentation-production-package {
+      position: static;
+      width: 104px;
+      height: 48px;
+      margin: 0 0 10px;
+    }
+
+    .presentation-approval {
+      position: static;
+      display: inline-grid;
+      width: 22px;
+      height: 22px;
+      min-width: 22px;
+      min-height: 22px;
+      aspect-ratio: 1 / 1;
+      place-items: center;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      color: #8f9b96;
+      background: #272d2b;
+      font-size: 12px;
+      line-height: 1;
+    }
+
+    .presentation-publish {
+      top: 415px;
+      left: 1190px;
+      width: 130px;
+      height: 265px;
+    }
+
+    .presentation-publish > .step-label {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      min-width: 92px;
+      min-height: 26px;
+      margin: 0;
+      padding: 6px 14px;
+      border: 0;
+      border-radius: 999px;
+      color: #b3b3b3;
+      background: #183A35;
+      font-size: 12px;
+      font-weight: 680;
+      line-height: 1;
+      transform: translateX(-50%);
+    }
+
+    .presentation-publish > h3 {
+      position: absolute;
+      top: 55px;
+      left: 5px;
+      display: grid;
+      width: 120px;
+      min-height: 64px;
+      margin: 0;
+      place-items: center;
+      padding: 10px;
+      border: 1px solid #456171;
+      border-radius: 10px;
+      color: #edf2f0;
+      background: #21343f;
+      font-size: 14px;
+      line-height: 1.2;
+    }
+
+    .presentation-publish > .page-stack {
+      position: absolute;
+      top: 145px;
+      left: 27px;
+      margin: 0;
+    }
+
+    .presentation-learning {
+      top: 520px;
+      left: 750px;
+      width: 270px;
+      height: 170px;
+      padding: 0;
+      border: 1px solid #3d6074;
+      border-radius: 15px;
+      color: #eef3f1;
+      background: #192b37;
+      text-align: center;
+    }
+
+    .presentation-learning > h3 {
+      position: absolute;
+      top: 48px;
+      right: 15px;
+      left: 15px;
+      margin: 0;
+      color: #eef3f1;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .presentation-learning > .caption {
+      position: absolute;
+      top: 80px;
+      right: 15px;
+      left: 15px;
+      margin: 0;
+      color: #8f9b97;
+      font-size: 12px;
+      line-height: 1.2;
+    }
+
+    .presentation-learning .presentation-internals {
+      top: 120px;
+      right: 20px;
+      left: 20px;
+      gap: 8px;
+    }
+
+    .presentation-learning .presentation-step {
+      height: 34px;
+      padding: 5px;
+      font-size: 11px;
+    }
+
+    .presentation-learning-package {
+      top: 548px;
+      width: 84px;
+      height: 46px;
+    }
+
+    .presentation-trend-learning { left: 118px; }
+    .presentation-story-learning { left: 523px; }
+
+    .presentation-automation {
+      position: absolute;
+      top: 548px;
+      left: 350px;
+      z-index: 5;
+      display: grid;
+      width: 54px;
+      height: 54px;
+      place-items: center;
+      padding: 0;
+      border: 1px solid #3d6074;
+      border-radius: 50%;
+      color: #eef3f1;
+      background: #192b37;
+    }
+
+    .presentation-automation svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .presentation-mvp-approach {
+      position: absolute;
+      top: 559px;
+      left: 317px;
+      z-index: 5;
+      min-width: 120px;
+      min-height: 32px;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 14px;
+      border: 1px solid #315f56;
+      border-radius: 999px;
+      color: #b3c0bc;
+      background: #183a35;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1;
+      text-align: center;
+    }
+
+    body.mode-mvp .presentation-mvp-approach { display: inline-flex; }
+
+    /* Presentation MVP mode */
+    .mode-controls {
+      position: absolute;
+      top: 50%;
+      right: 22px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transform: translateY(-50%);
+    }
+
+    .mode-controls .mode-switch,
+    .mode-controls .language-switch {
+      position: static;
+      transform: none;
+    }
+
+    .presentation-mvp-scope {
+      position: absolute;
+      top: 158px;
+      left: 50%;
+      width: 220px;
+      margin: 0;
+      padding: 10px 12px;
+      border: 1px solid #456171;
+      border-radius: 9px;
+      background: #21343f;
+      list-style: none;
+      transform: translateX(-50%);
+    }
+
+    body.mode-mvp .presentation-mvp-scope { display: block; }
+
+    .presentation-mvp-scope li {
+      position: relative;
+      min-height: 0;
+      padding: 4px 4px 4px 17px;
+      color: #d8e2df;
+      font-size: 11px;
+      font-weight: 670;
+      line-height: 1.25;
+      text-align: left;
+    }
+
+    .presentation-mvp-scope li::before {
+      position: absolute;
+      top: 9px;
+      left: 3px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #658d84;
+      content: "";
+    }
+
+    body.mode-mvp .presentation-publish-title { display: inline; }
+
+    .presentation-mvp-learning {
+      position: absolute;
+      inset: 47px 18px 18px;
+      text-align: center;
+    }
+
+    body.mode-mvp .presentation-mvp-learning { display: block; }
+
+    .presentation-mvp-learning h3 {
+      margin: 0 0 12px;
+      color: #eef3f1;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .presentation-mvp-learning strong {
+      display: inline-flex;
+      padding: 5px 11px;
+      border: 1px dashed #587069;
+      border-radius: 999px;
+      color: #aab6b2;
+      font-size: 11px;
+      line-height: 1;
+    }
+
+    body.mode-mvp .presentation-learning {
+      border-style: dashed;
+      opacity: .48;
+      filter: saturate(.45);
+    }
+
+    body.mode-mvp .presentation-learning-package,
+    body.mode-mvp .feedback-lines,
+    body.mode-mvp .learning-loop-line {
+      opacity: .18;
+      filter: saturate(.35);
+    }
+
+    .monitoring-plan.mvp-working-table { min-width: 980px; }
+
+    .mvp-working-note {
+      margin-top: 10px;
+      color: #94a39e;
+      font-size: 12px;
+      font-style: italic;
+      line-height: 1.4;
+    }
+
+    .mvp-run-sequence {
+      display: grid;
+      gap: 5px;
+      margin-top: 9px;
+    }
+
+    .mvp-run-sequence span {
+      display: grid;
+      min-height: 30px;
+      place-items: center;
+      padding: 6px 9px;
+      border: 1px solid #3d6259;
+      border-radius: 8px;
+      color: #dfe8e5;
+      background: #1d2b27;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    .mvp-run-sequence b {
+      color: #71958d;
+      font-size: 13px;
+      line-height: 1;
+      text-align: center;
+    }
+
+    .mvp-logic-chain {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      margin: 13px 0 15px;
+    }
+
+    .mvp-logic-chain span,
+    .mvp-story-chain span {
+      display: grid;
+      min-height: 30px;
+      place-items: center;
+      padding: 6px 8px;
+      border: 1px solid #4a7f74;
+      border-radius: 8px;
+      color: #e4efec;
+      background: #1b302b;
+      font-size: 11.5px;
+      font-weight: 760;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    .mvp-logic-chain span { position: relative; }
+    .mvp-logic-chain span:nth-child(1) { grid-area: 1 / 1; }
+    .mvp-logic-chain span:nth-child(2) { grid-area: 1 / 2; }
+    .mvp-logic-chain span:nth-child(3) { grid-area: 1 / 3; }
+    .mvp-logic-chain span:nth-child(4) { grid-area: 2 / 3; }
+    .mvp-logic-chain span:nth-child(5) { grid-area: 2 / 2; }
+    .mvp-logic-chain span:nth-child(6) { grid-area: 2 / 1; }
+
+    .mvp-logic-chain span::after {
+      position: absolute;
+      color: #79a79d;
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .mvp-logic-chain span:nth-child(1)::after,
+    .mvp-logic-chain span:nth-child(2)::after {
+      top: 50%;
+      right: -17px;
+      content: "→";
+      transform: translateY(-50%);
+    }
+
+    .mvp-logic-chain span:nth-child(3)::after {
+      bottom: -18px;
+      left: 50%;
+      content: "↓";
+      transform: translateX(-50%);
+    }
+
+    .mvp-logic-chain span:nth-child(4)::after,
+    .mvp-logic-chain span:nth-child(5)::after {
+      top: 50%;
+      left: -17px;
+      content: "←";
+      transform: translateY(-50%);
+    }
+
+    .mvp-story-chain b {
+      color: #79a79d;
+      font-size: 13px;
+      line-height: 1;
+      text-align: center;
+    }
+
+    .mvp-story-chain {
+      display: grid;
+      grid-template-columns: 1fr auto 1.35fr auto 1.1fr auto 1.2fr auto .72fr;
+      align-items: stretch;
+      gap: 5px;
+      margin: 13px 0 16px;
+    }
+
+    .mvp-story-chain span {
+      min-width: 0;
+      padding: 6px 5px;
+      font-size: 9.5px;
+    }
+
+    .mvp-story-chain b { align-self: center; }
+
+    .mvp-concept-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 9px;
+    }
+
+    .mvp-concept-pair .detail-rule { margin-top: 0; }
+
+    .presentation-card[data-detail]:hover,
+    .human-review-circle[data-detail]:hover,
+    .presentation-learning[data-detail]:hover,
+    .presentation-publish[data-detail]:hover,
+    .presentation-package[data-detail]:hover {
+      box-shadow: 0 0 0 2px rgba(76, 126, 113, .16);
+    }
+
+    .review-context[data-detail]:hover,
+    .review-context[data-detail][aria-expanded="true"],
+    .publish-destination[data-detail]:hover,
+    .publish-destination[data-detail][aria-expanded="true"] {
+      box-shadow: none;
+    }
+
+    @media (min-width: 1200px) and (min-height: 740px) {
+      html,
+      body { overflow: hidden; }
+    }
+
+    @media (max-width: 760px) {
+      body { overflow: auto; }
+      .shell { height: auto; min-height: 100vh; }
+      .topbar { flex-basis: auto; }
+      .topbar { align-items: flex-start; flex-direction: column; padding: 19px 17px 16px; }
+      .topbar h1 { font-size: 32px; }
+      .mode-controls { position: static; align-self: center; transform: none; }
+      .working-note { border-radius: 12px; }
+      main { padding-top: 12px; }
+      .canvas-wrap { padding-inline: 0; overflow-x: auto; }
+      .canvas { border-radius: 18px; }
+      .detail-popover { width: calc(100vw - 20px); padding: 18px; }
+      .detail-grid,
+      .detail-grid.three { grid-template-columns: 1fr; }
+    }
+
+    /* Shared Editorial Lighthouse document frame */
+    html,
+    body { height: auto; min-height: 100%; }
+
+    body { overflow: auto; background: #101514; }
+
+    .shell {
+      display: block;
+      width: min(1380px, calc(100% - 40px));
+      height: auto;
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 38px 0 56px;
+    }
+
+    .topbar {
+      display: block;
+      min-height: 0;
+      padding: 0;
+      background: transparent;
+    }
+
+    .flow-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .updated-label {
+      display: inline-flex;
+      margin: 0;
+      padding: 5px 9px;
+      border: 1px solid #40887b;
+      border-radius: 999px;
+      color: #b9e8df;
+      background: #183a35;
+      font-size: 10px;
+      font-weight: 760;
+      letter-spacing: .075em;
+    }
+
+    .topbar h1 {
+      margin: 13px 0 0;
+      color: #f1f5f3;
+      font-size: clamp(31px, 3.5vw, 48px);
+      line-height: 1.04;
+      letter-spacing: -.045em;
+      text-align: left;
+    }
+
+    .flow-subline {
+      margin: 9px 0 0;
+      color: #91a19b;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .mode-controls {
+      position: static;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      transform: none;
+    }
+
+    .mode-controls .mode-switch,
+    .mode-controls .language-switch {
+      position: static;
+      display: inline-flex;
+      padding: 3px;
+      border: 1px solid #35423e;
+      border-radius: 999px;
+      background: #171d1b;
+      transform: none;
+    }
+
+    .mode-switch button,
+    .language-switch button {
+      min-width: 54px;
+      padding: 7px 10px;
+      font-size: 10px;
+    }
+
+    .mode-switch button:hover,
+    .language-switch button:hover { color: #b8c5c1; }
+
+    .mode-switch button:focus-visible,
+    .language-switch button:focus-visible {
+      outline: 2px solid #6d9a90;
+      outline-offset: 2px;
+    }
+
+    main { min-height: 0; margin-top: 27px; padding: 0; overflow: visible; }
+    .canvas-wrap { padding: 0; overflow-x: auto; overflow-y: hidden; }
+    .canvas { width: 1380px; height: 560px; margin: 0; }
+    .process-lines,
+    .access-lines,
+    .feedback-lines { height: 488px; }
+
+    .presentation-source { top: 10px; height: 64px; }
+    .presentation-source h2 { font-size: 20px; }
+
+    .presentation-card { top: 125px; height: 225px; }
+    .presentation-card > h2 { top: 45px; }
+    .presentation-card > .caption { top: 84px; }
+    .presentation-internals { top: 122px; gap: 7px; }
+    .presentation-step { height: 46px; padding: 6px; }
+    .presentation-agent { height: 66px; gap: 4px; padding: 6px; }
+    .presentation-story .presentation-internals { right: 12px; left: 12px; gap: 5px; }
+
+    .presentation-package { width: 86px; height: 44px; padding: 6px 10px; }
+    .presentation-signal { top: 215px; }
+    .presentation-story-package { top: 215px; }
+
+    .human-review-circle { top: 135px; width: 170px; height: 170px; }
+    .human-review-circle > .step-label { top: -38px; }
+    .human-review-circle .person-icon { margin-top: 18px; }
+    .human-review-circle > h3 { margin-bottom: 9px; }
+    .presentation-production-package { width: 98px; height: 42px; margin-bottom: 8px; }
+
+    .presentation-publish { top: 315px; height: 235px; }
+    .presentation-publish > h3 { top: 43px; min-height: 54px; padding: 8px; }
+    .presentation-publish > .page-stack { top: 116px; }
+
+    .presentation-learning { top: 390px; height: 150px; }
+    .presentation-learning > h3 { top: 40px; }
+    .presentation-learning > .caption { top: 68px; }
+    .presentation-learning .presentation-internals { top: 102px; }
+    .presentation-learning .presentation-step { height: 31px; }
+    .presentation-learning-package { top: 430px; height: 42px; }
+    .presentation-automation { top: 370px; left: 353px; width: 48px; height: 48px; }
+    .presentation-mvp-approach { top: 378px; }
+    .presentation-mvp-scope { top: 112px; padding: 8px 10px; }
+    .presentation-mvp-scope li { padding-block: 3px; }
+
+    .canvas .presentation-step-copy {
+      font-size: 10.5px;
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -.035em;
+      text-align: center;
+    }
+
+    @media (min-width: 1200px) and (min-height: 740px) {
+      html,
+      body { overflow: auto; }
+    }
+
+    @media (max-width: 760px) {
+      .shell { width: calc(100% - 24px); padding: 24px 0 36px; }
+      .topbar { display: block; padding: 0; }
+      .flow-top-row { align-items: flex-start; flex-wrap: wrap; }
+      .mode-controls { align-self: auto; flex-wrap: wrap; }
+      .topbar h1 { font-size: clamp(31px, 10vw, 48px); }
+      main { margin-top: 22px; padding: 0; }
+      .canvas-wrap { padding: 0; }
+      .canvas { border-radius: 14px; }
+    }
+  </style>
+</head>
+<body class="mode-target">
+  <div class="shell">
+    <header class="topbar">
+      <div class="flow-top-row">
+        <span class="updated-label">UPDATED · 1 OCT 2026</span>
+        <div class="mode-controls">
+          <div class="mode-switch" role="group" aria-label="Architekturansicht" data-i18n-aria="architectureView">
+            <button type="button" data-mode="target" aria-pressed="true">Target</button>
+            <button type="button" data-mode="mvp" aria-pressed="false">MVP</button>
+          </div>
+          <div class="language-switch" role="group" aria-label="Sprache" data-i18n-aria="language">
+            <button type="button" data-language="de" aria-pressed="true">DE</button>
+            <button type="button" data-language="en" aria-pressed="false">EN</button>
+          </div>
+        </div>
+      </div>
+      <h1>Scaling Editorial · Editorial Flow</h1>
+      <p class="flow-subline" data-i18n="headerDescription"></p>
+    </header>
+
+    <main>
+      <div class="canvas-wrap" aria-label="Scrollbare Editorial-Lighthouse-Architektur" data-i18n-aria="canvas">
+        <section class="canvas" aria-label="Editorial Lighthouse Zielarchitektur">
+          <svg class="process-lines" viewBox="0 0 1400 690" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 8 4 0 8Z" fill="#fff" fill-opacity=".55"/></marker>
+              <marker id="arrow-data" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 8 4 0 8Z" fill="#fff" fill-opacity=".55"/></marker>
+            </defs>
+            <path d="M295 335 H415" fill="none" stroke="#fff" stroke-opacity=".34" stroke-width="1.7" marker-end="url(#arrow)"/>
+            <path d="M715 335 H825" fill="none" stroke="#fff" stroke-opacity=".34" stroke-width="1.7" marker-end="url(#arrow)"/>
+            <path d="M1095 335 H1160" fill="none" stroke="#fff" stroke-opacity=".34" stroke-width="1.7" marker-end="url(#arrow)"/>
+            <path d="M1255 395 V470" fill="none" stroke="#fff" stroke-opacity=".34" stroke-width="1.7" marker-end="url(#arrow)"/>
+            <path d="M1255 534 V555" fill="none" stroke="#fff" stroke-opacity=".34" stroke-width="1.7" marker-end="url(#arrow)"/>
+            <path class="learning-loop-line" d="M1195 630 H160" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="1.7"/>
+          </svg>
+
+          <svg class="access-lines" viewBox="0 0 1400 690" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M160 108 V190" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="1.5" stroke-dasharray="5 4"/>
+            <path d="M565 108 V190" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="1.5" stroke-dasharray="5 4"/>
+          </svg>
+
+          <svg class="feedback-lines" viewBox="0 0 1400 690" preserveAspectRatio="none" aria-hidden="true">
+            <defs><marker id="arrow-feedback" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 8 4 0 8Z" fill="#b39ad7" fill-opacity=".48"/></marker></defs>
+            <path d="M160 630 V490" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="1.6" marker-end="url(#arrow-feedback)"/>
+            <path d="M565 630 V490" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="1.6" marker-end="url(#arrow-feedback)"/>
+          </svg>
+
+          <section class="panel source-panel presentation-source" data-detail="detail-sources" tabindex="0" aria-label="Details zu Data und Sources" aria-haspopup="dialog" aria-expanded="false">
+            <span class="source-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="5" cy="6" r="1.5" stroke="currentColor" stroke-width="1.6"/><circle cx="5" cy="12" r="1.5" stroke="currentColor" stroke-width="1.6"/><circle cx="5" cy="18" r="1.5" stroke="currentColor" stroke-width="1.6"/><path d="M9 4.5h10v3H9zM9 10.5h10v3H9zM9 16.5h10v3H9z" stroke="currentColor" stroke-width="1.6"/></svg>
+            </span>
+            <h2>Data &amp; Sources</h2>
+          </section>
+
+          <article class="stage presentation-card presentation-trend" data-detail="detail-trend" data-detail-target="detail-trend" data-detail-mvp="detail-mvp-trend" data-label-target="Details zum Trend Finder" data-label-mvp="Details zum Trend Finder MVP" tabindex="0" aria-label="Details zum Trend Finder" aria-haspopup="dialog" aria-expanded="false">
+            <span class="step-label">1 Discover</span>
+            <h2>Trend Finder</h2>
+            <span class="caption" data-i18n="trendCaption">Erkennt relevante Marktsignale</span>
+            <div class="presentation-internals target-only" aria-label="Trend Finder Schritte" data-i18n-aria="trendSteps">
+              <span class="presentation-step presentation-step-copy">Focus</span>
+              <span class="presentation-step presentation-step-copy">Monitor</span>
+              <span class="presentation-step presentation-step-copy">Detect</span>
+            </div>
+            <ul class="presentation-mvp-scope mvp-only" aria-label="Trend Finder MVP Umfang" data-i18n-aria="trendScope"><li data-i18n="trendScope1">1–2 Trendfelder</li><li data-i18n="trendScope2">Einfach zugängliche Data Sources</li><li data-i18n="trendScope3">Reduzierter Suchraum</li><li data-i18n="trendScope4">Manueller Trigger</li></ul>
+          </article>
+
+          <div class="data-object package-object presentation-package presentation-signal" data-detail="detail-signal" tabindex="0" aria-label="Details zum Signal Package" aria-haspopup="dialog" aria-expanded="false">
+            <strong>Signal<br>Package</strong>
+          </div>
+
+          <article class="stage presentation-card presentation-story" data-detail="detail-story-creator" data-detail-target="detail-story-creator" data-detail-mvp="detail-mvp-story" data-label-target="Details zum Story Creator" data-label-mvp="Details zum Story Creator MVP" tabindex="0" aria-label="Details zum Story Creator" aria-haspopup="dialog" aria-expanded="false">
+            <span class="step-label">2 Generate</span>
+            <h2>Story Creator</h2>
+            <span class="caption" data-i18n="storyCaption">Entwickelt Story Angles</span>
+            <div class="presentation-internals target-only" aria-label="Story Creator Schritte" data-i18n-aria="storySteps">
+              <section class="presentation-step">
+                <h3>Validate</h3>
+              </section>
+              <section class="presentation-step">
+                <h3>Human<br>Relevance</h3>
+              </section>
+              <section class="presentation-step">
+                <h3>Shape</h3>
+              </section>
+              <section class="presentation-step">
+                <h3>Select</h3>
+              </section>
+            </div>
+            <ul class="presentation-mvp-scope mvp-only" aria-label="Story Creator MVP Umfang" data-i18n-aria="storyScope"><li data-i18n="storyScope1">1 Playbook pro Signal Type</li><li data-i18n="storyScope2">Feste Research Steps</li><li data-i18n="storyScope3">Definierte Story Patterns</li><li data-i18n="storyScope4">2–3 Angles → 1 auswählen</li></ul>
+          </article>
+
+          <div class="data-object package-object presentation-package presentation-story-package" data-detail="detail-story-package" tabindex="0" aria-label="Details zum Story Package" aria-haspopup="dialog" aria-expanded="false">
+            <strong>Story<br>Package</strong>
+          </div>
+
+          <section class="panel presentation-card presentation-content" data-detail="detail-asset" data-detail-target="detail-asset" data-detail-mvp="detail-mvp-content" data-label-target="Details zum Content Creator" data-label-mvp="Details zum Content Creator MVP" tabindex="0" aria-label="Details zum Content Creator" aria-haspopup="dialog" aria-expanded="false">
+            <span class="step-label">3 Draft</span>
+            <h2>Content Creator</h2>
+            <span class="caption" data-i18n="contentCaption">Erstellt publish-ready Inhalte</span>
+            <div class="presentation-internals target-only" aria-label="Content Creator Agents" data-i18n-aria="contentAgents">
+              <div class="presentation-agent"><span class="agent-marker">Agent</span><h3 class="presentation-step-copy">Writer</h3></div>
+              <div class="presentation-agent"><span class="agent-marker">Agent</span><h3 class="presentation-step-copy">Image<br>Creator</h3></div>
+              <div class="presentation-agent"><span class="agent-marker">Agent</span><h3 class="presentation-step-copy">Chart<br>Creator</h3></div>
+            </div>
+            <ul class="presentation-mvp-scope mvp-only" aria-label="Content Creator MVP Umfang" data-i18n-aria="contentScope"><li>Article</li><li>1 Image</li><li>Author + Metadata</li></ul>
+          </section>
+
+          <div class="human-review-circle" data-detail="detail-review" data-detail-target="detail-review" data-detail-mvp="detail-mvp-review" data-label-target="Details zum Human Review" data-label-mvp="Details zum Human Review MVP" tabindex="0" aria-label="Details zum Human Review" aria-haspopup="dialog" aria-expanded="false">
+            <span class="step-label">4 Human Edit</span>
+            <span class="person-icon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="2.4" stroke="currentColor" stroke-width="1.4"/><path d="M3.6 13c.45-2.45 1.9-3.7 4.4-3.7s3.95 1.25 4.4 3.7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+            <h3>Human Review</h3>
+            <div class="data-object package-object presentation-package presentation-production-package" data-detail="detail-production-package" tabindex="0" aria-label="Details zum Production Package" aria-haspopup="dialog" aria-expanded="false">
+              <strong>Production<br>Package</strong>
+            </div>
+            <span class="presentation-approval" role="img" aria-label="Freigegeben" data-i18n-aria="approved"><span aria-hidden="true">✓</span></span>
+          </div>
+
+          <div class="publish-destination presentation-publish" data-detail="detail-publish" data-detail-target="detail-publish" data-detail-mvp="detail-mvp-publish" data-label-target="Details zu Contentful Rendering und News Pages" data-label-mvp="Details zum LP Builder MVP" tabindex="0" aria-label="Details zu Contentful Rendering und News Pages" aria-haspopup="dialog" aria-expanded="false">
+            <span class="step-label">5 Publish</span>
+            <h3><span class="target-only">Contentful<br>Rendering</span><span class="presentation-publish-title mvp-only">LP Builder</span></h3>
+            <span class="page-stack" aria-hidden="true"><i></i><i></i><i></i></span>
+          </div>
+
+          <article class="stage presentation-learning" data-detail="detail-performance" data-detail-target="detail-performance" data-detail-mvp="detail-mvp-learning" data-label-target="Details zum Learning Agent" data-label-mvp="Details zum späteren Learning Agent" tabindex="0" aria-label="Details zum Learning Agent" aria-haspopup="dialog" aria-expanded="false">
+            <span class="step-label">6 Learn</span>
+            <h3 class="target-only">Learning Agent</h3>
+            <span class="caption target-only" data-i18n="learningCaption">Übersetzt Performance in konkrete Learnings</span>
+            <div class="presentation-internals target-only" aria-label="Learning Schritte" data-i18n-aria="learningSteps"><span class="presentation-step presentation-step-copy">Measure</span><span class="presentation-step presentation-step-copy">Interpret</span><span class="presentation-step presentation-step-copy">Improve</span></div>
+            <div class="presentation-mvp-learning mvp-only"><h3>Learning Agent</h3><strong>Later</strong></div>
+          </article>
+
+          <div class="data-object package-object presentation-package presentation-learning-package presentation-trend-learning" data-detail="detail-learning" tabindex="0" aria-label="Details zum Learning Package für den Trend Finder" aria-haspopup="dialog" aria-expanded="false">
+            <strong>Learning<br>Package</strong>
+          </div>
+
+          <div class="data-object package-object presentation-package presentation-learning-package presentation-story-learning" data-detail="detail-learning" tabindex="0" aria-label="Details zum Learning Package für den Story Creator" aria-haspopup="dialog" aria-expanded="false">
+            <strong>Learning<br>Package</strong>
+          </div>
+
+          <div class="presentation-automation target-only" data-detail="detail-workflow-automation" tabindex="0" aria-label="Details zur Workflow Automation" aria-haspopup="dialog" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M18.4 8.1A7.3 7.3 0 0 0 6.2 6.4L4.5 8.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M4.5 4.9v3.2h3.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M5.6 15.9a7.3 7.3 0 0 0 12.2 1.7l1.7-1.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M19.5 19.1v-3.2h-3.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <div class="presentation-mvp-approach mvp-only" data-detail="detail-mvp-approach" tabindex="0" aria-label="Details zum MVP-Ansatz" aria-haspopup="dialog" aria-expanded="false">MVP Approach</div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="detail-popover" id="detail-popover" role="dialog" aria-modal="false" aria-hidden="true" aria-labelledby="detail-popover-title">
+    <div id="detail-popover-content"></div>
+  </div>
+
+  <template id="detail-sources">
+    <h2>Data &amp; Sources</h2>
+    <p>Data &amp; Sources ist die gemeinsame Quellenbasis des Editorial-Systems. Trend Finder und Story Creator greifen je nach Aufgabe auf unterschiedliche Teile dieses Pools zu: für Signal Discovery, Research, Vergleich, Validierung und zusätzlichen Kontext.</p>
+
+    <h3 class="detail-section-title">Interne / First-party Data</h3>
+    <ul><li>Preis- und Marktdaten</li><li>Angebot / Listings / Bestand</li><li>Nachfrage- und Engagement-Signale, soweit freigegeben</li><li>WohnBarometer / Preisatlas</li><li>Geo- und Standortdaten</li><li>weitere freigegebene interne Daten und Analysen</li></ul>
+    <p>First-party Daten und Scout24 Marktexpertise sind ein zentraler Differenzierungsfaktor der Editorial Strategy.</p>
+
+    <h3 class="detail-section-title">Search &amp; User Demand</h3>
+    <ul><li>Google Search Console</li><li>Google Trends</li><li>Search Demand / Suchverhalten</li><li>bestehende Wissen-Inhalte und deren Performance</li><li>wiederkehrende Informationsbedürfnisse</li></ul>
+
+    <h3 class="detail-section-title">Externe &amp; offizielle Quellen</h3>
+    <ul><li>offizielle / regulatorische Quellen</li><li>seriöse News- und Immobilienmedien</li><li>Markt- und Research-Publikationen</li><li>lokale Quellen</li><li>Wettbewerber / Competitive Intelligence</li><li>autorisierte bzw. belastbare öffentliche Quellen für Property- und Lifestyle-Stories</li></ul>
+
+    <div class="detail-rule">Nicht jede Story benötigt alle Quellen. Welche Quellen verwendet werden, hängt vom Themenfeld, Signal und jeweiligen Research-Bedarf ab.</div>
+
+  </template>
+
+  <template id="detail-trend">
+    <h2>Trend Finder</h2>
+    <p>Der Trend Finder sucht systematisch nach Entwicklungen, die für unsere redaktionellen Themen interessant sein könnten. Er legt fest, was beobachtet wird, untersucht dafür definierte Daten und Quellen und erkennt auffällige Veränderungen oder Muster.</p>
+    <p>Relevante Beobachtungen werden als strukturiertes <strong>Signal Package</strong> an den Story Creator übergeben. Der Trend Finder findet das Signal – er entwickelt daraus noch nicht die Story.</p>
+    <h3 class="detail-step-label">Focus</h3>
+    <p><strong>Was wollen wir beobachten?</strong></p>
+    <p>Focus legt fest, welche Themen und Entwicklungen für uns redaktionell relevant sind. Damit definiert er, in welchen Bereichen der Trend Finder überhaupt nach Signalen sucht.</p>
+    <ul><li>Themen- und Trendfelder</li><li>konkrete Beobachtungsfelder</li><li>Zielgruppen und Nutzerbedürfnisse</li><li>redaktionelle Prioritäten</li><li>saisonale oder zeitliche Schwerpunkte</li></ul>
+    <div class="detail-example-card"><strong class="detail-example-label">Beispiel</strong>
+      <p>Wir wollen beobachten, wie sich die <strong>Angebotspreise von Eigentumswohnungen</strong> entwickeln – insgesamt, aber auch zwischen Regionen und unterschiedlichen Wohnungsgrößen.</p>
+    </div>
+    <h3 class="detail-step-label">Monitor</h3>
+    <p><strong>Was beobachten wir dafür konkret?</strong></p>
+    <p>Monitor legt fest, welche Daten, Quellen und Vergleiche innerhalb des gewählten Focus beobachtet werden. Dadurch entsteht ein konkreter Monitoring- und Suchraum.</p>
+    <ul><li>Datenquellen</li><li>Kennzahlen</li><li>Regionen</li><li>Marktsegmente</li><li>Zeiträume und Vergleiche</li><li>Monitoring-Frequenz</li></ul>
+    <div class="detail-example-card"><strong class="detail-example-label">Beispiel</strong>
+      <p>Für die Preisentwicklung beobachten wir unter anderem:</p>
+      <ul><li>Angebotspreis pro m²</li><li>Eigentumswohnungen</li><li>unterschiedliche Regionen</li><li>unterschiedliche Wohnungsgrößen</li><li>Vergleich zum Vorjahreszeitraum</li></ul>
+      <p>Für Potsdam vergleichen wir zum Beispiel <strong>2- und 4-Zimmer-Wohnungen im September 2026 mit September 2025</strong>.</p>
+    </div>
+    <h3 class="detail-step-label">Detect</h3>
+    <p><strong>Was ist auffällig?</strong></p>
+    <p>Detect führt die definierten Vergleiche durch und sucht nach Veränderungen oder Unterschieden, die genauer untersucht werden sollten. Dabei wird auch geprüft, ob die Datengrundlage ausreichend belastbar ist.</p>
+    <ul><li>auffällige Veränderungen erkennen</li><li>Regionen oder Segmente vergleichen</li><li>Ausreißer von stabileren Mustern unterscheiden</li><li>Fallzahlen und Datenqualität prüfen</li><li>relevante Signale auswählen</li></ul>
+    <div class="detail-example-card"><strong class="detail-example-label">Beispiel</strong>
+      <p>In Potsdam zeigt sich:</p>
+      <ul><li>4-Zimmer-Wohnungen: <strong>+9,4 %</strong></li><li>2-Zimmer-Wohnungen: <strong>+2,1 %</strong></li><li>Gesamtmarkt: <strong>+4,3 %</strong></li></ul>
+      <p>Die Entwicklung ist außerdem über mehrere Quartale sichtbar.</p>
+      <p>Das Signal lautet:</p>
+      <p><strong>Größere Eigentumswohnungen entwickeln sich in Potsdam deutlich stärker als kleinere.</strong></p>
+      <p>Noch ohne Erklärung, warum das passiert oder welche Story daraus entsteht.</p>
+    </div>
+  </template>
+
+  <template id="detail-signal">
+    <h2>Signal Package</h2>
+    <p>Das Signal Package ist der strukturierte Output des Trend Finders. Es beschreibt die gefundene Auffälligkeit so, dass der Story Creator direkt mit der weiteren Untersuchung beginnen kann.</p>
+    <ul><li>Signal</li><li>Region und Segment</li><li>Zeitraum</li><li>Kennzahl</li><li>Vergleichswerte</li><li>Datenquelle</li><li>Datenqualität</li><li>bekannte Einschränkungen</li></ul>
+    <h3 class="detail-section-title">Beispiel</h3>
+    <p><strong>Signal:</strong> 4-Zimmer-Eigentumswohnungen in Potsdam zeigen deutlich stärker gestiegene Angebotspreise als 2-Zimmer-Wohnungen.</p>
+    <p><strong>Vergleich:</strong></p>
+    <ul><li>4 Zimmer: +9,4 %</li><li>2 Zimmer: +2,1 %</li><li>Gesamtmarkt: +4,3 %</li></ul>
+    <p><strong>Zeitraum:</strong> September 2026 vs. September 2025</p>
+    <p><strong>Hinweis:</strong> Angebotspreise aktiver Inserate, keine erzielten Verkaufspreise.</p>
+  </template>
+
+  <template id="detail-story-creator">
+    <h2>Story Creator</h2>
+    <p>Der Story Creator untersucht und validiert das Signal, recherchiert zusätzlichen Kontext und entwickelt daraus unterschiedliche journalistische Perspektiven. Anschließend trifft er die redaktionelle Entscheidung für genau eine Story.</p>
+
+    <h3 class="detail-step-label">Validate</h3>
+    <p class="detail-subline"><strong>Research &amp; Validation – Ist das Signal belastbar und ausreichend verstanden?</strong></p>
+    <p>Validate prüft, ob das eingehende Signal genügend Substanz für eine Story hat und welcher zusätzliche Kontext benötigt wird.</p>
+    <ul><li>Signal und zugrunde liegende Daten prüfen</li><li>historische Entwicklung und Vergleichswerte einordnen</li><li>Regionen oder Marktsegmente vergleichen</li><li>zusätzlichen internen und externen Kontext recherchieren</li><li>Datenqualität, Aktualität und Quellen prüfen</li><li>alternative Erklärungen berücksichtigen</li><li>keine Kausalität ableiten, die die Daten nicht tragen</li></ul>
+    <p>Ziel ist zunächst Verständnis und Belastbarkeit – noch nicht die aufmerksamkeitsstärkste Story.</p>
+    <div class="detail-rule">Claims müssen durch belastbare Quellen oder Daten gestützt sein. Korrelation und mögliche Ursache dürfen nicht miteinander verwechselt werden.</div>
+
+    <h3 class="detail-step-label">Human Relevance</h3>
+    <p><strong>Warum ist das für Menschen interessant?</strong></p>
+    <p>Nach der Validierung wird geprüft, welche Bedeutung die beobachtete Entwicklung für Menschen haben könnte. Der Story Creator übersetzt die Daten dabei noch nicht in künstliche Auswirkungen, sondern sucht nach einer verständlichen und belegbaren menschlichen Perspektive.</p>
+    <ul><li>Wen könnte die Entwicklung betreffen?</li><li>In welcher realen Lebens- oder Entscheidungssituation ist sie relevant?</li><li>Welche natürliche Frage würde ein Leser dazu stellen?</li><li>Was ist überraschend, nützlich oder erklärungsbedürftig?</li><li>Was soll ein Leser nach dem Artikel besser verstehen?</li></ul>
+    <p>Die menschliche Relevanz darf nie stärker formuliert werden, als es die Evidenz erlaubt.</p>
+    <div class="detail-example-card"><strong class="detail-example-label">Beispiel</strong>
+      <p>Aus dem Potsdam-Signal entsteht die Frage:</p>
+      <p><strong>Was bedeutet der deutlich stärkere Preisanstieg größerer Wohnungen für Menschen, die mehr Platz suchen?</strong></p>
+      <p>Eine belastbare menschliche Perspektive wäre:</p>
+      <p><strong>Wer in Potsdam eine größere Eigentumswohnung sucht, trifft auf ein Angebotssegment, dessen Preise deutlich stärker gestiegen sind als bei kleineren Wohnungen.</strong></p>
+      <p>Nicht belegt wäre dagegen beispielsweise die Behauptung, dass Familien dadurch ihre Finanzierung nicht mehr stemmen können.</p>
+    </div>
+
+    <h3 class="detail-step-label">Shape</h3>
+    <p><strong>Welche journalistischen Perspektiven lassen sich entwickeln?</strong></p>
+    <p>Shape entwickelt aus validierter Evidenz, zusätzlichem Kontext und Human Relevance zwei bis drei unterschiedliche journalistische Story Angles.</p>
+    <p>Ein guter Angle verbindet:</p>
+    <ul><li>belastbare Evidenz</li><li>menschliche Bedeutung</li><li>eine klare Erkenntnis, Frage oder Spannung</li></ul>
+    <p>Story Angles dürfen unterschiedliche Perspektiven ausprobieren, aber keine Fakten oder Ursachen erfinden.</p>
+    <div class="detail-example-card"><strong class="detail-example-label">Beispiel</strong>
+      <p>Mögliche Angles:</p>
+      <ul><li>Mehr Platz wird in Potsdam deutlich teurer</li><li>Der Gesamtmarkt verdeckt große Unterschiede zwischen Wohnungsgrößen</li><li>4-Zimmer-Wohnungen entwickeln sich deutlich stärker als kleinere Wohnungen</li></ul>
+    </div>
+
+    <h3 class="detail-step-label">Select</h3>
+    <p><strong>Welche Story soll produziert werden?</strong></p>
+    <p>Select entscheidet sich für <strong>genau einen</strong> Story Angle. Aus diesem werden anschließend Core Story Claim, Story Promise, Primary Headline Direction und Writer Briefing geschärft.</p>
+    <p>Die Auswahl berücksichtigt unter anderem:</p>
+    <ul><li>Evidenzstärke</li><li>Nutzer- und redaktionelle Relevanz</li><li>Informationswert</li><li>Differenzierung</li><li>Search- / Discover-Potenzial</li><li>Spekulations- und Faktenrisiko</li><li>sinnvolle Nutzung von IS24-Daten oder Expertise</li></ul>
+    <p>Ein interessanter Angle wird verworfen, wenn er mit den vorhandenen Fakten nicht ausreichend gestützt werden kann.</p>
+    <div class="detail-example-card"><strong class="detail-example-label">Beispiel</strong>
+      <p><strong>Ausgewählter Angle:</strong> Mehr Platz wird in Potsdam deutlich teurer.</p>
+      <p><strong>Core Story Claim:</strong> In Potsdam verteuern sich größere Eigentumswohnungen deutlich stärker als kleinere.</p>
+      <p><strong>Primary Headline Direction:</strong> Wer in Potsdam mehr Platz braucht, trifft auf deutlich stärker gestiegene Angebotspreise.</p>
+    </div>
+  </template>
+
+  <template id="detail-story-package">
+    <h2>Story Package</h2>
+    <p>Das Story Package ist die redaktionelle Entscheidung des Story Creators. Es definiert, welche Geschichte produziert werden soll und auf welcher Evidenz sie basiert.</p>
+    <p>Es enthält insbesondere:</p>
+    <ul><li>ausgewählten Story Angle</li><li>Core Story Claim</li><li>Story Promise</li><li>Human Relevance</li><li>Reader Question</li><li>Primary Headline Direction</li><li>Core Evidence</li><li>Supporting Evidence</li><li>Claim Boundaries</li><li>Sources</li><li>Writer Briefing</li><li>Visual Briefing</li></ul>
+    <p>Das Story Package ist damit nicht nur eine Sammlung von Daten, sondern der klare redaktionelle Auftrag für die Produktion.</p>
+  </template>
+
+  <template id="detail-asset">
+    <h2>Content Creator</h2>
+    <p>Der Content Creator setzt die bereits entschiedene Story in konkrete redaktionelle Assets um. Writer, Image Creator und Chart Creator arbeiten dabei auf derselben geprüften Story-Grundlage und verändern die redaktionelle Entscheidung des Story Creators nicht.</p>
+    <h3 class="detail-step-label">Writer</h3>
+    <p>Der Writer übersetzt das Writer Briefing in einen vollständigen journalistischen Artikel. Die Geschichte ist zu diesem Zeitpunkt bereits entschieden.</p>
+    <ul><li>folgt Core Story Claim und Story Promise</li><li>orientiert sich an der Primary Headline Direction</li><li>nutzt ausschließlich übergebene Fakten und Quellen</li><li>schreibt aus Sicht der relevanten Leser</li><li>verwendet Zahlen als Evidenz, nicht automatisch als Storystruktur</li><li>erfindet keine Ursachen, Auswirkungen oder neuen Fakten</li></ul>
+    <h3 class="detail-step-label">Image Creator</h3>
+    <p>Der Image Creator erstellt oder bereitet passende visuelle Assets auf Basis des Visual Briefings vor.</p>
+    <ul><li>unterstützt die ausgewählte Story</li><li>berücksichtigt Brand- und Editorial-Anforderungen</li><li>berücksichtigt Bildrechte und Herkunft</li><li>darf keine nicht belegten Aussagen visuell suggerieren</li></ul>
+    <h3 class="detail-step-label">Chart Creator</h3>
+    <p>Der Chart Creator übersetzt validierte Daten in verständliche Visualisierungen.</p>
+    <ul><li>verwendet ausschließlich geprüfte Daten</li><li>macht Vergleiche und Entwicklungen leichter erfassbar</li><li>kennzeichnet Zeitraum, Einheit und Vergleichsbasis eindeutig</li><li>darf die Aussage der Daten nicht verzerren</li></ul>
+  </template>
+
+  <template id="detail-production-package">
+    <h2>Production Package</h2>
+    <p>Das Production Package bündelt alle produzierten Bestandteile der Story und stellt sie für den Human Review bereit. Es ist die nahezu veröffentlichungsfertige Version des Beitrags, aber noch nicht freigegeben.</p>
+    <h3>Enthält</h3>
+    <ul><li>vollständigen Artikelentwurf</li><li>Headline und Subline</li><li>Featured Image und weitere visuelle Assets</li><li>Datenvisualisierungen bzw. interaktive Charts</li><li>verwendete Quellen und Referenzen</li><li>relevante Metadaten und SEO-Informationen</li><li>geplante interne Links bzw. weiterführende IS24-Ziele</li></ul>
+    <h3>Nächster Schritt</h3>
+    <p>Das Production Package wird im Storage für den Human Review bereitgestellt. Erst nach der menschlichen Freigabe darf der Inhalt an Contentful übergeben werden.</p>
+  </template>
+
+  <template id="detail-review">
+    <h2>Human Review</h2>
+    <p>Vor der Veröffentlichung bleibt eine menschliche redaktionelle, faktische und – wo relevant – fachliche oder Compliance-Prüfung verpflichtend. Der Human Reviewer entscheidet, ob der Beitrag veröffentlicht, überarbeitet oder verworfen wird.</p>
+    <h3 class="detail-section-title">Editorial Review</h3>
+    <ul><li>Verständlichkeit und redaktionelle Qualität</li><li>Nutzwert und klare Storyline</li><li>angemessene Headline und Tonalität</li><li>Distinctiveness gegenüber generischem bzw. austauschbarem Content</li></ul>
+    <h3 class="detail-section-title">Factual &amp; Source Review</h3>
+    <ul><li>zentrale Claims und Zahlen</li><li>verwendete Quellen</li><li>Datenvisualisierungen und deren Interpretation</li><li>Aktualität und korrekte Einordnung</li><li>keine unbelegte Kausalität oder Spekulation</li></ul>
+    <h3 class="detail-section-title">Compliance &amp; Expert Review</h3>
+    <p>Je nach Thema kann zusätzliche fachliche, rechtliche oder Compliance-Prüfung erforderlich sein.</p>
+    <ul><li>Finanzierung, Recht, Regulierung oder andere sensible Themen bei Bedarf durch passende Expert:innen prüfen</li><li>Bildrechte / Nutzung</li><li>personenbezogene oder sensible Inhalte</li><li>transparente und korrekte Autoren- / Reviewer-Zuordnung</li></ul>
+    <div class="detail-rule">Ein „Fachlich geprüft von“-Hinweis ist nur sinnvoll, wenn tatsächlich eine substanzielle fachliche Prüfung stattgefunden hat.</div>
+    <h3 class="detail-section-title">Decision</h3>
+    <ul><li>Approve</li><li>Request Changes</li><li>Reject</li></ul>
+    <div class="detail-rule">AI unterstützt den Prozess, ersetzt aber nicht die menschliche Verantwortung für redaktionelle Qualität, Fakten und Compliance.</div>
+  </template>
+
+  <template id="detail-publish">
+    <h2>Publish</h2>
+    <p>Nach der menschlichen Freigabe wird der Beitrag in die technische Publishing-Strecke übergeben und als News Page ausgespielt. Die redaktionelle Entscheidung ist zu diesem Zeitpunkt bereits erfolgt.</p>
+    <h3 class="detail-section-title">Contentful Rendering</h3>
+    <ul><li>freigegebene Content-Bestandteile übernehmen</li><li>Text, Bilder, Charts und Metadaten zusammenführen</li><li>definierte Article Templates verwenden</li><li>Authorship, Structured Data und Internal Linking ausspielen</li><li>mobile Performance und konsistente Darstellung sicherstellen</li></ul>
+    <h3 class="detail-section-title">News Pages</h3>
+    <ul><li>neue Editorial Coverage soll unter der vorgesehenen <code>/news/</code> Experience ausgespielt werden</li><li>relevante Verbindungen zu <code>/wissen/</code> und zu passenden IS24 Search-, Product- oder Service-Journeys ermöglichen</li><li>News Pages dienen nicht nur Discover, sondern Search, News, direkte Nutzung und weitere Distribution</li></ul>
+    <div class="detail-rule">Contentful ist die Publishing-Schicht. Story-Auswahl, Produktion und menschliche Freigabe passieren vorher im Editorial Flow.</div>
+  </template>
+
+  <template id="detail-performance">
+    <h2>Learning Agent</h2>
+    <p>Der Learning Agent übersetzt die Performance veröffentlichter Inhalte in wiederverwendbare Learnings für zukünftige Editorial Decisions. Er entscheidet nicht automatisch, was als Nächstes produziert wird, sondern verbessert die Grundlage für zukünftige Priorisierung.</p>
+    <h3 class="detail-step-label">Measure</h3>
+    <p>Measure sammelt die relevanten Performance-Signale der veröffentlichten Inhalte.</p>
+    <ul><li>Search Performance</li><li>Discover Performance</li><li>Content Performance / Readership</li><li>Engagement</li><li>Returning Users, soweit verfügbar</li><li>Downstream IS24 Engagement</li><li>relevante Operating-Health-Signale</li></ul>
+    <h3 class="detail-step-label">Interpret</h3>
+    <p>Interpret sucht nach wiederholbaren Mustern in der Performance und versucht zu verstehen, welche Elemente zu guten Ergebnissen beitragen.</p>
+    <ul><li>welche Themen funktionieren?</li><li>welche Signal Types führen zu guten Stories?</li><li>welche Quellen liefern wertvolle Signale?</li><li>welche Story Angles funktionieren?</li><li>welche Formate und Visual Treatments funktionieren?</li><li>welche Muster zeigen sich über verschiedene Distribution Channels?</li></ul>
+    <h3 class="detail-step-label">Improve</h3>
+    <p>Improve übersetzt die Learnings in konkrete Empfehlungen für zukünftige Durchläufe.</p>
+    <ul><li>Themen stärker oder schwächer priorisieren</li><li>Monitoring oder Quellen anpassen</li><li>Detection Logic weiterentwickeln</li><li>Story Angles anders gewichten</li><li>erfolgreiche Formate weiter testen</li><li>schwache Muster reduzieren</li></ul>
+  </template>
+
+  <template id="detail-learning">
+    <h2>Learning Package</h2>
+    <p>Das Learning Package ist der strukturierte Output des Learning Agents. Es übersetzt Performance-Daten in konkrete Empfehlungen für zukünftige Entscheidungen im Trend Finder und Story Creator.</p>
+    <h3>Enthält</h3>
+    <ul><li>Themen-Performance</li><li>Quellen-Performance</li><li>Signal-Performance</li><li>Story-Winkel-Performance</li><li>Format-Performance</li><li>Search-/Discover-Performance</li><li>relevante Engagement-Signale</li><li>empfohlene Anpassungen</li></ul>
+    <h3>Beispiel</h3>
+    <p>Wenn erklärende Mietmarkt-Stories mit Angebots-/Nachfrage-Kontext wiederholt besser funktionieren als reine Preis-Rankings, könnte das Learning Package empfehlen:</p>
+    <ul><li>entsprechende Signale im Trend Finder stärker zu priorisieren</li><li>Angebotsentwicklung häufiger als ergänzenden Kontext zu prüfen</li><li>erklärende Markt-Winkel im Story Creator höher zu gewichten</li><li>schwache oder wenig differenzierende Varianten seltener zu produzieren</li></ul>
+    <h3>Feedback an Trend Finder</h3>
+    <p>Der Trend Finder kann daraus lernen, welche Themen, Quellen und Signaltypen häufiger zu relevanten Stories führen.</p>
+    <h3>Feedback an Story Creator</h3>
+    <p>Der Story Creator kann daraus lernen, welche Story-Winkel, Formate und redaktionellen Muster besonders gut funktionieren.</p>
+    <p><strong>Performance entscheidet nicht automatisch, was produziert wird. Die Learnings verbessern die Priorisierung und Entscheidungslogik im nächsten Durchlauf.</strong></p>
+  </template>
+
+  <template id="detail-workflow-automation">
+    <h2>Workflow Automation</h2>
+    <p>Der Editorial Flow ist überwiegend eine lineare Automatisierung: Jeder Agent übernimmt eine klar abgegrenzte Aufgabe und übergibt sein Ergebnis als strukturiertes Package an den nächsten Schritt.</p>
+    <p>Die Agents arbeiten nicht gleichzeitig miteinander und verändern nicht gegenseitig ihre Arbeitsweise. Dadurch benötigen wir keine komplexe Multi-Agent-Orchestrierung.</p>
+    <p>Die technische Verkettung kann über die bestehende Agent Factory erfolgen. Entscheidend ist, dass die einzelnen Agents einen klar begrenzten Scope, definierte Inputs und definierte Outputs haben.</p>
+    <div class="automation-chain" aria-label="Agent, Package, Agent, Package, Agent"><span>Agent</span><span>Package</span><span>Agent</span><span>Package</span><span>Agent</span></div>
+    <div class="detail-rule">Dies beschreibt das geplante technische Verbindungsprinzip – nicht eine bereits vollständig produktiv umgesetzte End-to-End-Automatisierung.</div>
+  </template>
+
+  <template id="detail-mvp-approach">
+    <h2>MVP Approach</h2>
+    <p>Der MVP testet den kompletten Editorial Flow zunächst mit einem bewusst kleinen Scope. Wir starten nur mit wenigen Trendfeldern, bei denen die benötigten Daten bereits einfach und zuverlässig verfügbar sind.</p>
+    <p>So testen wir zuerst, ob die Kette von <strong>Signal → Story → Content → Review → Publish</strong> zuverlässig funktioniert.</p>
+    <p>Wenn das gelingt, skalieren wir schrittweise:</p>
+    <ul><li>weitere Datenquellen anbinden</li><li>dadurch weitere Trendfelder und Themen ermöglichen</li><li>zusätzliche Signal Types und Playbooks ergänzen</li><li>Produktions- und Publishing-Schritte weiter automatisieren</li><li>später den Learning Loop hinzufügen</li></ul>
+    <div class="detail-rule"><strong>Prinzip:</strong> Erst den End-to-End-Prozess mit wenig zusätzlicher Unsicherheit beweisen, danach den inhaltlichen und technischen Scope erweitern.</div>
+  </template>
+
+  <template id="detail-mvp-trend">
+    <h2>Trend Finder · MVP</h2>
+    <p>Im MVP starten wir bewusst mit nur 1–2 Trendfeldern, bei denen die notwendigen Signale aus bereits einfach und verlässlich zugänglichen internen Daten erzeugt werden können. Innerhalb dieser Trendfelder beobachten wir konkrete Trendindikatoren. Der grundsätzlich größere Suchraum wird für den MVP gezielt reduziert.</p>
+    <div class="mvp-logic-chain" aria-label="Trendfeld, Trendindikator, reduzierter Suchraum, Vergleich, Signal, Signal Package"><span>Trendfeld</span><span>Trendindikator</span><span>Reduzierter Suchraum</span><span>Vergleich</span><span>Signal</span><span>Signal Package</span></div>
+    <p>Innerhalb des reduzierten Suchraums führt der Trend Finder definierte Vergleiche durch und erkennt Signale. Ein vollständiger Scan kann mehrere Signal Packages erzeugen und stoppt nicht beim ersten Treffer. Der Scan wird im MVP zunächst manuell gestartet.</p>
+    <div class="monitoring-plan-scroll" role="region" aria-label="Working Example für Trend Finder MVP" tabindex="0">
+      <table class="monitoring-plan mvp-working-table">
+        <thead><tr><th>Trendfeld</th><th>Trendindikator</th><th>Data Source</th><th>MVP-Suchraum / Vergleich</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Preisentwicklung</strong></td><td>Veränderung der Angebotsmiete pro m²</td><td>IS24 Mietpreis- / Marktdaten, z. B. WohnBarometer oder geeigneter interner Preisdatensatz</td><td>Ausgewählte Regionen · Miete · Wohnung; aktueller Monat vs. Vorjahresmonat</td></tr>
+          <tr><td><strong>Nachfrageentwicklung</strong></td><td>Veränderung der aktiven gespeicherten Suchen</td><td>verfügbare IS24 Nachfrage- / Engagementdaten</td><td>Ausgewählte Regionen · Miete; aktueller Monat vs. Vorjahresmonat</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mvp-working-note">Working Example – die finalen 1–2 Trendfelder und die dafür verwendeten Dimensionen werden anhand von verlässlichem Datenzugang und technischer Machbarkeit ausgewählt.</p>
+    <div class="detail-rule">Design, Celebrities, Regulation, Search Trends und externe News-Signale bleiben Teil der Target Architecture. Der MVP testet zunächst den End-to-End-Prozess mit intern verlässlich abbildbaren Trendfeldern.</div>
+  </template>
+
+  <template id="detail-mvp-story">
+    <h2>Story Creator · MVP</h2>
+    <p>Für jeden Signal Type definiert der MVP ein kompaktes Story Playbook mit festen Research Steps und passenden Story Patterns. Daraus entwickelt der Story Creator 2–3 konkrete Story Angles und wählt den am besten belegten aus.</p>
+    <div class="mvp-story-chain" aria-label="MVP Story Creator logic"><span>Signal</span><b aria-hidden="true">→</b><span>Follow-up Research</span><b aria-hidden="true">→</b><span>Story Patterns</span><b aria-hidden="true">→</b><span>2–3 Story Angles</span><b aria-hidden="true">→</b><span>Select 1</span></div>
+    <p class="mvp-working-note">Working example – die Signal Types und Story Patterns sind ein vorgeschlagener Startpunkt, keine finale Auswahl.</p>
+    <div class="monitoring-plan-scroll" role="region" aria-label="Working Example für MVP Story Playbooks" tabindex="0">
+      <table class="monitoring-plan mvp-working-table">
+        <thead><tr><th>Signal Type</th><th>Zusätzliche Recherche</th><th>Story Patterns</th><th>Angle-Auswahl</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Price Change</strong></td><td>Historische Entwicklung, Vergleichsstädte bzw. Regionen, Wohnungssegmente sowie – falls relevant – Angebot und Nachfrage prüfen.</td><td><ul><li>Regional Comparison</li><li>Segment Difference</li><li>Price + Supply Context</li><li>User Impact</li></ul></td><td>2–3 konkrete Story Angles erzeugen und den Angle auswählen, der durch die vorhandenen Daten am stärksten belegt und redaktionell relevant ist.</td></tr>
+          <tr><td><strong>Demand Change</strong></td><td>Entwicklung über Zeit prüfen und mit anderen Regionen, Segmenten sowie – falls verfügbar – Angebotsentwicklung vergleichen.</td><td><ul><li>Regional Difference</li><li>Segment Difference</li><li>Demand + Supply Context</li><li>User Impact</li></ul></td><td>2–3 konkrete Story Angles erzeugen und den Angle auswählen, für den sich eine klare und belastbare Differenz zeigen lässt.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3 class="detail-section-title">Story Pattern ≠ Story Angle</h3>
+    <div class="mvp-concept-pair"><div class="detail-rule"><strong>Story Pattern</strong><br>Eine vorab definierte mögliche Perspektive.</div><div class="detail-rule"><strong>Story Angle</strong><br>Eine konkrete Story-Idee auf Basis des tatsächlichen Signals und der Recherche.</div></div>
+    <p>Select wählt den Angle, der durch die verfügbaren Daten am besten belegt und redaktionell relevant ist.</p>
+  </template>
+
+  <template id="detail-mvp-content">
+    <h2>Content Creator · MVP</h2>
+    <p>Im MVP produzieren wir nur die Bestandteile, die für eine vollständige veröffentlichbare Test-Page benötigt werden.</p>
+    <p>The selected Story Angle defines what the Content Creator turns into the article.</p>
+    <h3 class="detail-section-title">Production Package</h3>
+    <ul><li>Article</li><li>1 Image</li><li>Author / Attribution</li><li>relevante Metadata</li><li>notwendige SEO- und Publishing-Informationen</li></ul>
+    <div class="detail-rule">Ziel ist ein kleines, vollständiges Production Package, das direkt menschlich geprüft und anschließend veröffentlicht werden kann.</div>
+  </template>
+
+  <template id="detail-mvp-review">
+    <h2>Human Review · MVP</h2>
+    <p>Die menschliche Freigabe bleibt auch im MVP verpflichtend. Vereinfacht wird nur der technische Workflow – nicht die redaktionelle Verantwortung.</p>
+    <h3 class="detail-section-title">Review</h3>
+    <ul><li>redaktionelle Qualität</li><li>Fakten und Quellen</li><li>Bild / Bildrechte</li><li>Author / Attribution</li><li>relevante Publishing-Angaben</li><li>bei Bedarf fachliche oder Compliance-Prüfung</li></ul>
+    <h3 class="detail-section-title">Decision</h3>
+    <div class="detail-rule">Approve · Request Changes · Reject</div>
+    <h3 class="detail-section-title">MVP Setup</h3>
+    <p>Für den MVP ist kein eigenes Review Tool erforderlich. Ein einfacher bestehender Preview- oder Dokument-Workflow reicht aus, solange Artikel, Quellen und relevante Assets nachvollziehbar geprüft werden können.</p>
+  </template>
+
+  <template id="detail-mvp-publish">
+    <h2>LP Builder · MVP</h2>
+    <p>Für den MVP nutzen wir den bestehenden LP Builder als automatisierten Publishing-Pfad. Er wird einmal für den Editorial Use Case vorbereitet; danach kann aus einem freigegebenen Production Package automatisch eine Page erstellt und veröffentlicht werden.</p>
+    <h3 class="detail-section-title">One-time Setup</h3>
+    <ul><li>passendes Editorial Template im LP Builder vorbereiten</li><li>benötigte Package-Felder mit dem Template verbinden</li><li>Editorial Use Case einmal konfigurieren</li></ul>
+    <h3 class="detail-section-title">MVP Run</h3>
+    <div class="mvp-run-sequence" aria-label="MVP Publishing Sequence"><span>Approved Production Package</span><b aria-hidden="true">↓</b><span>Upload to LP Builder</span><b aria-hidden="true">↓</b><span>Create + Publish</span><b aria-hidden="true">↓</b><span>LP Builder builds the page automatically</span><b aria-hidden="true">↓</b><span>Live Page</span></div>
+    <div class="detail-rule">Der Nutzer baut die Page nicht manuell. Nach dem einmaligen Setup übernimmt der bestehende LP Builder Page Build und Veröffentlichung aus dem freigegebenen Package.</div>
+    <p>Für den MVP brauchen wir damit keine neue Storage-, Rendering- oder Publishing-Architektur.</p>
+  </template>
+
+  <template id="detail-mvp-learning">
+    <h2>Learning Agent · Later</h2>
+    <p>Der Learning Agent ist noch nicht Teil des ersten MVP. Für belastbare Aussagen darüber, welche Signaltypen, Story-Angles, Formate oder Inhalte funktionieren, benötigen wir zunächst mehrere veröffentlichte Stories und ausreichend Vergleichsdaten.</p>
+    <h3 class="detail-section-title">Later</h3>
+    <ul><li>Signal- und Story-Performance vergleichen</li><li>wiederholbare Muster erkennen</li><li>Themen, Story-Angles und Formate bewerten</li><li>Learnings in Trend Finder und Story Creator zurückspielen</li></ul>
+    <div class="detail-rule">Der erste MVP endet deshalb bewusst mit einer funktionierenden veröffentlichten Page. Der automatisierte Learning Loop folgt in einer späteren Ausbaustufe.</div>
+  </template>
+
+  <script>
+    (() => {
+      const popover = document.getElementById('detail-popover');
+      const content = document.getElementById('detail-popover-content');
+      const triggers = [...document.querySelectorAll('[data-detail]')];
+      let activeTrigger = null;
+      let closeTimer = 0;
+      let suppressFocusOpen = false;
+      let pointerPosition = null;
+      let pointerInsidePopover = false;
+      let currentMode = document.body.classList.contains('mode-mvp') ? 'mvp' : 'target';
+      let currentLanguage = 'de';
+
+      const uiTranslations = {
+        de: {
+          headerDescription: 'Der Flow zeigt Target und MVP des Editorial Lighthouse vom Signal über Story und Content bis zu Human Review, Publishing und Learning.',
+          trendCaption: 'Erkennt relevante Marktsignale',
+          storyCaption: 'Entwickelt Story Angles',
+          contentCaption: 'Erstellt publish-ready Inhalte',
+          learningCaption: 'Übersetzt Performance in konkrete Learnings',
+          trendScope1: '1–2 Trendfelder',
+          trendScope2: 'Einfach zugängliche Data Sources',
+          trendScope3: 'Reduzierter Suchraum',
+          trendScope4: 'Manueller Trigger',
+          storyScope1: '1 Playbook pro Signal Type',
+          storyScope2: 'Feste Research Steps',
+          storyScope3: 'Definierte Story Patterns',
+          storyScope4: '2–3 Angles → 1 auswählen',
+          architectureView: 'Architekturansicht',
+          language: 'Sprache',
+          canvas: 'Scrollbare Editorial-Lighthouse-Architektur',
+          architectureTarget: 'Editorial Lighthouse Zielarchitektur',
+          architectureMvp: 'Editorial Lighthouse MVP-Architektur',
+          approved: 'Freigegeben',
+          trendSteps: 'Trend Finder Schritte',
+          trendScope: 'Trend Finder MVP Umfang',
+          storySteps: 'Story Creator Schritte',
+          storyScope: 'Story Creator MVP Umfang',
+          contentAgents: 'Content Creator Agents',
+          contentScope: 'Content Creator MVP Umfang',
+          learningSteps: 'Learning Schritte'
+        },
+        en: {
+          headerDescription: 'The flow shows the Target and MVP setup of the Editorial Lighthouse from signal to story and content through Human Review, Publishing and Learning.',
+          trendCaption: 'Finds relevant market signals',
+          storyCaption: 'Turns signals into strong story angles',
+          contentCaption: 'Creates publish-ready content',
+          learningCaption: 'Turns performance into actionable learnings',
+          trendScope1: '1–2 Trend Fields',
+          trendScope2: 'Easy-access Data Sources',
+          trendScope3: 'Reduced Search Space',
+          trendScope4: 'Manual Trigger',
+          storyScope1: '1 Playbook per Signal Type',
+          storyScope2: 'Fixed Research Steps',
+          storyScope3: 'Defined Story Patterns',
+          storyScope4: '2–3 Angles → Select 1',
+          architectureView: 'Architecture view',
+          language: 'Language',
+          canvas: 'Scrollable Editorial Lighthouse architecture',
+          architectureTarget: 'Editorial Lighthouse target architecture',
+          architectureMvp: 'Editorial Lighthouse MVP architecture',
+          approved: 'Approved',
+          trendSteps: 'Trend Finder steps',
+          trendScope: 'Trend Finder MVP scope',
+          storySteps: 'Story Creator steps',
+          storyScope: 'Story Creator MVP scope',
+          contentAgents: 'Content Creator agents',
+          contentScope: 'Content Creator MVP scope',
+          learningSteps: 'Learning steps'
+        }
+      };
+
+      const triggerLabels = {
+        de: {
+          'detail-sources': 'Details zu Data & Sources',
+          'detail-trend': 'Details zum Trend Finder',
+          'detail-mvp-trend': 'Details zum Trend Finder MVP',
+          'detail-signal': 'Details zum Signal Package',
+          'detail-story-creator': 'Details zum Story Creator',
+          'detail-mvp-story': 'Details zum Story Creator MVP',
+          'detail-story-package': 'Details zum Story Package',
+          'detail-asset': 'Details zum Content Creator',
+          'detail-mvp-content': 'Details zum Content Creator MVP',
+          'detail-production-package': 'Details zum Production Package',
+          'detail-review': 'Details zum Human Review',
+          'detail-mvp-review': 'Details zum Human Review MVP',
+          'detail-publish': 'Details zu Contentful Rendering und News Pages',
+          'detail-mvp-publish': 'Details zum LP Builder MVP',
+          'detail-performance': 'Details zum Learning Agent',
+          'detail-mvp-learning': 'Details zum späteren Learning Agent',
+          'detail-learning': 'Details zum Learning Package',
+          'detail-workflow-automation': 'Details zur Workflow Automation',
+          'detail-mvp-approach': 'Details zum MVP-Ansatz'
+        },
+        en: {
+          'detail-sources': 'Data & Sources details',
+          'detail-trend': 'Trend Finder details',
+          'detail-mvp-trend': 'Trend Finder MVP details',
+          'detail-signal': 'Signal Package details',
+          'detail-story-creator': 'Story Creator details',
+          'detail-mvp-story': 'Story Creator MVP details',
+          'detail-story-package': 'Story Package details',
+          'detail-asset': 'Content Creator details',
+          'detail-mvp-content': 'Content Creator MVP details',
+          'detail-production-package': 'Production Package details',
+          'detail-review': 'Human Review details',
+          'detail-mvp-review': 'Human Review MVP details',
+          'detail-publish': 'Contentful Rendering and News Pages details',
+          'detail-mvp-publish': 'LP Builder MVP details',
+          'detail-performance': 'Learning Agent details',
+          'detail-mvp-learning': 'Later Learning Agent details',
+          'detail-learning': 'Learning Package details',
+          'detail-workflow-automation': 'Workflow Automation details',
+          'detail-mvp-approach': 'MVP approach details'
+        }
+      };
+
+      const detailTranslations = { en: {
+        'detail-sources': `
+          <h2>Data &amp; Sources</h2>
+          <p>Data &amp; Sources is the shared source base of the editorial system. Trend Finder and Story Creator use different parts of this pool for signal discovery, research, comparison, validation and additional context.</p>
+          <h3 class="detail-section-title">Internal / First-party Data</h3>
+          <ul><li>price and market data</li><li>supply / listings / inventory</li><li>demand and engagement signals, where approved</li><li>WohnBarometer / Preisatlas</li><li>geo and location data</li><li>other approved internal data and analyses</li></ul>
+          <p>First-party data and Scout24 market expertise are key differentiators of the editorial strategy.</p>
+          <h3 class="detail-section-title">Search &amp; User Demand</h3>
+          <ul><li>Google Search Console</li><li>Google Trends</li><li>search demand / search behaviour</li><li>existing knowledge content and its performance</li><li>recurring information needs</li></ul>
+          <h3 class="detail-section-title">External &amp; Official Sources</h3>
+          <ul><li>official / regulatory sources</li><li>reputable news and real-estate media</li><li>market and research publications</li><li>local sources</li><li>competitors / competitive intelligence</li><li>authorised or reliable public sources for property and lifestyle stories</li></ul>
+          <div class="detail-rule">Not every story needs every source. The sources used depend on the topic area, signal and specific research need.</div>`,
+        'detail-trend': `
+          <h2>Trend Finder</h2>
+          <p>The Trend Finder systematically searches for developments that could be relevant to our editorial topics. It defines what to observe, examines defined data and sources, and identifies unusual changes or patterns.</p>
+          <p>Relevant observations are passed to the Story Creator as a structured <strong>Signal Package</strong>. The Trend Finder finds the signal – it does not yet develop the story from it.</p>
+          <h3 class="detail-step-label">Focus</h3><p><strong>What do we want to observe?</strong></p><p>Focus defines which topics and developments are editorially relevant to us. This determines the areas in which the Trend Finder searches for signals.</p><ul><li>topics and Trend Fields</li><li>specific monitoring areas</li><li>audiences and user needs</li><li>editorial priorities</li><li>seasonal or time-based priorities</li></ul><div class="detail-example-card"><strong class="detail-example-label">Example</strong><p>We want to observe how <strong>asking prices for owner-occupied apartments</strong> are developing – overall, but also across regions and different apartment sizes.</p></div>
+          <h3 class="detail-step-label">Monitor</h3><p><strong>What exactly do we observe?</strong></p><p>Monitor defines which data, sources and comparisons are observed within the selected Focus. This creates a concrete monitoring and search space.</p><ul><li>data sources</li><li>metrics</li><li>regions</li><li>market segments</li><li>time periods and comparisons</li><li>monitoring frequency</li></ul><div class="detail-example-card"><strong class="detail-example-label">Example</strong><p>For price development, we observe, among other things:</p><ul><li>asking price per m²</li><li>owner-occupied apartments</li><li>different regions</li><li>different apartment sizes</li><li>comparison with the same period in the previous year</li></ul><p>For Potsdam, for example, we compare <strong>2- and 4-room apartments in September 2026 with September 2025</strong>.</p></div>
+          <h3 class="detail-step-label">Detect</h3><p><strong>What stands out?</strong></p><p>Detect runs the defined comparisons and looks for changes or differences that should be investigated more closely. It also checks whether the underlying data is sufficiently robust.</p><ul><li>identify unusual changes</li><li>compare regions or segments</li><li>distinguish outliers from more stable patterns</li><li>check sample sizes and data quality</li><li>select relevant signals</li></ul><div class="detail-example-card"><strong class="detail-example-label">Example</strong><p>In Potsdam, the data shows:</p><ul><li>4-room apartments: <strong>+9.4%</strong></li><li>2-room apartments: <strong>+2.1%</strong></li><li>overall market: <strong>+4.3%</strong></li></ul><p>The development is also visible across several quarters.</p><p>The signal is:</p><p><strong>Larger owner-occupied apartments are developing significantly more strongly in Potsdam than smaller ones.</strong></p><p>This does not yet explain why it is happening or what story might emerge from it.</p></div>`,
+        'detail-signal': `<h2>Signal Package</h2><p>The Signal Package is the structured output of the Trend Finder. It describes the identified anomaly so that the Story Creator can immediately begin the next stage of investigation.</p><ul><li>signal</li><li>region and segment</li><li>period</li><li>metric</li><li>comparison values</li><li>data source</li><li>data quality</li><li>known limitations</li></ul><h3 class="detail-section-title">Example</h3><p><strong>Signal:</strong> Asking prices for 4-room owner-occupied apartments in Potsdam have risen significantly more strongly than those for 2-room apartments.</p><p><strong>Comparison:</strong></p><ul><li>4 rooms: +9.4%</li><li>2 rooms: +2.1%</li><li>overall market: +4.3%</li></ul><p><strong>Period:</strong> September 2026 vs. September 2025</p><p><strong>Note:</strong> Asking prices for active listings, not achieved sale prices.</p>`,
+        'detail-story-creator': `
+          <h2>Story Creator</h2><p>The Story Creator investigates and validates the signal, researches additional context and develops different journalistic perspectives. It then makes the editorial decision for exactly one story.</p>
+          <h3 class="detail-step-label">Validate</h3><p><strong>Is the signal robust and sufficiently understood?</strong></p><p>Validate checks whether the incoming signal has enough substance for a story and which additional context is needed.</p><ul><li>check the signal and underlying data</li><li>interpret historical trends and comparison values</li><li>compare regions or market segments</li><li>research additional internal and external context</li><li>check data quality, recency and sources</li><li>consider alternative explanations</li><li>do not infer causality that the data cannot support</li></ul><p>The first goal is understanding and reliability, not the most attention-grabbing story.</p><div class="detail-rule">Claims must be supported by reliable sources or data. Correlation and possible cause must not be confused.</div>
+          <h3 class="detail-step-label">Human Relevance</h3><p><strong>Why is this interesting to people?</strong></p><p>After validation, the Story Creator examines what the observed development could mean for people. It does not invent impacts; it looks for an understandable, evidence-based human perspective.</p><ul><li>Who might be affected by the development?</li><li>In which real-life or decision-making situation is it relevant?</li><li>What natural question would a reader ask?</li><li>What is surprising, useful or in need of explanation?</li><li>What should a reader understand better after the article?</li></ul><p>Human relevance must never be framed more strongly than the evidence allows.</p><div class="detail-example-card"><strong class="detail-example-label">Example</strong><p>The Potsdam signal raises the question:</p><p><strong>What does the much stronger price increase for larger apartments mean for people looking for more space?</strong></p><p>A supportable human perspective would be:</p><p><strong>Anyone looking for a larger owner-occupied apartment in Potsdam is encountering a segment in which asking prices have risen much more strongly than for smaller apartments.</strong></p><p>By contrast, a claim that families can no longer afford their financing would not be supported.</p></div>
+          <h3 class="detail-step-label">Shape</h3><p><strong>Which journalistic perspectives can be developed?</strong></p><p>Shape develops two or three different journalistic Story Angles from validated evidence, additional context and Human Relevance.</p><p>A strong angle connects:</p><ul><li>robust evidence</li><li>human meaning</li><li>a clear insight, question or tension</li></ul><p>Story Angles may explore different perspectives, but they must not invent facts or causes.</p><div class="detail-example-card"><strong class="detail-example-label">Example</strong><p>Possible angles:</p><ul><li>More space is becoming significantly more expensive in Potsdam</li><li>The overall market hides major differences between apartment sizes</li><li>4-room apartments are developing much more strongly than smaller apartments</li></ul></div>
+          <h3 class="detail-step-label">Select</h3><p><strong>Which story should be produced?</strong></p><p>Select chooses <strong>exactly one</strong> Story Angle. It is then refined into a Core Story Claim, Story Promise, Primary Headline Direction and Writer Briefing.</p><p>The selection considers, among other things:</p><ul><li>strength of evidence</li><li>user and editorial relevance</li><li>information value</li><li>differentiation</li><li>Search / Discover potential</li><li>speculation and factual risk</li><li>meaningful use of IS24 data or expertise</li></ul><p>An interesting angle is rejected if the available facts do not support it sufficiently.</p><div class="detail-example-card"><strong class="detail-example-label">Example</strong><p><strong>Selected angle:</strong> More space is becoming significantly more expensive in Potsdam.</p><p><strong>Core Story Claim:</strong> In Potsdam, larger owner-occupied apartments are becoming significantly more expensive than smaller ones.</p><p><strong>Primary Headline Direction:</strong> Anyone needing more space in Potsdam is facing asking prices that have risen much more sharply.</p></div>`,
+        'detail-story-package': `<h2>Story Package</h2><p>The Story Package is the editorial decision made by the Story Creator. It defines which story should be produced and the evidence on which it is based.</p><p>It includes in particular:</p><ul><li>selected Story Angle</li><li>Core Story Claim</li><li>Story Promise</li><li>Human Relevance</li><li>Reader Question</li><li>Primary Headline Direction</li><li>Core Evidence</li><li>Supporting Evidence</li><li>Claim Boundaries</li><li>Sources</li><li>Writer Briefing</li><li>Visual Briefing</li></ul><p>The Story Package is therefore not just a collection of data, but the clear editorial brief for production.</p>`,
+        'detail-asset': `<h2>Content Creator</h2><p>The Content Creator turns the already-decided story into concrete editorial assets. Writer, Image Creator and Chart Creator work from the same validated story foundation and do not change the editorial decision made by the Story Creator.</p><h3 class="detail-step-label">Writer</h3><p>The Writer turns the Writer Briefing into a complete journalistic article. The story has already been decided at this point.</p><ul><li>follows the Core Story Claim and Story Promise</li><li>uses the Primary Headline Direction as guidance</li><li>uses only the supplied facts and sources</li><li>writes from the perspective of the relevant readers</li><li>uses numbers as evidence, not automatically as the story structure</li><li>does not invent causes, impacts or new facts</li></ul><h3 class="detail-step-label">Image Creator</h3><p>The Image Creator creates or prepares suitable visual assets based on the Visual Briefing.</p><ul><li>supports the selected story</li><li>follows brand and editorial requirements</li><li>accounts for image rights and provenance</li><li>must not visually imply unsupported claims</li></ul><h3 class="detail-step-label">Chart Creator</h3><p>The Chart Creator turns validated data into clear visualisations.</p><ul><li>uses only validated data</li><li>makes comparisons and developments easier to understand</li><li>labels the period, unit and comparison basis unambiguously</li><li>must not distort what the data shows</li></ul>`,
+        'detail-production-package': `<h2>Production Package</h2><p>The Production Package bundles all produced story elements and makes them available for Human Review. It is the nearly publication-ready version of the article, but it has not yet been approved.</p><h3>Includes</h3><ul><li>complete article draft</li><li>headline and subline</li><li>featured image and other visual assets</li><li>data visualisations or interactive charts</li><li>sources and references used</li><li>relevant metadata and SEO information</li><li>planned internal links or onward IS24 destinations</li></ul><h3>Next step</h3><p>The Production Package is made available in storage for Human Review. Content may only be passed to Contentful after human approval.</p>`,
+        'detail-review': `<h2>Human Review</h2><p>Before publication, a human editorial, factual and, where relevant, expert or compliance review remains mandatory. The Human Reviewer decides whether the article is published, revised or rejected.</p><h3 class="detail-section-title">Editorial Review</h3><ul><li>clarity and editorial quality</li><li>user value and a clear storyline</li><li>appropriate headline and tone</li><li>distinctiveness from generic or interchangeable content</li></ul><h3 class="detail-section-title">Factual &amp; Source Review</h3><ul><li>key claims and figures</li><li>sources used</li><li>data visualisations and their interpretation</li><li>recency and correct context</li><li>no unsupported causality or speculation</li></ul><h3 class="detail-section-title">Compliance &amp; Expert Review</h3><p>Depending on the topic, additional expert, legal or compliance review may be required.</p><ul><li>have financing, legal, regulatory or other sensitive topics reviewed by suitable experts where needed</li><li>image rights / usage</li><li>personal or sensitive content</li><li>transparent and correct author / reviewer attribution</li></ul><div class="detail-rule">A “Reviewed by an expert” note is only appropriate when a substantive expert review has actually taken place.</div><h3 class="detail-section-title">Decision</h3><ul><li>Approve</li><li>Request Changes</li><li>Reject</li></ul><div class="detail-rule">AI supports the process but does not replace human responsibility for editorial quality, facts and compliance.</div>`,
+        'detail-publish': `<h2>Publish</h2><p>After human approval, the article enters the technical publishing path and is delivered as a News Page. The editorial decision has already been made at this point.</p><h3 class="detail-section-title">Contentful Rendering</h3><ul><li>take over approved content elements</li><li>combine text, images, charts and metadata</li><li>use defined article templates</li><li>deliver authorship, structured data and internal linking</li><li>ensure mobile performance and consistent presentation</li></ul><h3 class="detail-section-title">News Pages</h3><ul><li>new editorial coverage should be delivered in the planned <code>/news/</code> experience</li><li>enable relevant connections to <code>/wissen/</code> and suitable IS24 search, product or service journeys</li><li>News Pages serve not only Discover, but also Search, News, direct usage and other distribution</li></ul><div class="detail-rule">Contentful is the publishing layer. Story selection, production and human approval happen earlier in the editorial flow.</div>`,
+        'detail-performance': `<h2>Learning Agent</h2><p>The Learning Agent turns the performance of published content into reusable learnings for future editorial decisions. It does not automatically decide what should be produced next; it improves the basis for future prioritisation.</p><h3 class="detail-step-label">Measure</h3><p>Measure collects the relevant performance signals from published content.</p><ul><li>Search Performance</li><li>Discover Performance</li><li>Content Performance / Readership</li><li>Engagement</li><li>Returning Users, where available</li><li>Downstream IS24 Engagement</li><li>relevant Operating Health signals</li></ul><h3 class="detail-step-label">Interpret</h3><p>Interpret looks for repeatable performance patterns and seeks to understand which elements contribute to strong results.</p><ul><li>which topics work?</li><li>which Signal Types lead to good stories?</li><li>which sources deliver valuable signals?</li><li>which Story Angles work?</li><li>which formats and Visual Treatments work?</li><li>which patterns appear across different Distribution Channels?</li></ul><h3 class="detail-step-label">Improve</h3><p>Improve turns the learnings into concrete recommendations for future cycles.</p><ul><li>prioritise topics more or less strongly</li><li>adjust monitoring or sources</li><li>develop Detection Logic further</li><li>weight Story Angles differently</li><li>continue testing successful formats</li><li>reduce weak patterns</li></ul>`,
+        'detail-learning': `<h2>Learning Package</h2><p>The Learning Package is the structured output of the Learning Agent. It turns performance data into concrete recommendations for future decisions in Trend Finder and Story Creator.</p><h3>Includes</h3><ul><li>topic performance</li><li>source performance</li><li>signal performance</li><li>Story Angle performance</li><li>format performance</li><li>Search / Discover performance</li><li>relevant engagement signals</li><li>recommended adjustments</li></ul><h3>Example</h3><p>If explanatory rental-market stories with supply-and-demand context repeatedly outperform simple price rankings, the Learning Package could recommend:</p><ul><li>prioritising corresponding signals more strongly in the Trend Finder</li><li>checking supply development more often as additional context</li><li>weighting explanatory market angles more strongly in the Story Creator</li><li>producing weak or insufficiently differentiated variants less often</li></ul><h3>Feedback to Trend Finder</h3><p>The Trend Finder can learn which topics, sources and Signal Types more often lead to relevant stories.</p><h3>Feedback to Story Creator</h3><p>The Story Creator can learn which Story Angles, formats and editorial patterns perform particularly well.</p><p><strong>Performance does not automatically decide what gets produced. Learnings improve prioritisation and decision logic in the next cycle.</strong></p>`,
+        'detail-workflow-automation': `<h2>Workflow Automation</h2><p>The Editorial Flow is primarily a linear automation: each agent owns a clearly defined task and passes its result to the next step as a structured package.</p><p>The agents do not continuously coordinate with each other or change each other's behaviour. This means the setup does not require complex multi-agent orchestration.</p><p>The existing Agent Factory can provide the technical connection between the agents. The important requirement is that every agent has a clearly limited scope and defined inputs and outputs.</p><div class="automation-chain" aria-label="Agent, Package, Agent, Package, Agent"><span>Agent</span><span>Package</span><span>Agent</span><span>Package</span><span>Agent</span></div><div class="detail-rule">This describes the planned technical connection principle, not an end-to-end automation that is already fully implemented in production.</div>`,
+        'detail-mvp-approach': `<h2>MVP Approach</h2><p>The MVP first tests the complete Editorial Flow with a deliberately small scope. We start with only a few Trend Fields where the required data is already easy and reliable to access.</p><p>This allows us to test first whether the chain from <strong>Signal → Story → Content → Review → Publish</strong> works reliably.</p><p>If it does, we scale step by step:</p><ul><li>connect additional data sources</li><li>enable additional Trend Fields and topics</li><li>add further Signal Types and Playbooks</li><li>automate more production and publishing steps</li><li>add the Learning Loop later</li></ul><div class="detail-rule"><strong>Principle:</strong> Prove the end-to-end process with as little additional uncertainty as possible, then expand the editorial and technical scope.</div>`,
+        'detail-mvp-trend': `<h2>Trend Finder · MVP</h2><p>In the MVP, we deliberately start with only 1–2 Trend Fields where the necessary signals can be generated from internal data that is already easy and reliable to access. Within these Trend Fields, we observe concrete Trend Indicators. The potentially broader Search Space is deliberately reduced for the MVP.</p><div class="mvp-logic-chain" aria-label="Trend Field, Trend Indicator, Reduced Search Space, Comparison, Signal, Signal Package"><span>Trend Field</span><span>Trend Indicator</span><span>Reduced Search Space</span><span>Comparison</span><span>Signal</span><span>Signal Package</span></div><p>Within the Reduced Search Space, the Trend Finder runs defined comparisons and detects signals. A complete scan can generate multiple Signal Packages and does not stop at the first match. In the MVP, the scan is initially triggered manually.</p><div class="monitoring-plan-scroll" role="region" aria-label="Working example for the Trend Finder MVP" tabindex="0"><table class="monitoring-plan mvp-working-table"><thead><tr><th>Trend Field</th><th>Trend Indicator</th><th>Data Source</th><th>MVP Search Space / Comparison</th></tr></thead><tbody><tr><td><strong>Price Development</strong></td><td>Change in asking rent per m²</td><td>IS24 rental price / market data, e.g. WohnBarometer or a suitable internal price dataset</td><td>Selected regions · Rent · Apartment; current month vs. same month of the previous year</td></tr><tr><td><strong>Demand Development</strong></td><td>Change in active saved searches</td><td>available IS24 demand / engagement data</td><td>Selected regions · Rent; current month vs. same month of the previous year</td></tr></tbody></table></div><p class="mvp-working-note">Working example – the final 1–2 Trend Fields and the dimensions used for them will be selected based on reliable data access and technical feasibility.</p><div class="detail-rule">Design, Celebrities, Regulation, Search Trends and external news signals remain part of the Target Architecture. The MVP initially tests the end-to-end process with Trend Fields that can be represented reliably using internal data.</div>`,
+        'detail-mvp-story': `<h2>Story Creator · MVP</h2><p>For each Signal Type, the MVP defines a compact Story Playbook with fixed Research Steps and relevant Story Patterns. The Story Creator uses it to develop 2–3 concrete Story Angles and selects the best-supported one.</p><div class="mvp-story-chain" aria-label="MVP Story Creator logic"><span>Signal</span><b aria-hidden="true">→</b><span>Follow-up Research</span><b aria-hidden="true">→</b><span>Story Patterns</span><b aria-hidden="true">→</b><span>2–3 Story Angles</span><b aria-hidden="true">→</b><span>Select 1</span></div><p class="mvp-working-note">Working example – the Signal Types and Story Patterns are a proposed starting point, not a final selection.</p><div class="monitoring-plan-scroll" role="region" aria-label="Working example for MVP Story Playbooks" tabindex="0"><table class="monitoring-plan mvp-working-table"><thead><tr><th>Signal Type</th><th>Follow-up Research</th><th>Story Patterns</th><th>Angle Selection</th></tr></thead><tbody><tr><td><strong>Price Change</strong></td><td>Check historical development, comparison cities or regions, housing segments and, where relevant, supply and demand.</td><td><ul><li>Regional Comparison</li><li>Segment Difference</li><li>Price + Supply Context</li><li>User Impact</li></ul></td><td>Generate 2–3 concrete Story Angles and select the angle best supported by the available data and editorially relevant.</td></tr><tr><td><strong>Demand Change</strong></td><td>Check development over time and compare it with other regions, segments and, where available, supply development.</td><td><ul><li>Regional Difference</li><li>Segment Difference</li><li>Demand + Supply Context</li><li>User Impact</li></ul></td><td>Generate 2–3 concrete Story Angles and select the angle that shows a clear, robust difference.</td></tr></tbody></table></div><h3 class="detail-section-title">Story Pattern ≠ Story Angle</h3><div class="mvp-concept-pair"><div class="detail-rule"><strong>Story Pattern</strong><br>A predefined possible perspective.</div><div class="detail-rule"><strong>Story Angle</strong><br>A concrete story idea based on the actual signal and research.</div></div><p>Select chooses the angle that is best supported by the available data and editorially relevant.</p>`,
+        'detail-mvp-content': `<h2>Content Creator · MVP</h2><p>In the MVP, we produce only the elements needed for a complete, publishable test page.</p><p>The selected Story Angle defines what the Content Creator turns into the article.</p><h3 class="detail-section-title">Production Package</h3><ul><li>Article</li><li>1 Image</li><li>Author / Attribution</li><li>relevant metadata</li><li>required SEO and publishing information</li></ul><div class="detail-rule">The goal is a small but complete Production Package that can be reviewed by a human and then published directly.</div>`,
+        'detail-mvp-review': `<h2>Human Review · MVP</h2><p>Human approval remains mandatory in the MVP. Only the technical workflow is simplified, not editorial responsibility.</p><h3 class="detail-section-title">Review</h3><ul><li>editorial quality</li><li>facts and sources</li><li>image / image rights</li><li>Author / Attribution</li><li>relevant publishing information</li><li>expert or compliance review where needed</li></ul><h3 class="detail-section-title">Decision</h3><div class="detail-rule">Approve · Request Changes · Reject</div><h3 class="detail-section-title">MVP Setup</h3><p>The MVP does not require a dedicated review tool. A simple existing preview or document workflow is sufficient as long as the article, sources and relevant assets can be reviewed transparently.</p>`,
+        'detail-mvp-publish': `<h2>LP Builder · MVP</h2><p>For the MVP, we use the existing LP Builder as the automated publishing path. It is prepared once for the editorial use case; after that, an approved Production Package can automatically create and publish a page.</p><h3 class="detail-section-title">One-time Setup</h3><ul><li>prepare a suitable editorial template in the LP Builder</li><li>connect the required package fields to the template</li><li>configure the editorial use case once</li></ul><h3 class="detail-section-title">MVP Run</h3><div class="mvp-run-sequence" aria-label="MVP publishing sequence"><span>Approved Production Package</span><b aria-hidden="true">↓</b><span>Upload to LP Builder</span><b aria-hidden="true">↓</b><span>Create + Publish</span><b aria-hidden="true">↓</b><span>LP Builder builds the page automatically</span><b aria-hidden="true">↓</b><span>Live Page</span></div><div class="detail-rule">The user does not build the page manually. After the one-time setup, the existing LP Builder handles the page build and publication from the approved package.</div><p>The MVP therefore does not require a new storage, rendering or publishing architecture.</p>`,
+        'detail-mvp-learning': `<h2>Learning Agent · Later</h2><p>The Learning Agent is not part of the first MVP. Reliable conclusions about which Signal Types, Story Angles, formats or content work require several published stories and sufficient comparison data.</p><h3 class="detail-section-title">Later</h3><ul><li>compare signal and story performance</li><li>identify repeatable patterns</li><li>evaluate topics, Story Angles and formats</li><li>feed learnings back into Trend Finder and Story Creator</li></ul><div class="detail-rule">The first MVP deliberately ends with a working published page. The automated learning loop follows in a later stage.</div>`
+      }};
+
+      const visualStepLabels = new Set([
+        'Focus', 'Monitor', 'Detect',
+        'Validate', 'Human Relevance', 'Shape', 'Select',
+        'Writer', 'Image Creator', 'Chart Creator',
+        'Measure', 'Interpret', 'Improve'
+      ]);
+
+      const decorateDetailContent = () => {
+        content.querySelectorAll('h3').forEach((heading) => {
+          const label = heading.textContent.trim();
+          if (visualStepLabels.has(label)) heading.classList.add('detail-step-label');
+          if (label === 'Beispiel' || label === 'Example') heading.classList.add('detail-example-label');
+        });
+      };
+
+      const clearClose = () => window.clearTimeout(closeTimer);
+
+      const positionPopover = () => {
+        if (!activeTrigger || !popover.classList.contains('is-open')) return;
+
+        popover.style.maxHeight = '';
+
+        const gap = 18;
+        const margin = 13;
+        const cursorClearance = 8;
+        const target = activeTrigger.getBoundingClientRect();
+        const box = popover.getBoundingClientRect();
+        const clamp = (value, min, max) => Math.min(Math.max(value, min), Math.max(min, max));
+        const centeredTop = clamp(target.top + (target.height - box.height) / 2, margin, innerHeight - box.height - margin);
+        const centeredLeft = clamp(target.left + (target.width - box.width) / 2, margin, innerWidth - box.width - margin);
+        const candidates = [
+          { placement: 'right', left: target.right + gap, top: centeredTop },
+          { placement: 'left', left: target.left - box.width - gap, top: centeredTop },
+          { placement: 'below', left: centeredLeft, top: target.bottom + gap },
+          { placement: 'above', left: centeredLeft, top: target.top - box.height - gap }
+        ];
+        const toRect = ({ left, top }, width = box.width, height = box.height) => ({ left, top, right: left + width, bottom: top + height });
+        const isInViewport = (rect) => rect.left >= margin && rect.top >= margin && rect.right <= innerWidth - margin && rect.bottom <= innerHeight - margin;
+        const overlapsTrigger = (rect) => rect.left < target.right && rect.right > target.left && rect.top < target.bottom && rect.bottom > target.top;
+        const isNearPointer = (rect) => pointerPosition && pointerPosition.x >= rect.left - cursorClearance && pointerPosition.x <= rect.right + cursorClearance && pointerPosition.y >= rect.top - cursorClearance && pointerPosition.y <= rect.bottom + cursorClearance;
+        const isValid = (candidate, width = box.width, height = box.height) => {
+          const rect = toRect(candidate, width, height);
+          return isInViewport(rect) && !overlapsTrigger(rect) && !isNearPointer(rect);
+        };
+
+        let chosen = candidates.find((candidate) => isValid(candidate));
+
+        if (!chosen) {
+          const verticalFallbacks = [
+            { placement: 'below', available: innerHeight - margin - target.bottom - gap },
+            { placement: 'above', available: target.top - margin - gap }
+          ].sort((a, b) => b.available - a.available);
+
+          for (const fallback of verticalFallbacks) {
+            if (fallback.available <= 0) continue;
+            popover.style.maxHeight = `${Math.floor(fallback.available)}px`;
+            const resized = popover.getBoundingClientRect();
+            const candidate = fallback.placement === 'below'
+              ? { placement: 'below', left: clamp(target.left + (target.width - resized.width) / 2, margin, innerWidth - resized.width - margin), top: target.bottom + gap }
+              : { placement: 'above', left: clamp(target.left + (target.width - resized.width) / 2, margin, innerWidth - resized.width - margin), top: target.top - resized.height - gap };
+            if (isValid(candidate, resized.width, resized.height)) {
+              chosen = candidate;
+              break;
+            }
+          }
+        }
+
+        if (!chosen) return;
+
+        popover.style.left = `${Math.round(chosen.left)}px`;
+        popover.style.top = `${Math.round(chosen.top)}px`;
+      };
+
+      const showDetail = (trigger) => {
+        clearClose();
+        const template = document.getElementById(trigger.dataset.detail);
+        if (!template) return;
+
+        if (activeTrigger && activeTrigger !== trigger) {
+          activeTrigger.setAttribute('aria-expanded', 'false');
+          activeTrigger.removeAttribute('aria-describedby');
+        }
+
+        activeTrigger = trigger;
+        const translatedDetail = currentLanguage === 'en' ? detailTranslations.en[trigger.dataset.detail] : null;
+        if (translatedDetail) {
+          content.innerHTML = translatedDetail;
+        } else {
+          content.replaceChildren(template.content.cloneNode(true));
+        }
+        decorateDetailContent();
+        const heading = content.querySelector('h2');
+        if (heading) heading.id = 'detail-popover-title';
+        trigger.setAttribute('aria-expanded', 'true');
+        trigger.setAttribute('aria-describedby', 'detail-popover-content');
+        popover.setAttribute('aria-hidden', 'false');
+        popover.classList.add('is-open');
+        requestAnimationFrame(positionPopover);
+      };
+
+      const hideDetail = ({ restoreFocus = false } = {}) => {
+        clearClose();
+        if (!activeTrigger) return;
+        const previous = activeTrigger;
+        previous.setAttribute('aria-expanded', 'false');
+        previous.removeAttribute('aria-describedby');
+        activeTrigger = null;
+        pointerInsidePopover = false;
+        popover.classList.remove('is-open');
+        popover.setAttribute('aria-hidden', 'true');
+        if (restoreFocus) {
+          suppressFocusOpen = true;
+          previous.focus({ preventScroll: true });
+          queueMicrotask(() => { suppressFocusOpen = false; });
+        }
+      };
+
+      const modeButtons = [...document.querySelectorAll('[data-mode]')];
+      const languageButtons = [...document.querySelectorAll('[data-language]')];
+      const modeAwareTriggers = triggers.filter((trigger) => trigger.dataset.detailTarget && trigger.dataset.detailMvp);
+
+      const updateTriggerLabels = () => {
+        modeAwareTriggers.forEach((trigger) => {
+          trigger.dataset.labelTarget = triggerLabels[currentLanguage][trigger.dataset.detailTarget];
+          trigger.dataset.labelMvp = triggerLabels[currentLanguage][trigger.dataset.detailMvp];
+        });
+        triggers.forEach((trigger) => {
+          const label = triggerLabels[currentLanguage][trigger.dataset.detail];
+          if (label) trigger.setAttribute('aria-label', label);
+        });
+      };
+
+      const setMode = (mode) => {
+        const nextMode = mode === 'mvp' ? 'mvp' : 'target';
+        hideDetail();
+        currentMode = nextMode;
+        document.body.classList.toggle('mode-mvp', nextMode === 'mvp');
+        document.body.classList.toggle('mode-target', nextMode === 'target');
+        document.querySelector('.canvas').setAttribute('aria-label', uiTranslations[currentLanguage][nextMode === 'mvp' ? 'architectureMvp' : 'architectureTarget']);
+        modeButtons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.mode === nextMode)));
+        modeAwareTriggers.forEach((trigger) => {
+          trigger.dataset.detail = nextMode === 'mvp' ? trigger.dataset.detailMvp : trigger.dataset.detailTarget;
+          const label = nextMode === 'mvp' ? trigger.dataset.labelMvp : trigger.dataset.labelTarget;
+          if (label) trigger.setAttribute('aria-label', label);
+        });
+        updateTriggerLabels();
+      };
+
+      const setLanguage = (language) => {
+        const nextLanguage = language === 'en' ? 'en' : 'de';
+        hideDetail();
+        currentLanguage = nextLanguage;
+        document.documentElement.lang = nextLanguage;
+        languageButtons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.language === nextLanguage)));
+        document.querySelectorAll('[data-i18n]').forEach((element) => {
+          const value = uiTranslations[nextLanguage][element.dataset.i18n];
+          if (value) element.textContent = value;
+        });
+        document.querySelectorAll('[data-i18n-aria]').forEach((element) => {
+          const value = uiTranslations[nextLanguage][element.dataset.i18nAria];
+          if (value) element.setAttribute('aria-label', value);
+        });
+        updateTriggerLabels();
+        setMode(currentMode);
+      };
+
+      modeButtons.forEach((button) => button.addEventListener('click', () => setMode(button.dataset.mode)));
+      languageButtons.forEach((button) => button.addEventListener('click', () => setLanguage(button.dataset.language)));
+      setLanguage('de');
+
+      const scheduleHide = () => {
+        clearClose();
+        closeTimer = window.setTimeout(() => {
+          const pointerStillInside = pointerInsidePopover || popover.matches(':hover') || activeTrigger?.matches(':hover');
+          if (pointerStillInside) {
+            clearClose();
+            return;
+          }
+          hideDetail();
+        }, 140);
+      };
+
+      triggers.forEach((trigger) => {
+        trigger.setAttribute('aria-controls', 'detail-popover');
+        trigger.addEventListener('mouseenter', (event) => {
+          pointerPosition = { x: event.clientX, y: event.clientY };
+          showDetail(trigger);
+        });
+        trigger.addEventListener('mouseleave', (event) => {
+          const parentTrigger = trigger.parentElement?.closest('[data-detail]');
+          if (parentTrigger && parentTrigger.contains(event.relatedTarget)) {
+            showDetail(parentTrigger);
+            return;
+          }
+          scheduleHide();
+        });
+        trigger.addEventListener('focus', () => {
+          if (!suppressFocusOpen) showDetail(trigger);
+        });
+        trigger.addEventListener('blur', scheduleHide);
+        trigger.addEventListener('click', (event) => {
+          event.stopPropagation();
+          pointerPosition = { x: event.clientX, y: event.clientY };
+          showDetail(trigger);
+        });
+      });
+
+      popover.addEventListener('pointerenter', () => {
+        pointerInsidePopover = true;
+        clearClose();
+      });
+      popover.addEventListener('pointerleave', () => {
+        pointerInsidePopover = false;
+        scheduleHide();
+      });
+      popover.addEventListener('pointerdown', clearClose);
+      popover.addEventListener('wheel', clearClose, { passive: true });
+      popover.addEventListener('scroll', clearClose, true);
+      popover.addEventListener('transitionend', (event) => {
+        if (event.propertyName === 'transform') positionPopover();
+      });
+      document.addEventListener('pointermove', (event) => {
+        pointerPosition = { x: event.clientX, y: event.clientY };
+        if (popover.classList.contains('is-open')) {
+          const rect = popover.getBoundingClientRect();
+          pointerInsidePopover = event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom;
+          if (pointerInsidePopover) clearClose();
+        }
+      }, { passive: true });
+      document.addEventListener('pointerdown', (event) => {
+        if (activeTrigger && !activeTrigger.contains(event.target) && !popover.contains(event.target)) hideDetail();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && activeTrigger) hideDetail({ restoreFocus: true });
+      });
+      window.addEventListener('resize', positionPopover);
+      window.addEventListener('scroll', (event) => {
+        const scrollSource = event.target;
+        if (scrollSource === popover || (scrollSource instanceof Node && popover.contains(scrollSource))) {
+          clearClose();
+          return;
+        }
+        positionPopover();
+      }, true);
+    })();
+  </script>
+</body>
+</html>

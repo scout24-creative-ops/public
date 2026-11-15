@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Scaling Editorial · Working Plan</title>
+  <style>
+    :root {
+      --bg: #101514;
+      --surface: #151d1a;
+      --surface-2: #19231f;
+      --header: #1b332e;
+      --accent: #49d8bf;
+      --accent-soft: #bcece3;
+      --accent-bg: #183a35;
+      --accent-line: #40887b;
+      --text: #f1f5f3;
+      --soft: #ccd6d2;
+      --muted: #91a19b;
+      --line: #354b44;
+      --week-line: rgba(122, 167, 156, .13);
+      --vacation: rgba(197, 169, 104, .075);
+      --vacation-line: rgba(197, 169, 104, .2);
+      --task: #244b43;
+      --task-line: #40887b;
+      --completed: #236a4b;
+      --completed-line: #55bd87;
+      --planned: #203947;
+      --planned-line: #3d6478;
+      --label-width: 238px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family: "Make It Better", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button { font: inherit; }
+
+    .page {
+      width: min(1380px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 38px 0 56px;
+    }
+
+    .page-header {
+      position: relative;
+    }
+
+    .top-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+
+    .updated-label {
+      display: inline-flex;
+      margin: 0;
+      padding: 5px 9px;
+      border: 1px solid var(--accent-line);
+      border-radius: 999px;
+      color: #b9e8df;
+      background: var(--accent-bg);
+      font-size: 10px;
+      font-weight: 760;
+      letter-spacing: .075em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 13px 0 0;
+      font-size: clamp(31px, 3.5vw, 48px);
+      line-height: 1.04;
+      letter-spacing: -.045em;
+    }
+
+    .subline {
+      margin: 9px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .intro {
+      max-width: 1030px;
+      margin: 17px 0 0;
+      color: var(--soft);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .language-switch {
+      display: inline-flex;
+      padding: 3px;
+      border: 1px solid #35423e;
+      border-radius: 999px;
+      background: #171d1b;
+    }
+
+    .language-switch button {
+      min-width: 54px;
+      padding: 7px 10px;
+      border: 0;
+      border-radius: 999px;
+      color: #88938f;
+      background: transparent;
+      font-size: 10px;
+      font-weight: 720;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .language-switch button[aria-pressed="true"] {
+      color: #d7e6e1;
+      background: #23312d;
+    }
+
+    .language-switch button:hover { color: #b8c5c1; }
+
+    .language-switch button:focus-visible,
+    .task-bar:focus-visible {
+      outline: 2px solid #6d9a90;
+      outline-offset: 2px;
+    }
+
+    .timeline-section { margin-top: 27px; }
+
+    .timeline-scroll {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      scrollbar-color: #58726a #15201d;
+      scrollbar-width: thin;
+      overscroll-behavior-x: contain;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      grid-template-columns: var(--label-width) minmax(1040px, 1fr);
+      min-width: 1278px;
+      isolation: isolate;
+    }
+
+    .corner,
+    .months,
+    .week-label,
+    .weeks,
+    .row-label,
+    .track {
+      position: relative;
+      z-index: 2;
+      border-bottom: 1px solid rgba(107, 136, 128, .24);
+    }
+
+    .corner,
+    .week-label,
+    .row-label {
+      position: sticky;
+      left: 0;
+      z-index: 6;
+      border-right: 1px solid var(--line);
+      background: #18231f;
+    }
+
+    .corner {
+      display: flex;
+      align-items: flex-end;
+      padding: 15px 18px;
+      color: #9fb0aa;
+      font-size: 10px;
+      font-weight: 750;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .months {
+      display: grid;
+      grid-template-columns: 31fr 30fr 31fr 31fr;
+      min-height: 76px;
+      background: var(--header);
+    }
+
+    .month {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 14px 18px;
+      border-right: 1px solid rgba(146, 190, 178, .25);
+    }
+
+    .month:last-child { border-right: 0; }
+    .month.cleaning { background: #20302f; }
+    .month strong { color: var(--accent-soft); font-size: 15px; }
+    .month small { margin-top: 4px; color: #8fa59e; font-size: 10px; }
+
+    .week-label {
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      color: #82958f;
+      font-size: 9px;
+      font-weight: 730;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .weeks {
+      display: flex;
+      min-height: 38px;
+      background: #17211e;
+    }
+
+    .week {
+      flex: 0 0 auto;
+      padding: 12px 0 0 7px;
+      border-right: 1px solid var(--week-line);
+      color: #778b85;
+      font-size: 8px;
+      font-weight: 720;
+    }
+
+    .row-label {
+      display: flex;
+      align-items: center;
+      min-height: 67px;
+      padding: 12px 18px;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 690;
+      line-height: 1.35;
+    }
+
+    .track {
+      min-height: 67px;
+    }
+
+    .week-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      z-index: 1;
+      width: 1px;
+      background: var(--week-line);
+      pointer-events: none;
+    }
+
+    .task-bar {
+      position: absolute;
+      top: 17px;
+      z-index: 4;
+      height: 33px;
+      min-width: 17px;
+      overflow: hidden;
+      padding: 0 11px;
+      border: 1px solid var(--task-line);
+      border-radius: 7px;
+      color: #e5f1ed;
+      background: var(--task);
+      font-size: 9.5px;
+      font-weight: 720;
+      line-height: 31px;
+      text-align: left;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      cursor: help;
+    }
+
+    .task-bar.planned {
+      border-color: var(--planned-line);
+      background: var(--planned);
+    }
+
+    .task-bar.completed {
+      border-color: var(--completed-line);
+      background: var(--completed);
+    }
+
+    .vacation-layer,
+    .cleaning-layer,
+    .marker-layer {
+      position: absolute;
+      top: 76px;
+      right: 0;
+      bottom: 0;
+      left: var(--label-width);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .vacation-layer { z-index: 3; }
+    .cleaning-layer { z-index: 1; }
+    .marker-layer { z-index: 5; }
+
+    .vacation-zone {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      border-right: 1px solid var(--vacation-line);
+      border-left: 1px solid var(--vacation-line);
+      background: var(--vacation);
+    }
+
+    .vacation-zone span {
+      position: absolute;
+      top: 5px;
+      left: 7px;
+      max-width: calc(100% - 14px);
+      overflow: hidden;
+      color: #baa875;
+      font-size: 8px;
+      font-weight: 730;
+      line-height: 1.15;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .cleaning-zone {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      border-left: 1px solid rgba(103, 158, 148, .34);
+      background: rgba(77, 126, 119, .065);
+    }
+
+    .marker-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(73, 216, 191, .32);
+    }
+
+    .marker-line.today { background: rgba(188, 236, 227, .55); }
+
+    .today-label {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      padding: 3px 6px;
+      border-radius: 5px;
+      color: #dcece7;
+      background: #263c36;
+      font-size: 7.5px;
+      font-weight: 780;
+      letter-spacing: .045em;
+      white-space: nowrap;
+    }
+
+    .end-label {
+      position: absolute;
+      top: 5px;
+      padding: 3px 6px;
+      border: 1px solid var(--accent-line);
+      border-radius: 5px;
+      color: #ccebe4;
+      background: #203a34;
+      font-size: 7.5px;
+      font-weight: 780;
+      letter-spacing: .035em;
+      white-space: nowrap;
+      transform: translateX(-100%);
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      margin: 13px 3px 0;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .legend-item { display: inline-flex; gap: 7px; align-items: center; }
+    .legend-swatch { width: 18px; height: 8px; border: 1px solid var(--task-line); border-radius: 3px; background: var(--task); }
+    .legend-swatch.completed { border-color: var(--completed-line); background: var(--completed); }
+    .legend-swatch.planned { border-color: var(--planned-line); background: var(--planned); }
+    .legend-swatch.vacation { border-color: var(--vacation-line); background: var(--vacation); }
+
+    .popover {
+      position: fixed;
+      z-index: 100;
+      width: min(360px, calc(100vw - 24px));
+      padding: 17px 18px;
+      border: 1px solid #3c5650;
+      border-radius: 12px;
+      color: var(--soft);
+      background: #17211e;
+      box-shadow: 0 18px 46px rgba(0, 0, 0, .38);
+      font-size: 11px;
+      line-height: 1.48;
+      pointer-events: none;
+    }
+
+    .popover[hidden] { display: none; }
+    .popover h3 { margin: 0 0 7px; color: var(--text); font-size: 15px; line-height: 1.25; }
+    .popover p { margin: 0; }
+    .popover ul { margin: 10px 0 0; padding: 0; list-style: none; }
+    .popover li { position: relative; padding: 2px 0 2px 12px; }
+    .popover li::before { position: absolute; top: 8px; left: 1px; width: 4px; height: 4px; border-radius: 50%; background: #68968c; content: ""; }
+    .popover .detail-note { margin-top: 10px; color: #aebdb8; }
+    .popover .outcome { margin-top: 11px; padding-top: 9px; border-top: 1px solid #31433e; color: #bcece3; }
+    .popover .outcome strong { color: #85aaa1; font-size: 8px; letter-spacing: .07em; text-transform: uppercase; }
+
+    @media (max-width: 720px) {
+      .page { width: calc(100% - 24px); padding: 24px 0 36px; }
+      .top-row { align-items: flex-start; flex-wrap: wrap; }
+      .timeline-section { margin-top: 22px; }
+      .timeline-scroll { border-radius: 10px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <div class="top-row">
+        <span class="updated-label">UPDATED · 1 OCT 2026</span>
+        <div class="language-switch" id="language-switch" role="group">
+          <button type="button" data-language="de" aria-pressed="true">DE</button>
+          <button type="button" data-language="en" aria-pressed="false">EN</button>
+        </div>
+      </div>
+      <h1>Scaling Editorial · Working Plan</h1>
+      <p class="subline" id="subline"></p>
+    </header>
+
+    <section class="timeline-section" aria-labelledby="timeline-title">
+      <h2 id="timeline-title" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)"></h2>
+      <div class="timeline-scroll" tabindex="0" id="timeline-scroll"></div>
+      <div class="legend" id="legend"></div>
+    </section>
+  </main>
+
+  <aside class="popover" id="popover" role="tooltip" hidden></aside>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const B = (de, en) => ({ de, en });
+      const ui = {
+        de: {
+          subline: 'Der Working Plan zeigt den aktuellen MVP-Stand und die groben Workstreams für C3 sowie den anschließenden Cleaning Month.',
+          language: 'Sprache', timeline: 'C3-Zeitplan Oktober 2026 bis Januar 2027', workstream: 'Workstream', weeks: 'Wochen',
+          months: [['Oktober', 'Grundlage & Agent Quality'], ['November', 'Integrieren & vorbereiten'], ['Dezember', 'End-to-End testen & stabilisieren'], ['Januar', 'Cleaning Month']],
+          vacationOne: 'Dominik · Urlaub', vacationTwo: 'Urlaub / Holiday Period', today: 'HEUTE · 1. OKT',
+          completed: 'Abgeschlossen', planned: 'Geplant', capacity: 'Urlaub / Kapazität', outcome: 'Ergebnis', targetFlow: 'Zielbild', c3End: 'C3 Ende'
+        },
+        en: {
+          subline: 'The Working Plan shows the current MVP state, the high-level C3 workstreams and the following Cleaning Month.',
+          language: 'Language', timeline: 'C3 timeline from October 2026 to January 2027', workstream: 'Workstream', weeks: 'Weeks',
+          months: [['October', 'Foundation & Agent Quality'], ['November', 'Integrate & prepare'], ['December', 'Run end-to-end & stabilise'], ['January', 'Cleaning Month']],
+          vacationOne: 'Dominik · Vacation', vacationTwo: 'Vacation / Holiday Period', today: 'TODAY · 1 OCT',
+          completed: 'Completed', planned: 'Planned', capacity: 'Vacation / Capacity', outcome: 'Outcome', targetFlow: 'Target flow', c3End: 'End of C3'
+        }
+      };
+
+      const workstreams = [
+        {
+          id: 'foundation', status: 'completed', name: B('MVP Scope & Foundation', 'MVP Scope & Foundation'), start: '2026-10-01', end: '2026-10-18',
+          description: B('Die grundlegende Struktur des MVP ist definiert und dokumentiert.', 'The fundamental structure of the MVP has been defined and documented.'),
+          bullets: B(['Target- und MVP-Flow definiert', 'MVP Approach und Scope beschrieben', 'Master Matrix als Trend-Finder-Grundlage aufgebaut', 'erste Trendfelder und Search-Space-Logik definiert', 'Package-Logik zwischen den Workflow-Schritten beschrieben', 'technischer Workflow-Automation-Ansatz grundsätzlich geklärt'], ['Target and MVP flow defined', 'MVP approach and scope documented', 'Master Matrix established as the Trend Finder foundation', 'initial Trend Fields and Search Space logic defined', 'Package logic between workflow steps documented', 'technical workflow automation approach clarified in principle']),
+          outcome: B('Gemeinsame MVP-Grundlage steht.', 'The shared MVP foundation is in place.')
+        },
+        {
+          id: 'initial-agents', status: 'completed', name: B('Initial MVP Agents', 'Initial MVP Agents'), start: '2026-10-01', end: '2026-10-18',
+          description: B('Die drei zentralen MVP-Agents wurden initial aufgebaut und erstmals gemeinsam getestet.', 'The three core MVP agents have been set up initially and tested together for the first time.'),
+          bullets: B(['Trend Finder eingerichtet', 'Story Creator eingerichtet', 'Writer eingerichtet', 'erste Agent-to-Agent-Übergaben getestet', 'Signal Package → Story Package → Writer Briefing grundsätzlich validiert', 'kompletter Kern-Workflow funktioniert im Prinzip bereits'], ['Trend Finder set up', 'Story Creator set up', 'Writer set up', 'first Agent-to-Agent handoffs tested', 'Signal Package → Story Package → Writer Briefing validated in principle', 'the core workflow already works as an initial proof']),
+          outcome: B('Trend Finder → Story Creator → Writer funktioniert als erster Proof.', 'Trend Finder → Story Creator → Writer works as an initial proof.')
+        },
+        {
+          id: 'base-rules', status: 'completed', name: B('Base Agent Scope & Rules', 'Base Agent Scope & Rules'), start: '2026-10-01', end: '2026-10-18',
+          description: B('Für die bestehenden Agents wurde ein erster klarer Scope mit grundlegenden Regeln und Grenzen aufgebaut.', 'An initial clear scope with fundamental rules and boundaries has been established for the existing agents.'),
+          bullets: B(['Rollen und Verantwortungen der Agents definiert', 'Inputs und Outputs strukturiert', 'erste Evidenz- und Qualitätsregeln eingebaut', 'Human Relevance im Story Creator ergänzt', 'Core Story Claim / Story Promise / Headline Direction definiert', 'Writer auf die bereits getroffene Story-Entscheidung begrenzt', 'erste Tests mit realistischen und synthetischen Signalen durchgeführt'], ['agent roles and responsibilities defined', 'inputs and outputs structured', 'initial evidence and quality rules added', 'Human Relevance added to the Story Creator', 'Core Story Claim / Story Promise / Headline Direction defined', 'Writer limited to the story decision already made', 'initial tests run with realistic and synthetic signals']),
+          outcome: B('Eine funktionierende Basis für die weitere Qualitätsarbeit steht.', 'A functional foundation for further quality work is in place.')
+        },
+        {
+          id: 'quality', status: 'planned', name: B('Agent Quality & Rules', 'Agent Quality & Rules'), start: '2026-10-19', end: '2026-11-20',
+          description: B('Trend Finder, Story Creator und Writer funktionieren bereits grundsätzlich. Der größte Teil der nächsten MVP-Arbeit besteht darin, ihre Regeln anhand weiterer Testfälle zu verfeinern und die Qualität der Ergebnisse stabiler zu machen.', 'Trend Finder, Story Creator and Writer already work together in principle. The largest part of the next MVP phase is refining their rules through additional test cases and making the quality of their outputs more reliable.'),
+          bullets: B(['Agent-Anweisungen und Grenzen weiter schärfen', 'Evidenz-Handling verbessern', 'Human Relevance und Story-Qualität verbessern', 'Signal Package, Story Package und Writer Briefing optimieren', 'unbelegte Claims reduzieren', 'datenlastige oder technisch wirkende Artikel reduzieren', 'verschiedene Signal- und Grenzfälle testen', 'Input-/Output-Verträge zwischen den Agents stabilisieren', 'Regeln anhand echter Ergebnisse iterativ verbessern'], ['further refine agent instructions and boundaries', 'improve evidence handling', 'improve Human Relevance and story quality', 'optimise Signal Package, Story Package and Writer Briefing', 'reduce unsupported claims', 'reduce overly data-heavy or technical article output', 'test different signals and edge cases', 'stabilise input/output contracts between agents', 'continuously improve rules based on test results']),
+          outcome: B('Die bestehenden Agents liefern zunehmend verlässliche und redaktionell starke Outputs.', 'The existing agents increasingly produce reliable and editorially strong outputs.')
+        },
+        {
+          id: 'automation', status: 'planned', name: B('Workflow-Automatisierung', 'Workflow Automation'), start: '2026-11-23', end: '2026-11-27',
+          description: B('Die bereits funktionierenden Agents über die bestehende Agent Factory zu einem linearen Workflow verbinden.', 'Connect the already working agents into a linear workflow using the existing Agent Factory.'),
+          bullets: B(['Agent → Package → Agent technisch verbinden', 'bestehende Agent Factory nutzen', 'definierte Inputs und Outputs übergeben', 'Agent-Scopes getrennt halten', 'einfache Fehler- und Fallback-Logik berücksichtigen', 'keine unnötige Multi-Agent-Orchestrierung bauen'], ['technically connect Agent → Package → Agent', 'use the existing Agent Factory', 'pass defined inputs and outputs', 'keep agent scopes separated', 'include simple error and fallback handling', 'avoid unnecessary multi-agent orchestration']),
+          note: B('Die Automation soll erst starten, wenn die wichtigsten Agent-Regeln und Handoffs ausreichend stabil sind.', 'Automation should start only once the key agent rules and handoffs are sufficiently stable.'),
+          outcome: B('Ein wiederholbarer automatisierter Flow vom Signal bis zum Production Package.', 'A repeatable automated flow from Signal to Production Package.')
+        },
+        {
+          id: 'review', status: 'planned', name: B('Human Review', 'Human Review'), start: '2026-11-02', end: '2026-11-20',
+          description: B('Definieren, wie menschliche redaktionelle Prüfung im MVP und später im Target Scope funktioniert.', 'Define how human editorial review should work in the MVP and later in the Target Scope.'),
+          bullets: B(['festlegen, welche Inhalte zwingend geprüft werden', 'definieren, welche Claims, Quellen und Daten besonders geprüft werden müssen', 'Approve / Change / Reject Logik definieren', 'klären, wer welche Art von Review übernimmt', 'festlegen, welche Themen ggf. zusätzliche Expert-, Legal- oder Compliance-Prüfung brauchen', 'MVP Review möglichst einfach halten', 'Anforderungen für einen skalierbaren Target-Review-Prozess dokumentieren', 'Feedback aus dem Review für die Verbesserung der Agents nutzbar machen'], ['define which content must always be reviewed', 'define which claims, sources and data require particular attention', 'define an Approve / Change / Reject logic', 'clarify who reviews which type of content', 'identify topics that may require additional expert, legal or compliance review', 'keep MVP review as simple as possible', 'document requirements for a scalable Target review process', 'make review feedback usable for improving the agents']),
+          outcome: B('Ein klarer Human-Review-Prozess für den MVP und erste Anforderungen für den Target Scope.', 'A clear Human Review process for the MVP and initial requirements for the Target Scope.')
+        },
+        {
+          id: 'publishing', status: 'planned', name: B('Publishing Setup · LP Builder + Contentful', 'Publishing Setup · LP Builder + Contentful'), start: '2026-11-09', end: '2026-11-27',
+          description: B('Den Publishing-Pfad so vorbereiten, dass ein geprüftes Production Package ohne manuellen Seitenbau in eine reale Contentful Page überführt werden kann.', 'Prepare the publishing path so that an approved Production Package can become a real Contentful page without manually building each page.'),
+          bullets: B(['bestehendes Editorial-/LP-Design von Viktoria als Grundlage übernehmen', 'Design einmal über den vorhandenen LP Builder in Contentful umsetzen', 'wiederverwendbares Editorial Template definieren', 'benötigte Contentful-Felder und Metadaten festlegen', 'Production-Package-Felder auf das Template mappen', 'Handoff vom finalen Package an den LP Builder definieren', 'Page-Erstellung in Contentful testen', 'Publishing-Pfad testen'], ["use Viktoria's existing editorial / LP design as the foundation", 'implement the design once in Contentful using the existing LP Builder', 'define a reusable editorial template', 'define required Contentful fields and metadata', 'map Production Package fields to the template', 'define the handoff from the final Package to the LP Builder', 'test page creation in Contentful', 'test the publishing path']),
+          targetFlow: B('Final Production Package → LP Builder → Contentful Page → Publish', 'Final Production Package → LP Builder → Contentful Page → Publish'),
+          outcome: B('Ein wiederverwendbarer Publishing-Pfad für MVP-Artikel.', 'A reusable publishing path for MVP articles.')
+        },
+        {
+          id: 'tests', status: 'planned', name: B('End-to-End-Test-Storys', 'End-to-End Test Stories'), start: '2026-11-30', end: '2026-12-18',
+          description: B('Mehrere reale Stories durch den vollständigen MVP-Workflow führen.', 'Run multiple real stories through the complete MVP workflow.'),
+          bullets: B(['Signal mit dem Trend Finder erkennen', 'Story Creator durchlaufen lassen', 'Content mit Writer / Content Creator erstellen', 'Human Review durchführen', 'finales Production Package erzeugen', 'über LP Builder / Contentful veröffentlichen', 'Probleme, manuelle Schritte und Qualitätsprobleme dokumentieren'], ['detect a Signal with the Trend Finder', 'run it through the Story Creator', 'create content with Writer / Content Creator', 'perform Human Review', 'create the final Production Package', 'publish via LP Builder / Contentful', 'document problems, manual steps and quality issues']),
+          outcome: B('Mehrere reale Publish-Loops beweisen den vollständigen MVP-Prozess.', 'Multiple real publishing loops prove the complete MVP process.')
+        },
+        {
+          id: 'stabilise', status: 'planned', name: B('Iterieren & stabilisieren', 'Iterate & Stabilise'), start: '2026-12-07', end: '2026-12-31',
+          description: B('Die Ergebnisse aus echten End-to-End-Läufen nutzen, um den MVP stabiler und einfacher wiederholbar zu machen.', 'Use the results from real end-to-end runs to make the MVP more stable and easier to repeat.'),
+          bullets: B(['Agent-Regeln anhand realer Ergebnisse weiter verbessern', 'Package-Handoffs nachschärfen', 'Review-Probleme beheben', 'Publishing-Probleme beheben', 'Automation stabilisieren', 'unnötige manuelle Schritte reduzieren', 'wiederkehrende Fehler dokumentieren', 'offene Punkte für den Cleaning Month sammeln'], ['further improve agent rules based on real results', 'refine Package handoffs', 'resolve review issues', 'resolve publishing issues', 'stabilise automation', 'reduce unnecessary manual steps', 'document recurring errors', 'collect open issues for the Cleaning Month']),
+          outcome: B('Ein belastbarer MVP-Stand am Ende von C3.', 'A robust MVP state at the end of C3.')
+        },
+        {
+          id: 'cleaning', status: 'planned', name: B('Cleaning Month · Learnings & Next Scope', 'Cleaning Month · Learnings & Next Scope'), start: '2027-01-01', end: '2027-01-31',
+          description: B('Nach C3 wird der MVP aufgeräumt, ausgewertet und für den nächsten Cycle vorbereitet.', 'After C3, clean up and evaluate the MVP and prepare it for the next cycle.'),
+          bullets: B(['zentrale C3-Learnings dokumentieren', 'technische und redaktionelle offene Punkte aufräumen', 'Agent Instructions konsolidieren', 'bekannte Schwächen und technische Schulden dokumentieren oder beheben', 'Review- und Publishing-Learnings zusammenführen', 'wiederverwendbare Templates und Dokumentation bereinigen', 'entscheiden, welche Datenquellen als Nächstes ergänzt werden', 'entscheiden, welche Trendfelder / Topics erweitert werden', 'nächste Automatisierungsmöglichkeiten priorisieren', 'nächsten Scope vorbereiten'], ['document key C3 learnings', 'clean up remaining technical and editorial issues', 'consolidate Agent Instructions', 'document or resolve known weaknesses and technical debt', 'consolidate review and publishing learnings', 'clean up reusable templates and documentation', 'decide which data sources should be added next', 'decide which Trend Fields / Topics should be expanded', 'prioritise the next automation opportunities', 'prepare the next scope']),
+          outcome: B('Ein sauber dokumentierter MVP und ein klarer Ausgangspunkt für den nächsten Cycle.', 'A clean, documented MVP and a clear starting point for the next cycle.')
+        }
+      ];
+
+      const workstreamOrder = ['foundation', 'initial-agents', 'base-rules', 'quality', 'review', 'publishing', 'automation', 'tests', 'stabilise', 'cleaning'];
+      workstreams.sort((a, b) => workstreamOrder.indexOf(a.id) - workstreamOrder.indexOf(b.id));
+
+      const start = Date.UTC(2026, 9, 1);
+      const days = 123;
+      const dayIndex = (date) => (Date.parse(`${date}T00:00:00Z`) - start) / 86400000;
+      const left = (date, centre = false) => ((dayIndex(date) + (centre ? .5 : 0)) / days) * 100;
+      const width = (from, to) => ((dayIndex(to) - dayIndex(from) + 1) / days) * 100;
+      const calendarWeeks = [
+        ['KW40', '2026-10-01', '2026-10-04'], ['KW41', '2026-10-05', '2026-10-11'],
+        ['KW42', '2026-10-12', '2026-10-18'], ['KW43', '2026-10-19', '2026-10-25'],
+        ['KW44', '2026-10-26', '2026-11-01'], ['KW45', '2026-11-02', '2026-11-08'],
+        ['KW46', '2026-11-09', '2026-11-15'], ['KW47', '2026-11-16', '2026-11-22'],
+        ['KW48', '2026-11-23', '2026-11-29'], ['KW49', '2026-11-30', '2026-12-06'],
+        ['KW50', '2026-12-07', '2026-12-13'], ['KW51', '2026-12-14', '2026-12-20'],
+        ['KW52', '2026-12-21', '2026-12-27'], ['KW53', '2026-12-28', '2027-01-03'],
+        ['KW1', '2027-01-04', '2027-01-10'], ['KW2', '2027-01-11', '2027-01-17'],
+        ['KW3', '2027-01-18', '2027-01-24'], ['KW4', '2027-01-25', '2027-01-31']
+      ];
+
+      let language = 'de';
+      const timelineScroll = document.getElementById('timeline-scroll');
+      const popover = document.getElementById('popover');
+      const T = (value) => value[language];
+
+      const detailMarkup = (item) => {
+        const bullets = item.bullets ? `<ul>${T(item.bullets).map((bullet) => `<li>${bullet}</li>`).join('')}</ul>` : '';
+        const note = item.note ? `<p class="detail-note">${T(item.note)}</p>` : '';
+        const targetFlow = item.targetFlow ? `<p class="outcome"><strong>${ui[language].targetFlow}</strong><br>${T(item.targetFlow)}</p>` : '';
+        const outcome = item.outcome ? `<p class="outcome"><strong>${ui[language].outcome}</strong><br>${T(item.outcome)}</p>` : '';
+        return `<h3>${T(item.name || item.title)}</h3><p>${T(item.description)}</p>${bullets}${note}${targetFlow}${outcome}`;
+      };
+
+      const taskBar = (workstream, from, to) => `<button type="button" class="task-bar ${workstream.status}" style="left:${left(from)}%;width:${width(from, to)}%" data-detail-type="workstream" data-detail-id="${workstream.id}" aria-describedby="popover">${T(workstream.name)}</button>`;
+
+      const render = () => {
+        const c = ui[language];
+        document.documentElement.lang = language;
+        document.getElementById('subline').textContent = c.subline;
+        document.getElementById('timeline-title').textContent = c.timeline;
+        document.getElementById('language-switch').setAttribute('aria-label', c.language);
+        document.querySelectorAll('[data-language]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.language === language)));
+
+        const monthMarkup = c.months.map(([month, story], index) => `<div class="month ${index === 3 ? 'cleaning' : ''}"><strong>${month}</strong><small>${story}</small></div>`).join('');
+        const weekMarkup = calendarWeeks.map(([label, from, to]) => `<span class="week" style="width:${width(from, to)}%">${language === 'de' ? label : label.replace('KW', 'W')}</span>`).join('');
+        const weekLines = calendarWeeks.slice(1).map(([, from]) => `<span class="week-line" style="left:${left(from)}%"></span>`).join('');
+        const rows = workstreams.map((workstream) => {
+          const bars = workstream.segments ? workstream.segments.map(([from, to]) => taskBar(workstream, from, to)).join('') : taskBar(workstream, workstream.start, workstream.end);
+          return `<div class="row-label">${T(workstream.name)}</div><div class="track">${weekLines}${bars}</div>`;
+        }).join('');
+
+        timelineScroll.setAttribute('aria-label', c.timeline);
+        timelineScroll.innerHTML = `<div class="timeline">
+          <div class="corner">${c.workstream}</div><div class="months">${monthMarkup}</div>
+          <div class="week-label">${c.weeks}</div><div class="weeks">${weekMarkup}</div>
+          ${rows}
+          <div class="vacation-layer" aria-hidden="true">
+            <div class="vacation-zone" style="left:${left('2026-10-05')}%;width:${width('2026-10-05', '2026-10-18')}%"><span>${c.vacationOne}</span></div>
+            <div class="vacation-zone" style="left:${left('2026-12-22')}%;width:${width('2026-12-22', '2026-12-31')}%"><span>${c.vacationTwo}</span></div>
+          </div>
+          <div class="cleaning-layer" aria-hidden="true">
+            <div class="cleaning-zone" style="left:${left('2027-01-01')}%;width:${width('2027-01-01', '2027-01-31')}%"></div>
+          </div>
+          <div class="marker-layer" aria-hidden="true">
+            <span class="marker-line today" style="left:${left('2026-10-01', true)}%"><span class="today-label">${c.today}</span></span>
+            <span class="marker-line" style="left:${left('2027-01-01')}%"><span class="end-label">${c.c3End}</span></span>
+          </div>
+        </div>`;
+
+        document.getElementById('legend').innerHTML = `
+          <span class="legend-item"><span class="legend-swatch completed"></span>${c.completed}</span>
+          <span class="legend-item"><span class="legend-swatch planned"></span>${c.planned}</span>
+          <span class="legend-item"><span class="legend-swatch vacation"></span>${c.capacity}</span>`;
+        hidePopover();
+      };
+
+      const findDetail = (element) => workstreams.find((item) => item.id === element.dataset.detailId);
+
+      const positionPopover = (element) => {
+        const anchor = element.getBoundingClientRect();
+        const box = popover.getBoundingClientRect();
+        const margin = 12;
+        let x = anchor.left + anchor.width / 2 - box.width / 2;
+        x = Math.max(margin, Math.min(x, window.innerWidth - box.width - margin));
+        let y = anchor.bottom + 9;
+        if (y + box.height > window.innerHeight - margin) y = anchor.top - box.height - 9;
+        y = Math.max(margin, y);
+        popover.style.left = `${x}px`;
+        popover.style.top = `${y}px`;
+      };
+
+      const showPopover = (element) => {
+        const item = findDetail(element);
+        if (!item) return;
+        popover.innerHTML = detailMarkup(item);
+        popover.hidden = false;
+        requestAnimationFrame(() => positionPopover(element));
+      };
+
+      function hidePopover() { popover.hidden = true; }
+
+      timelineScroll.addEventListener('pointerover', (event) => {
+        const element = event.target.closest('[data-detail-id]');
+        if (element) showPopover(element);
+      });
+      timelineScroll.addEventListener('pointerout', (event) => {
+        const element = event.target.closest('[data-detail-id]');
+        if (element && !element.contains(event.relatedTarget)) hidePopover();
+      });
+      timelineScroll.addEventListener('focusin', (event) => {
+        const element = event.target.closest('[data-detail-id]');
+        if (element) showPopover(element);
+      });
+      timelineScroll.addEventListener('focusout', hidePopover);
+      window.addEventListener('resize', hidePopover);
+      timelineScroll.addEventListener('scroll', hidePopover, { passive: true });
+
+      document.querySelectorAll('[data-language]').forEach((button) => {
+        button.addEventListener('click', () => {
+          language = button.dataset.language === 'en' ? 'en' : 'de';
+          render();
+        });
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>

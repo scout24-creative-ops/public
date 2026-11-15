@@ -181,6 +181,74 @@
       ],
       "lastPublished": "2026-08-10T12:10:42Z",
       "status": "published"
+    },
+    {
+      "title": "Content Plan",
+      "slug": "content-plan",
+      "project": "Scaling Editorial",
+      "sourceRepository": "scout24-creative-ops/scaling-editorial",
+      "sourcePath": "documents/content-planning.html",
+      "sourceAbsolutePath": "/workspace/scratch/63faf04277f8/wiki-link-repair-20261115/Scaling Editorial/documents/content-planning.html",
+      "sourceCommit": "861020a934d168d323b62ce2876358fb94202bf7",
+      "sourceHash": "sha256:0ee2a18998cd2ce5a423bd6bbbade916367e67cdef0c714ed8c179008706f77a",
+      "publicPath": "Scaling Editorial/content-plan/",
+      "publicUrl": "https://scout24-creative-ops.github.io/public/Scaling%20Editorial/content-plan/",
+      "publishedFiles": [
+        "index.html"
+      ],
+      "lastPublished": "2026-11-15T07:42:40Z",
+      "status": "published"
+    },
+    {
+      "title": "Scaling Editorial Lighthouse",
+      "slug": "scaling-editorial-lighthouse",
+      "project": "Scaling Editorial",
+      "sourceRepository": "scout24-creative-ops/scaling-editorial",
+      "sourcePath": "documents/flow-chart.html",
+      "sourceAbsolutePath": "/workspace/scratch/63faf04277f8/wiki-link-repair-20261115/Scaling Editorial/documents/flow-chart.html",
+      "sourceCommit": "861020a934d168d323b62ce2876358fb94202bf7",
+      "sourceHash": "sha256:eaddc9f63c808f83cd2271d68da0b275fc8527b5e7a60261e7254fc7dfa63b25",
+      "publicPath": "Scaling Editorial/scaling-editorial-lighthouse/",
+      "publicUrl": "https://scout24-creative-ops.github.io/public/Scaling%20Editorial/scaling-editorial-lighthouse/",
+      "publishedFiles": [
+        "index.html"
+      ],
+      "lastPublished": "2026-11-15T07:42:40Z",
+      "status": "published"
+    },
+    {
+      "title": "Trend Finder Matrix",
+      "slug": "trend-finder-matrix",
+      "project": "Scaling Editorial",
+      "sourceRepository": "scout24-creative-ops/scaling-editorial",
+      "sourcePath": "documents/master-matrix.html",
+      "sourceAbsolutePath": "/workspace/scratch/63faf04277f8/wiki-link-repair-20261115/Scaling Editorial/documents/master-matrix.html",
+      "sourceCommit": "861020a934d168d323b62ce2876358fb94202bf7",
+      "sourceHash": "sha256:7401b219882f14ec79a68e647caf1c30624b5e42284b9f0e61700b33f589af9a",
+      "publicPath": "Scaling Editorial/trend-finder-matrix/",
+      "publicUrl": "https://scout24-creative-ops.github.io/public/Scaling%20Editorial/trend-finder-matrix/",
+      "publishedFiles": [
+        "index.html"
+      ],
+      "lastPublished": "2026-11-15T07:42:40Z",
+      "status": "published"
+    },
+    {
+      "title": "Working Plan",
+      "slug": "working-plan",
+      "project": "Scaling Editorial",
+      "sourceRepository": "scout24-creative-ops/scaling-editorial",
+      "sourcePath": "documents/mvp-workplan.html",
+      "sourceAbsolutePath": "/workspace/scratch/63faf04277f8/wiki-link-repair-20261115/Scaling Editorial/documents/mvp-workplan.html",
+      "sourceCommit": "861020a934d168d323b62ce2876358fb94202bf7",
+      "sourceHash": "sha256:f4d77d71c5b3117b36e19c1a3cb48732ad8b7356672e149cef327ff04c6079a3",
+      "publicPath": "Scaling Editorial/working-plan/",
+      "publicUrl": "https://scout24-creative-ops.github.io/public/Scaling%20Editorial/working-plan/",
+      "publishedFiles": [
+        "index.html"
+      ],
+      "lastPublished": "2026-11-15T07:42:40Z",
+      "status": "published"
     }
   ]
 }
