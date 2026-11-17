@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Optimization Enablement – AI Steering Loop</title>
+  <link rel="stylesheet" href="https://www.static-immobilienscout24.de/fro/make-it-better/1.0.0/makeitbetter.css">
+  <style>
+    :root {
+      --bg: #FBF8F6;
+      --card: #FFFFFF;
+      --teal: #3DF5DC;
+      --blue: #24E3FF;
+      --yellow: #EFF933;
+      --graphite: rgba(0,0,0,0.26);
+      --grey: rgba(0,0,0,0.18);
+      --graphite-tint: #F2F3F5;
+      --grey-tint: #F6F7F9;
+      --text: #333333;
+      --muted: rgba(0,0,0,0.55);
+      --max: 1280px;
+      --ring: rgba(0,0,0,0.10);
+      --ring-strong: rgba(0,0,0,0.16);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
+    body {
+      font-family: "Make it Sans", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 64px 48px 96px;
+    }
+
+    h1 {
+      font-size: 44px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .intro {
+      font-size: 20px;
+      line-height: 1.6;
+      max-width: 820px;
+      color: var(--muted);
+      margin-bottom: 72px;
+    }
+
+    /* Loop */
+    .loop-wrapper {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 40px;
+      overflow: visible;
+    }
+
+    .loop {
+      position: relative;
+      width: 560px;
+      height: 560px;
+      border-radius: 50%;
+      background: transparent;
+      overflow: visible;
+    }
+
+    /* ring (single consistent color) */
+    .loop::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.14);
+      /* cut out the center to create the thick ring */
+      -webkit-mask: radial-gradient(
+        farthest-side,
+        transparent calc(100% - 18px),
+        #000 calc(100% - 18px)
+      );
+      mask: radial-gradient(
+        farthest-side,
+        transparent calc(100% - 18px),
+        #000 calc(100% - 18px)
+      );
+    }
+
+    .loop svg.loop-path {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1; /* very back: only the dashed line */
+    }
+
+    .loop svg.loop-arrows {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 4; /* above packets, below cards */
+    }
+
+    /* Accent mapping (card ↔ outgoing packet) */
+    .step.steering { --accent: var(--teal); }
+    .step.production { --accent: var(--blue); }
+    .step.publishing { --accent: var(--yellow); }
+    .step.measurement { --accent: var(--graphite-tint); }
+    .step.insights { --accent: var(--grey-tint); }
+
+    .packet.from-steering { --accent: var(--teal); }
+    .packet.from-production { --accent: var(--blue); }
+    .packet.from-publishing { --accent: var(--yellow); }
+    .packet.from-measurement { --accent: var(--graphite); }
+    .packet.from-insights { --accent: var(--grey); }
+
+
+
+    .step {
+      z-index: 5; /* always above dashed line, arrows and packets */
+      position: absolute;
+      width: 224px;
+      background: var(--accent, #FFFFFF);
+      border-radius: 12px;
+      padding: 20px 22px;
+      font-size: 15px;
+      line-height: 1.4;
+      cursor: default;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.08);
+      border: 1px solid rgba(0,0,0,0.08);
+      transform: translate(-50%, -50%);
+      isolation: isolate; /* ensure tooltip stacks within */
+    }
+
+    /* bring hovered tooltips to the very front */
+    .step:hover { z-index: 999; }
+
+    .packet:hover { z-index: 998; }
+
+    .step.start {
+      border-color: rgba(0,0,0,0.12);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.10);
+    }
+
+    .step.start strong::after {
+      content: "START";
+      display: inline-block;
+      margin-left: 10px;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: var(--accent, var(--teal));
+      padding: 5px 8px;
+      border-radius: 999px;
+      vertical-align: middle;
+    }
+
+
+    .step strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .step span {
+      font-size: 13px;
+      color: rgba(0,0,0,0.70);
+    }
+
+    /* keep text readable on colored cards */
+    .step strong { color: #111; }
+
+    
+    /* Data packets (small circles on the loop) */
+    .packet {
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: #FFFFFF;
+      border: 2px solid rgba(0,0,0,0.20);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      cursor: help;
+      --a: 0deg;
+    }
+
+    
+    .packet::after {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border-radius: 999px;
+      background: var(--accent, var(--teal));
+      opacity: 0.75;
+    }
+
+    .packet[data-tooltip]:hover::before {
+      content: attr(data-tooltip);
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translate(-50%, -100%);
+      background: #333;
+      color: #fff;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      line-height: 1.4;
+      width: 280px;
+      z-index: 10;
+    }
+
+    /* Positions are calculated to be evenly distributed */
+    .step { left: 50%; top: 50%; }
+
+    /* Tooltip */
+    .step[data-tooltip]:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 110%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333;
+      color: #fff;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      line-height: 1.4;
+      width: 260px;
+      z-index: 10;
+    }
+
+    .step[data-tooltip]:hover::before {
+      content: "";
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 6px;
+      border-style: solid;
+      border-color: #333 transparent transparent transparent;
+    }
+
+    @media (max-width: 900px) {
+      .page { padding: 48px 20px 72px; }
+      .loop { transform: scale(0.86); transform-origin: top center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>Optimization Enablement – AI Steering Loop</h1>
+    <p class="intro">
+      A centralized AI steering approach that connects campaign strategy, production, and learning into a continuous optimization loop. The goal is to enable marketing teams to scale efficiency, quality, and brand consistency while continuously improving performance.
+    </p>
+
+    <div class="loop-wrapper">
+      <div class="loop" id="loop">
+
+        <svg class="loop-path" viewBox="0 0 560 560" aria-hidden="true">
+          <!-- dashed loop (background) -->
+          <path d="M 280 60
+                   A 220 220 0 1 1 279.9 60" fill="none" stroke="rgba(0,0,0,0.22)" stroke-width="2" stroke-dasharray="6 10" />
+        </svg>
+
+        <svg class="loop-arrows" viewBox="0 0 560 560" aria-hidden="true">
+          <defs>
+            <marker id="arrowHead" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L12,6 L0,12 z" fill="rgba(0,0,0,0.28)" />
+            </marker>
+          </defs>
+          <g id="dirArrows"></g>
+        </svg>
+
+        <!-- Data packets along the loop -->
+        <div class="packet from-steering" data-angle="-54" data-tooltip="Blueprint + tracking plan (KPIs, events, experiment IDs) → handed to Production"></div>
+        <div class="packet from-production" data-angle="18" data-tooltip="Touchpoint drafts + variants (assets + copy) → publishing-ready"></div>
+        <div class="packet from-publishing" data-angle="90" data-tooltip="Structured publishing data + auto-tagging (UTMs, Experiment-ID, Variant-ID)"></div>
+        <div class="packet from-measurement" data-angle="162" data-tooltip="Test results (uplift, confidence, segments) → input for insights"></div>
+        <div class="packet from-insights" data-angle="234" data-tooltip="Attribution dataset + learnings → feeds the next iteration in Steering"></div>
+
+        <div class="step steering start" data-angle="-90" data-tooltip="Single entry point for AI campaign and CRO planning. Defines goals, audiences, offers, and success metrics.">
+          <strong>AI Campaign &amp; CRO Steering</strong>
+          <span>Single entry point</span>
+        </div>
+
+        <div class="step production" data-angle="-18" data-tooltip="AI-powered creator agents generate variants for LPs, emails, ads, and images – ready for publishing.">
+          <strong>Production</strong>
+          <span>Creator agents</span>
+        </div>
+
+        <div class="step publishing" data-angle="54" data-tooltip="Structured data is published via Contentful, Iterable, Salesforce, including auto-tagging and experiment IDs.">
+          <strong>Publishing</strong>
+          <span>Structured & automated</span>
+        </div>
+
+        <div class="step measurement" data-angle="126" data-tooltip="Standardized measurement across experiments using analytics and testing tools.">
+          <strong>Measurement</strong>
+          <span>Comparable results</span>
+        </div>
+
+        <div class="step insights" data-angle="198" data-tooltip="Results are translated into insights, patterns, and recommendations feeding the next iteration.">
+          <strong>Insights</strong>
+          <span>Learning loop</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const loop = document.getElementById('loop');
+      const nodes = Array.from(document.querySelectorAll('[data-angle]'));
+
+      function layout() {
+        if (!loop) return;
+        const rect = loop.getBoundingClientRect();
+        const cx = rect.width / 2;
+        const cy = rect.height / 2;
+
+        // Keep cards nicely on the ring without overlapping.
+        // Radius is based on loop size.
+        const rMain = Math.min(rect.width, rect.height) * 0.47; // cards
+        const rPacket = Math.min(rect.width, rect.height) * 0.39; // small circles on dashed path
+
+        // Match SVG geometry (viewBox 560x560 with dashed radius ~220)
+        const svgRadius = 220; // dashed path radius in SVG coordinates
+        const svgCenter = 280; // center in SVG coordinates
+
+        nodes.forEach((el) => {
+          const deg = parseFloat(el.getAttribute('data-angle') || '0');
+          const rad = (deg * Math.PI) / 180;
+          const useR = el.classList.contains('packet') ? rPacket : rMain;
+          const x = cx + useR * Math.cos(rad);
+          const y = cy + useR * Math.sin(rad);
+          el.style.left = x + 'px';
+          el.style.top = y + 'px';
+        });
+
+        // --- Direction arrows: one AFTER each packet (clockwise) ---
+        const svg = loop.querySelector('svg.loop-arrows');
+        const arrowLayer = svg ? svg.querySelector('#dirArrows') : null;
+        if (svg && arrowLayer) {
+          // Clear
+          while (arrowLayer.firstChild) arrowLayer.removeChild(arrowLayer.firstChild);
+
+          const packets = Array.from(loop.querySelectorAll('.packet[data-angle]'));
+          const offsetDeg = 14; // place arrow shortly after the packet
+
+          packets.forEach((p) => {
+            const a = parseFloat(p.getAttribute('data-angle') || '0');
+            const aArrow = a + offsetDeg;
+            const r = (aArrow * Math.PI) / 180;
+
+            const px = svgCenter + svgRadius * Math.cos(r);
+            const py = svgCenter + svgRadius * Math.sin(r);
+            const rot = aArrow + 90; // tangent direction (clockwise)
+
+            const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            g.setAttribute('transform', `translate(${px.toFixed(1)} ${py.toFixed(1)}) rotate(${rot.toFixed(1)})`);
+
+            const tri = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            tri.setAttribute('d', 'M-8,-6 L10,0 L-8,6 Z');
+            tri.setAttribute('fill', 'rgba(0,0,0,0.26)');
+
+            g.appendChild(tri);
+            arrowLayer.appendChild(g);
+          });
+        }
+      }
+
+      window.addEventListener('resize', layout);
+      window.addEventListener('load', layout);
+      layout();
+    })();
+  </script>
+</body>
+</html>

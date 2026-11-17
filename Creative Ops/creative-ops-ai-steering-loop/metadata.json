@@ -1,0 +1,17 @@
+{
+  "title": "Creative Ops AI Steering Loop",
+  "slug": "creative-ops-ai-steering-loop",
+  "project": "Creative Ops",
+  "sourceRepository": "scout24-creative-ops/creative-ops",
+  "sourcePath": "presentations/creative_ops_ai_steering_loop.html",
+  "sourceAbsolutePath": "/Users/dboehme/Projects/Creative Ops/creative-ops/presentations/creative_ops_ai_steering_loop.html",
+  "sourceCommit": "f205a5e26086cb0f0a5ad8648c715050200533b5",
+  "sourceHash": "sha256:c0f3fcc6fdb0af7d37a4f4e642cd1ea85b43c284956f95ab537117c67aba1974",
+  "publicPath": "Creative Ops/creative-ops-ai-steering-loop/",
+  "publicUrl": "https://scout24-creative-ops.github.io/public/Creative%20Ops/creative-ops-ai-steering-loop/",
+  "publishedFiles": [
+    "index.html"
+  ],
+  "lastPublished": "2026-11-17T11:47:33Z",
+  "status": "published"
+}
