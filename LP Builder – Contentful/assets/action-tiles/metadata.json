@@ -2,10 +2,10 @@
   "title": "Action Tile Assets",
   "slug": "assets/action-tiles",
   "project": "LP Builder – Contentful",
-  "sourceRepository": "TODO: source repository not available",
-  "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/action-tiles/",
-  "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/action-tiles/",
-  "sourceCommit": "TODO: source commit not available",
+  "sourceRepository": "scout24-creative-ops/lp-builder",
+  "sourcePath": "modules/assets/action-tiles/",
+  "sourceAbsolutePath": "not-published",
+  "sourceCommit": "b2aac5e52f74c44459fa9ffbae78b72fbf8d92d9",
   "sourceHash": "sha256:2df1f87cb46f82bae58b6d33164a28bd502830ac09e9c09f82c52022b9c2b60c",
   "publicPath": "LP Builder – Contentful/assets/action-tiles/",
   "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/assets/action-tiles/",
@@ -16,5 +16,35 @@
     "wohnung.svg"
   ],
   "lastPublished": "2026-09-03T07:05:26Z",
-  "status": "published"
+  "status": "published",
+  "sourceReconciliation": {
+    "verifiedOn": "2026-11-21",
+    "kind": "current-project-source",
+    "method": "git-blob identity for every published file",
+    "sourceCommitRole": "Verified available source snapshot; not a claim about the original publication commit.",
+    "files": [
+      {
+        "publishedFile": "gewerbe.svg",
+        "gitBlob": "577a88ed41ccbdc325f5336242cce1eef5452754",
+        "sourcePath": "modules/assets/action-tiles/gewerbe.svg"
+      },
+      {
+        "publishedFile": "grundstueck.svg",
+        "gitBlob": "365556660b93ba271aa06ba575aa6d8de39a6582",
+        "sourcePath": "modules/assets/action-tiles/grundstueck.svg"
+      },
+      {
+        "publishedFile": "haus.svg",
+        "gitBlob": "414a420ca3818b640b59e60c10ad7a1aa0c2f26e",
+        "sourcePath": "modules/assets/action-tiles/haus.svg"
+      },
+      {
+        "publishedFile": "wohnung.svg",
+        "gitBlob": "265e990ea78135b780e76c03b80f2e746179a194",
+        "sourcePath": "modules/assets/action-tiles/wohnung.svg"
+      }
+    ]
+  },
+  "sourceVisibility": "public",
+  "sourceRecordId": "src-ee4ee387791935f9"
 }

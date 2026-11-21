@@ -2,10 +2,10 @@
   "title": "Service Tile Assets",
   "slug": "assets/servicetiles",
   "project": "LP Builder – Contentful",
-  "sourceRepository": "TODO: source repository not available",
-  "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/servicetiles/",
-  "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/servicetiles/",
-  "sourceCommit": "TODO: source repository not available",
+  "sourceRepository": "scout24-creative-ops/lp-builder",
+  "sourcePath": "modules/assets/servicetiles/",
+  "sourceAbsolutePath": "not-published",
+  "sourceCommit": "b2aac5e52f74c44459fa9ffbae78b72fbf8d92d9",
   "sourceHash": "sha256:672eba66b308889fa75baf6135b70ce0081bcebaff294b7444672ef3f0db2628",
   "publicPath": "LP Builder – Contentful/assets/servicetiles/",
   "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/assets/servicetiles/",
@@ -19,5 +19,50 @@
     "umziehen.svg"
   ],
   "lastPublished": "2026-09-02T19:06:01Z",
-  "status": "published"
+  "status": "published",
+  "sourceReconciliation": {
+    "verifiedOn": "2026-11-21",
+    "kind": "current-project-source",
+    "method": "git-blob identity for every published file",
+    "sourceCommitRole": "Verified available source snapshot; not a claim about the original publication commit.",
+    "files": [
+      {
+        "publishedFile": "badge_plus.svg",
+        "gitBlob": "464f9f9458a1d6fe0fcce78d99cbbdfaf1b4e930",
+        "sourcePath": "modules/assets/servicetiles/badge_plus.svg"
+      },
+      {
+        "publishedFile": "finanzieren.svg",
+        "gitBlob": "4b2c9e7d40a6827662224076bcbcd1b7034f9319",
+        "sourcePath": "modules/assets/servicetiles/finanzieren.svg"
+      },
+      {
+        "publishedFile": "mieter-kaeufer-plus.svg",
+        "gitBlob": "e61c258d793056e221882ef3eeeb01a1cf50505c",
+        "sourcePath": "modules/assets/servicetiles/mieter-kaeufer-plus.svg"
+      },
+      {
+        "publishedFile": "mobile-service-icon.svg",
+        "gitBlob": "5d072572417e3712af1e08bd9593d21379ed8f0e",
+        "sourcePath": "modules/assets/servicetiles/mobile-service-icon.svg"
+      },
+      {
+        "publishedFile": "schufa-bonitaetscheck.svg",
+        "gitBlob": "55127e24f3d5227a32d697e287e1974f2699ef40",
+        "sourcePath": "modules/assets/servicetiles/schufa-bonitaetscheck.svg"
+      },
+      {
+        "publishedFile": "suche-speichern.svg",
+        "gitBlob": "a0a09312d61c27e0de622ffc2b85029a774156b1",
+        "sourcePath": "modules/assets/servicetiles/suche-speichern.svg"
+      },
+      {
+        "publishedFile": "umziehen.svg",
+        "gitBlob": "2c0d1a26586486f51e96ec7ff4c0b2b4349b3633",
+        "sourcePath": "modules/assets/servicetiles/umziehen.svg"
+      }
+    ]
+  },
+  "sourceVisibility": "public",
+  "sourceRecordId": "src-1597bf30fbfaf8bf"
 }

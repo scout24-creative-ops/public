@@ -2,10 +2,10 @@
   "title": "Callout Assets",
   "slug": "assets/callouts",
   "project": "LP Builder – Contentful",
-  "sourceRepository": "TODO: source repository not available",
-  "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/callouts/",
-  "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/callouts/",
-  "sourceCommit": "TODO: source repository not available",
+  "sourceRepository": "scout24-creative-ops/lp-builder",
+  "sourcePath": "modules/assets/callouts/",
+  "sourceAbsolutePath": "not-published",
+  "sourceCommit": "b2aac5e52f74c44459fa9ffbae78b72fbf8d92d9",
   "sourceHash": "sha256:073699582f17a500af5a4af83be917a750d583043c5f428f5d5551c5b9e9db7f",
   "publicPath": "LP Builder – Contentful/assets/callouts/",
   "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/assets/callouts/",
@@ -15,5 +15,30 @@
     "star.png"
   ],
   "lastPublished": "2026-09-02T18:33:04Z",
-  "status": "published"
+  "status": "published",
+  "sourceReconciliation": {
+    "verifiedOn": "2026-11-21",
+    "kind": "current-project-source",
+    "method": "git-blob identity for every published file",
+    "sourceCommitRole": "Verified available source snapshot; not a claim about the original publication commit.",
+    "files": [
+      {
+        "publishedFile": "avatar_man.png",
+        "gitBlob": "d4e3d68ba49e6dbcaad02a86342b3e7dfc2588fc",
+        "sourcePath": "modules/assets/callouts/avatar_man.png"
+      },
+      {
+        "publishedFile": "news.png",
+        "gitBlob": "bd95705b6236a5f17dd428eca18cff97cc2aa741",
+        "sourcePath": "modules/assets/callouts/news.png"
+      },
+      {
+        "publishedFile": "star.png",
+        "gitBlob": "d42e3a2d93d431c3876a057cfad2786ec800bde7",
+        "sourcePath": "modules/assets/callouts/star.png"
+      }
+    ]
+  },
+  "sourceVisibility": "public",
+  "sourceRecordId": "src-25b7a7ba28454c5f"
 }

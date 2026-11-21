@@ -2,10 +2,10 @@
   "title": "Lpbuilder Runtime Test",
   "slug": "lpbuilder-runtime-test",
   "project": "LP Builder – Contentful",
-  "sourceRepository": "TODO: source repository not available",
-  "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/runtime-test/counter/counter-runtime.js",
-  "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/runtime-test/counter/counter-runtime.js",
-  "sourceCommit": "TODO: source commit not available",
+  "sourceRepository": "private",
+  "sourcePath": "private",
+  "sourceAbsolutePath": "not-published",
+  "sourceCommit": "private",
   "sourceHash": "sha256:a35c9a9f1aff7d4d951e051aaf67c66c7868ca838cb04ddb4aaaad8568e752c1",
   "publicPath": "LP Builder – Contentful/lpbuilder-runtime-test/",
   "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/lpbuilder-runtime-test/",
@@ -13,5 +13,20 @@
     "counter-runtime.js"
   ],
   "lastPublished": "2026-09-06T08:28:35Z",
-  "status": "published"
+  "status": "published",
+  "sourceReconciliation": {
+    "verifiedOn": "2026-11-21",
+    "kind": "recovered-distribution",
+    "method": "git-blob identity for every published file",
+    "sourceCommitRole": "Verified available source snapshot; not a claim about the original publication commit.",
+    "files": [
+      {
+        "publishedFile": "counter-runtime.js",
+        "gitBlob": "9a377a265190a1bc070d33e714e3dcf1302359fa"
+      }
+    ],
+    "note": "Exact historical distribution recovery. Original authoring source not established; not current LP runtime."
+  },
+  "sourceVisibility": "private",
+  "sourceRecordId": "src-d380fcb09e3ad88b"
 }

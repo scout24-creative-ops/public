@@ -5,10 +5,10 @@
       "title": "Ai Team Check",
       "slug": "ai-team-check",
       "project": "AI Team Check",
-      "sourceRepository": "TODO: source repository not available",
-      "sourcePath": "/Users/dboehme/Projects/AI Team Check/AI-Team-Check.html",
-      "sourceAbsolutePath": "/Users/dboehme/Projects/AI Team Check/AI-Team-Check.html",
-      "sourceCommit": "TODO: source commit not available",
+      "sourceRepository": "private",
+      "sourcePath": "private",
+      "sourceAbsolutePath": "not-published",
+      "sourceCommit": "private",
       "sourceHash": "sha256:40d41350646285d8063eff710d1d653b3655e0250155cbaabc2a70aa5326c5dc",
       "publicPath": "AI Team Check/ai-team-check/",
       "publicUrl": "https://scout24-creative-ops.github.io/public/AI%20Team%20Check/ai-team-check/",
@@ -16,16 +16,30 @@
         "index.html"
       ],
       "lastPublished": "2026-07-23T12:10:11Z",
-      "status": "published"
+      "status": "published",
+      "sourceReconciliation": {
+        "verifiedOn": "2026-11-21",
+        "kind": "archived-project-source",
+        "method": "git-blob identity for every published file",
+        "sourceCommitRole": "Verified available source snapshot; not a claim about the original publication commit.",
+        "files": [
+          {
+            "publishedFile": "index.html",
+            "gitBlob": "a635f5cf073a0dd29536ab4ba6a81385d058ea21"
+          }
+        ]
+      },
+      "sourceVisibility": "private",
+      "sourceRecordId": "src-de57fafdcfc597f5"
     },
     {
       "title": "B2b Migration Sitemap",
       "slug": "b2b-migration-sitemap",
       "project": "Contentful Migration",
-      "sourceRepository": "scout24-creative-ops/contentful-marketing",
-      "sourcePath": "outputs/b2b/AEM_Anbieten_Visuelle_Sitemap_v2.html",
-      "sourceAbsolutePath": "/Users/dboehme/Projects/Contentful Migration/outputs/b2b/AEM_Anbieten_Visuelle_Sitemap_v2.html",
-      "sourceCommit": "63808af0ca3a1c15e7c083cc0e765e9ee7ca2d22",
+      "sourceRepository": "private",
+      "sourcePath": "private",
+      "sourceAbsolutePath": "not-published",
+      "sourceCommit": "private",
       "sourceHash": "sha256:12f8071f886f367dc6f7c9b36d95e2c5915ca41966574246f85fd05a19b5932b",
       "publicPath": "Contentful Migration/b2b-migration-sitemap/",
       "publicUrl": "https://scout24-creative-ops.github.io/public/Contentful%20Migration/b2b-migration-sitemap/",
@@ -33,16 +47,30 @@
         "index.html"
       ],
       "lastPublished": "2026-09-01T06:59:03Z",
-      "status": "published"
+      "status": "published",
+      "sourceReconciliation": {
+        "verifiedOn": "2026-11-21",
+        "kind": "archived-project-source",
+        "method": "git-blob identity for every published file",
+        "sourceCommitRole": "Verified available source snapshot; not a claim about the original publication commit.",
+        "files": [
+          {
+            "publishedFile": "index.html",
+            "gitBlob": "9f4298baed7c77b8b833960645348ae2fcd62425"
+          }
+        ]
+      },
+      "sourceVisibility": "private",
+      "sourceRecordId": "src-2315ac2537b245d3"
     },
     {
       "title": "Creative Hub Wireframe Index Design",
       "slug": "creative-hub-wireframe-index-design",
       "project": "Creative Hub",
-      "sourceRepository": "scout24-creative-ops/creative-hub",
-      "sourcePath": "drafts/creative-hub-wireframe-index-design.html",
-      "sourceAbsolutePath": "/Users/dboehme/Projects/Creative Hub/drafts/creative-hub-wireframe-index-design.html",
-      "sourceCommit": "c3d5c83c56a10750833b2bac303f4e8d893ebcdc",
+      "sourceRepository": "private",
+      "sourcePath": "private",
+      "sourceAbsolutePath": "not-published",
+      "sourceCommit": "private",
       "sourceHash": "sha256:5005abb530b8dc17e57f49c355c9043762e2e82cd43af736067aceba239f47b4",
       "publicPath": "Creative Hub/creative-hub-wireframe-index-design/",
       "publicUrl": "https://scout24-creative-ops.github.io/public/Creative%20Hub/creative-hub-wireframe-index-design/",
@@ -50,16 +78,30 @@
         "index.html"
       ],
       "lastPublished": "2026-07-22T15:55:25Z",
-      "status": "published"
+      "status": "published",
+      "sourceReconciliation": {
+        "verifiedOn": "2026-11-21",
+        "kind": "archived-project-source",
+        "method": "git-blob identity for every published file",
+        "sourceCommitRole": "Verified available source snapshot; not a claim about the original publication commit.",
+        "files": [
+          {
+            "publishedFile": "index.html",
+            "gitBlob": "33a1c6d4ff3e376028f38429047846ae5155de69"
+          }
+        ]
+      },
+      "sourceVisibility": "private",
+      "sourceRecordId": "src-70c054c69424171a"
     },
     {
       "title": "Creative Ops AI Steering Loop",
       "slug": "creative-ops-ai-steering-loop",
       "project": "Creative Ops",
-      "sourceRepository": "scout24-creative-ops/creative-ops",
-      "sourcePath": "presentations/creative_ops_ai_steering_loop.html",
-      "sourceAbsolutePath": "/Users/dboehme/Projects/Creative Ops/creative-ops/presentations/creative_ops_ai_steering_loop.html",
-      "sourceCommit": "f205a5e26086cb0f0a5ad8648c715050200533b5",
+      "sourceRepository": "private",
+      "sourcePath": "private",
+      "sourceAbsolutePath": "not-published",
+      "sourceCommit": "private",
       "sourceHash": "sha256:c0f3fcc6fdb0af7d37a4f4e642cd1ea85b43c284956f95ab537117c67aba1974",
       "publicPath": "Creative Ops/creative-ops-ai-steering-loop/",
       "publicUrl": "https://scout24-creative-ops.github.io/public/Creative%20Ops/creative-ops-ai-steering-loop/",
@@ -67,16 +109,30 @@
         "index.html"
       ],
       "lastPublished": "2026-11-17T11:47:33Z",
-      "status": "published"
+      "status": "published",
+      "sourceReconciliation": {
+        "verifiedOn": "2026-11-21",
+        "kind": "current-project-source",
+        "method": "git-blob identity for every published file",
+        "sourceCommitRole": "Verified available source snapshot; not a claim about the original publication commit.",
+        "files": [
+          {
+            "publishedFile": "index.html",
+            "gitBlob": "a101c4742c0208efd66f3bb039b95ef3833142c2"
+          }
+        ]
+      },
+      "sourceVisibility": "private",
+      "sourceRecordId": "src-ac1ec562514b3c79"
     },
     {
       "title": "Action Tile Assets",
       "slug": "assets/action-tiles",
       "project": "LP Builder – Contentful",
-      "sourceRepository": "TODO: source repository not available",
-      "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/action-tiles/",
-      "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/action-tiles/",
-      "sourceCommit": "TODO: source commit not available",
+      "sourceRepository": "scout24-creative-ops/lp-builder",
+      "sourcePath": "modules/assets/action-tiles/",
+      "sourceAbsolutePath": "not-published",
+      "sourceCommit": "b2aac5e52f74c44459fa9ffbae78b72fbf8d92d9",
       "sourceHash": "sha256:2df1f87cb46f82bae58b6d33164a28bd502830ac09e9c09f82c52022b9c2b60c",
       "publicPath": "LP Builder – Contentful/assets/action-tiles/",
       "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/assets/action-tiles/",
@@ -87,16 +143,46 @@
         "wohnung.svg"
       ],
       "lastPublished": "2026-09-03T07:05:26Z",
-      "status": "published"
+      "status": "published",
+      "sourceReconciliation": {
+        "verifiedOn": "2026-11-21",
+        "kind": "current-project-source",
+        "method": "git-blob identity for every published file",
+        "sourceCommitRole": "Verified available source snapshot; not a claim about the original publication commit.",
+        "files": [
+          {
+            "publishedFile": "gewerbe.svg",
+            "gitBlob": "577a88ed41ccbdc325f5336242cce1eef5452754",
+            "sourcePath": "modules/assets/action-tiles/gewerbe.svg"
+          },
+          {
+            "publishedFile": "grundstueck.svg",
+            "gitBlob": "365556660b93ba271aa06ba575aa6d8de39a6582",
+            "sourcePath": "modules/assets/action-tiles/grundstueck.svg"
+          },
+          {
+            "publishedFile": "haus.svg",
+            "gitBlob": "414a420ca3818b640b59e60c10ad7a1aa0c2f26e",
+            "sourcePath": "modules/assets/action-tiles/haus.svg"
+          },
+          {
+            "publishedFile": "wohnung.svg",
+            "gitBlob": "265e990ea78135b780e76c03b80f2e746179a194",
+            "sourcePath": "modules/assets/action-tiles/wohnung.svg"
+          }
+        ]
+      },
+      "sourceVisibility": "public",
+      "sourceRecordId": "src-ee4ee387791935f9"
     },
     {
       "title": "Callout Assets",
       "slug": "assets/callouts",
       "project": "LP Builder – Contentful",
-      "sourceRepository": "TODO: source repository not available",
-      "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/callouts/",
-      "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/callouts/",
-      "sourceCommit": "TODO: source repository not available",
+      "sourceRepository": "scout24-creative-ops/lp-builder",
+      "sourcePath": "modules/assets/callouts/",
+      "sourceAbsolutePath": "not-published",
+      "sourceCommit": "b2aac5e52f74c44459fa9ffbae78b72fbf8d92d9",
       "sourceHash": "sha256:073699582f17a500af5a4af83be917a750d583043c5f428f5d5551c5b9e9db7f",
       "publicPath": "LP Builder – Contentful/assets/callouts/",
       "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/assets/callouts/",
@@ -106,16 +192,41 @@
         "star.png"
       ],
       "lastPublished": "2026-09-02T18:33:04Z",
-      "status": "published"
+      "status": "published",
+      "sourceReconciliation": {
+        "verifiedOn": "2026-11-21",
+        "kind": "current-project-source",
+        "method": "git-blob identity for every published file",
+        "sourceCommitRole": "Verified available source snapshot; not a claim about the original publication commit.",
+        "files": [
+          {
+            "publishedFile": "avatar_man.png",
+            "gitBlob": "d4e3d68ba49e6dbcaad02a86342b3e7dfc2588fc",
+            "sourcePath": "modules/assets/callouts/avatar_man.png"
+          },
+          {
+            "publishedFile": "news.png",
+            "gitBlob": "bd95705b6236a5f17dd428eca18cff97cc2aa741",
+            "sourcePath": "modules/assets/callouts/news.png"
+          },
+          {
+            "publishedFile": "star.png",
+            "gitBlob": "d42e3a2d93d431c3876a057cfad2786ec800bde7",
+            "sourcePath": "modules/assets/callouts/star.png"
+          }
+        ]
+      },
+      "sourceVisibility": "public",
+      "sourceRecordId": "src-25b7a7ba28454c5f"
     },
     {
       "title": "Service Tile Assets",
       "slug": "assets/servicetiles",
       "project": "LP Builder – Contentful",
-      "sourceRepository": "TODO: source repository not available",
-      "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/servicetiles/",
-      "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/assets/servicetiles/",
-      "sourceCommit": "TODO: source repository not available",
+      "sourceRepository": "scout24-creative-ops/lp-builder",
+      "sourcePath": "modules/assets/servicetiles/",
+      "sourceAbsolutePath": "not-published",
+      "sourceCommit": "b2aac5e52f74c44459fa9ffbae78b72fbf8d92d9",
       "sourceHash": "sha256:672eba66b308889fa75baf6135b70ce0081bcebaff294b7444672ef3f0db2628",
       "publicPath": "LP Builder – Contentful/assets/servicetiles/",
       "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/assets/servicetiles/",
@@ -129,16 +240,61 @@
         "umziehen.svg"
       ],
       "lastPublished": "2026-09-02T19:06:01Z",
-      "status": "published"
+      "status": "published",
+      "sourceReconciliation": {
+        "verifiedOn": "2026-11-21",
+        "kind": "current-project-source",
+        "method": "git-blob identity for every published file",
+        "sourceCommitRole": "Verified available source snapshot; not a claim about the original publication commit.",
+        "files": [
+          {
+            "publishedFile": "badge_plus.svg",
+            "gitBlob": "464f9f9458a1d6fe0fcce78d99cbbdfaf1b4e930",
+            "sourcePath": "modules/assets/servicetiles/badge_plus.svg"
+          },
+          {
+            "publishedFile": "finanzieren.svg",
+            "gitBlob": "4b2c9e7d40a6827662224076bcbcd1b7034f9319",
+            "sourcePath": "modules/assets/servicetiles/finanzieren.svg"
+          },
+          {
+            "publishedFile": "mieter-kaeufer-plus.svg",
+            "gitBlob": "e61c258d793056e221882ef3eeeb01a1cf50505c",
+            "sourcePath": "modules/assets/servicetiles/mieter-kaeufer-plus.svg"
+          },
+          {
+            "publishedFile": "mobile-service-icon.svg",
+            "gitBlob": "5d072572417e3712af1e08bd9593d21379ed8f0e",
+            "sourcePath": "modules/assets/servicetiles/mobile-service-icon.svg"
+          },
+          {
+            "publishedFile": "schufa-bonitaetscheck.svg",
+            "gitBlob": "55127e24f3d5227a32d697e287e1974f2699ef40",
+            "sourcePath": "modules/assets/servicetiles/schufa-bonitaetscheck.svg"
+          },
+          {
+            "publishedFile": "suche-speichern.svg",
+            "gitBlob": "a0a09312d61c27e0de622ffc2b85029a774156b1",
+            "sourcePath": "modules/assets/servicetiles/suche-speichern.svg"
+          },
+          {
+            "publishedFile": "umziehen.svg",
+            "gitBlob": "2c0d1a26586486f51e96ec7ff4c0b2b4349b3633",
+            "sourcePath": "modules/assets/servicetiles/umziehen.svg"
+          }
+        ]
+      },
+      "sourceVisibility": "public",
+      "sourceRecordId": "src-1597bf30fbfaf8bf"
     },
     {
       "title": "Lpbuilder Accordion",
       "slug": "lpbuilder-accordion",
       "project": "LP Builder – Contentful",
-      "sourceRepository": "TODO: source repository not available",
-      "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/bridge/lpbuilder-accordion.js",
-      "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/bridge/lpbuilder-accordion.js",
-      "sourceCommit": "TODO: source commit not available",
+      "sourceRepository": "private",
+      "sourcePath": "private",
+      "sourceAbsolutePath": "not-published",
+      "sourceCommit": "private",
       "sourceHash": "sha256:14a7c7dc8d1f32c65677a00f3d3f8c72d458eca381171dc1f9fe245f15fd5040",
       "publicPath": "LP Builder – Contentful/lpbuilder-accordion/",
       "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/lpbuilder-accordion/",
@@ -146,16 +302,31 @@
         "lpbuilder-accordion.js"
       ],
       "lastPublished": "2026-09-03T09:30:55Z",
-      "status": "published"
+      "status": "published",
+      "sourceReconciliation": {
+        "verifiedOn": "2026-11-21",
+        "kind": "recovered-distribution",
+        "method": "git-blob identity for every published file",
+        "sourceCommitRole": "Verified available source snapshot; not a claim about the original publication commit.",
+        "files": [
+          {
+            "publishedFile": "lpbuilder-accordion.js",
+            "gitBlob": "7ce5dad379757c58e33cdb351bcdfc0f9e443468"
+          }
+        ],
+        "note": "Exact historical distribution recovery. Original authoring source not established; not current LP runtime."
+      },
+      "sourceVisibility": "private",
+      "sourceRecordId": "src-42046f17d260f578"
     },
     {
       "title": "Lpbuilder Bridge",
       "slug": "lpbuilder-bridge",
       "project": "LP Builder – Contentful",
-      "sourceRepository": "TODO: source repository not available",
-      "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/bridge/lpbuilder-bridge.css",
-      "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/bridge/lpbuilder-bridge.css",
-      "sourceCommit": "TODO: source commit not available",
+      "sourceRepository": "private",
+      "sourcePath": "private",
+      "sourceAbsolutePath": "not-published",
+      "sourceCommit": "private",
       "sourceHash": "sha256:164e897ec29027c4547ab447f8f0997ea86b703939c8c57a85c9bc7003df3bf0",
       "publicPath": "LP Builder – Contentful/lpbuilder-bridge/",
       "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/lpbuilder-bridge/",
@@ -163,16 +334,31 @@
         "lpbuilder-bridge.css"
       ],
       "lastPublished": "2026-09-09T18:55:01Z",
-      "status": "published"
+      "status": "published",
+      "sourceReconciliation": {
+        "verifiedOn": "2026-11-21",
+        "kind": "recovered-distribution",
+        "method": "git-blob identity for every published file",
+        "sourceCommitRole": "Verified available source snapshot; not a claim about the original publication commit.",
+        "files": [
+          {
+            "publishedFile": "lpbuilder-bridge.css",
+            "gitBlob": "9bb6f0094666f0db4ed9f63e2d8c39e163c5f29b"
+          }
+        ],
+        "note": "Exact historical distribution recovery. Original authoring source not established; not current LP runtime."
+      },
+      "sourceVisibility": "private",
+      "sourceRecordId": "src-a88f95c2c8618455"
     },
     {
       "title": "Lpbuilder Runtime Test",
       "slug": "lpbuilder-runtime-test",
       "project": "LP Builder – Contentful",
-      "sourceRepository": "TODO: source repository not available",
-      "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/runtime-test/counter/counter-runtime.js",
-      "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/runtime-test/counter/counter-runtime.js",
-      "sourceCommit": "TODO: source commit not available",
+      "sourceRepository": "private",
+      "sourcePath": "private",
+      "sourceAbsolutePath": "not-published",
+      "sourceCommit": "private",
       "sourceHash": "sha256:a35c9a9f1aff7d4d951e051aaf67c66c7868ca838cb04ddb4aaaad8568e752c1",
       "publicPath": "LP Builder – Contentful/lpbuilder-runtime-test/",
       "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/lpbuilder-runtime-test/",
@@ -180,16 +366,31 @@
         "counter-runtime.js"
       ],
       "lastPublished": "2026-09-06T08:28:35Z",
-      "status": "published"
+      "status": "published",
+      "sourceReconciliation": {
+        "verifiedOn": "2026-11-21",
+        "kind": "recovered-distribution",
+        "method": "git-blob identity for every published file",
+        "sourceCommitRole": "Verified available source snapshot; not a claim about the original publication commit.",
+        "files": [
+          {
+            "publishedFile": "counter-runtime.js",
+            "gitBlob": "9a377a265190a1bc070d33e714e3dcf1302359fa"
+          }
+        ],
+        "note": "Exact historical distribution recovery. Original authoring source not established; not current LP runtime."
+      },
+      "sourceVisibility": "private",
+      "sourceRecordId": "src-d380fcb09e3ad88b"
     },
     {
       "title": "Pr Intelligence Hub",
       "slug": "pr-intelligence-hub",
       "project": "PR Intelligence Hub",
-      "sourceRepository": "TODO: source repository not available",
-      "sourcePath": "/Users/dboehme/Projects/PR Intelligence Hub/index.html",
-      "sourceAbsolutePath": "/Users/dboehme/Projects/PR Intelligence Hub/index.html",
-      "sourceCommit": "TODO: source commit not available",
+      "sourceRepository": "private",
+      "sourcePath": "private",
+      "sourceAbsolutePath": "not-published",
+      "sourceCommit": "private",
       "sourceHash": "sha256:9d5e336efe4188923f378ab7cde66858efcfe8bf11a722ed692b7808463dfc98",
       "publicPath": "PR Intelligence Hub/pr-intelligence-hub/",
       "publicUrl": "https://scout24-creative-ops.github.io/public/PR%20Intelligence%20Hub/pr-intelligence-hub/",
@@ -197,7 +398,21 @@
         "index.html"
       ],
       "lastPublished": "2026-08-10T12:10:42Z",
-      "status": "published"
+      "status": "published",
+      "sourceReconciliation": {
+        "verifiedOn": "2026-11-21",
+        "kind": "archived-project-source",
+        "method": "git-blob identity for every published file",
+        "sourceCommitRole": "Verified available source snapshot; not a claim about the original publication commit.",
+        "files": [
+          {
+            "publishedFile": "index.html",
+            "gitBlob": "907ddf0ef373e95735effe96e7504e8a8c8e075d"
+          }
+        ]
+      },
+      "sourceVisibility": "private",
+      "sourceRecordId": "src-46970e2cd44cb409"
     }
   ]
 }
