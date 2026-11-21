@@ -2,10 +2,10 @@
   "title": "Pr Intelligence Hub",
   "slug": "pr-intelligence-hub",
   "project": "PR Intelligence Hub",
-  "sourceRepository": "TODO: source repository not available",
-  "sourcePath": "/Users/dboehme/Projects/PR Intelligence Hub/index.html",
-  "sourceAbsolutePath": "/Users/dboehme/Projects/PR Intelligence Hub/index.html",
-  "sourceCommit": "TODO: source commit not available",
+  "sourceRepository": "private",
+  "sourcePath": "private",
+  "sourceAbsolutePath": "not-published",
+  "sourceCommit": "private",
   "sourceHash": "sha256:9d5e336efe4188923f378ab7cde66858efcfe8bf11a722ed692b7808463dfc98",
   "publicPath": "PR Intelligence Hub/pr-intelligence-hub/",
   "publicUrl": "https://scout24-creative-ops.github.io/public/PR%20Intelligence%20Hub/pr-intelligence-hub/",
@@ -13,5 +13,19 @@
     "index.html"
   ],
   "lastPublished": "2026-08-10T12:10:42Z",
-  "status": "published"
+  "status": "published",
+  "sourceReconciliation": {
+    "verifiedOn": "2026-11-21",
+    "kind": "archived-project-source",
+    "method": "git-blob identity for every published file",
+    "sourceCommitRole": "Verified available source snapshot; not a claim about the original publication commit.",
+    "files": [
+      {
+        "publishedFile": "index.html",
+        "gitBlob": "907ddf0ef373e95735effe96e7504e8a8c8e075d"
+      }
+    ]
+  },
+  "sourceVisibility": "private",
+  "sourceRecordId": "src-46970e2cd44cb409"
 }

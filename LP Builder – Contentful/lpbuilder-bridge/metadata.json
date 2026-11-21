@@ -2,10 +2,10 @@
   "title": "Lpbuilder Bridge",
   "slug": "lpbuilder-bridge",
   "project": "LP Builder – Contentful",
-  "sourceRepository": "TODO: source repository not available",
-  "sourcePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/bridge/lpbuilder-bridge.css",
-  "sourceAbsolutePath": "/Users/dboehme/Projects/LP/LP Builder – Contentful/bridge/lpbuilder-bridge.css",
-  "sourceCommit": "TODO: source commit not available",
+  "sourceRepository": "private",
+  "sourcePath": "private",
+  "sourceAbsolutePath": "not-published",
+  "sourceCommit": "private",
   "sourceHash": "sha256:164e897ec29027c4547ab447f8f0997ea86b703939c8c57a85c9bc7003df3bf0",
   "publicPath": "LP Builder – Contentful/lpbuilder-bridge/",
   "publicUrl": "https://scout24-creative-ops.github.io/public/LP%20Builder%20%E2%80%93%20Contentful/lpbuilder-bridge/",
@@ -13,5 +13,20 @@
     "lpbuilder-bridge.css"
   ],
   "lastPublished": "2026-09-09T18:55:01Z",
-  "status": "published"
+  "status": "published",
+  "sourceReconciliation": {
+    "verifiedOn": "2026-11-21",
+    "kind": "recovered-distribution",
+    "method": "git-blob identity for every published file",
+    "sourceCommitRole": "Verified available source snapshot; not a claim about the original publication commit.",
+    "files": [
+      {
+        "publishedFile": "lpbuilder-bridge.css",
+        "gitBlob": "9bb6f0094666f0db4ed9f63e2d8c39e163c5f29b"
+      }
+    ],
+    "note": "Exact historical distribution recovery. Original authoring source not established; not current LP runtime."
+  },
+  "sourceVisibility": "private",
+  "sourceRecordId": "src-a88f95c2c8618455"
 }
